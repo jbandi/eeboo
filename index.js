@@ -10,10 +10,10 @@ app.use(express.static(path.join(__dirname, 'web/build')));
 app.get('/api/users', (req, res) => {
   res.json([{
       id: 1,
-      username: "samsepi0l"
+      username: "iam"
   }, {
       id: 2,
-      username: "D0loresH4ze"
+      username: "seeyousoon"
   }]);
 });
 
