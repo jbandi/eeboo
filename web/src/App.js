@@ -35,7 +35,7 @@ class App extends Component {
             ..then be the happiest man..
           </p>
           <RaisedButton label="Default" />
-          <h1>Users</h1>
+          <h1>Users from API</h1>
           {this.state.users.map(user =>
             <div key={user.id}>{user.username}</div>
           )}
