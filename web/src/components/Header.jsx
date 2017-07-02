@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const Header = () => (
   <Toolbar>
     <ToolbarGroup firstChild={true}>
-      <ToolbarTitle text="Schuhu" />
+      <ToolbarTitle text=" ..eeboo.com" />
     </ToolbarGroup>
     <ToolbarGroup>
       <div>
@@ -19,6 +19,11 @@ const Header = () => (
         label="About"
         primary={true}
         containerElement={<Link to="/about"/>}
+      />
+      <FlatButton
+        label="Admin"
+        primary={true}
+        containerElement={<Link to="/admin"/>}
       />
       </div>
     </ToolbarGroup>
