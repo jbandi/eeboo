@@ -9,7 +9,12 @@ export default class Auth {
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+    this.getAccessToken = this.getAccessToken.bind(this);
   }
+
+  userProfile;
+  requestedScopes = 'openid profile read:messages write:messages';
 
   auth0 = new auth0.WebAuth({
     domain: 'eeboo.eu.auth0.com',
@@ -17,29 +22,31 @@ export default class Auth {
     redirectUri: 'http://localhost:3000/callback',
     audience: 'https://eeboo.eu.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid'
+    // scope: 'openid profile',
+    scope: this.requestedScopes
   });
 
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        history.replace('/about');
+        history.replace('/admin');
       } else if (err) {
-        history.replace('/about');
+        history.replace('/');
         console.log(err);
       }
     });
   }
 
   setSession(authResult) {
-    // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    const scopes = authResult.scope || this.requestedScopes || '';
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    // navigate to the home route
-    history.replace('/about');
+    localStorage.setItem('scopes', JSON.stringify(scopes));
+    // navigate to the admin route
+    history.replace('/admin');
   }
 
   login() {
@@ -52,14 +59,33 @@ export default class Auth {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     // navigate to the home route
-    history.replace('/about');
+    history.replace('/');
   }
 
   isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  getAccessToken() {
+    return localStorage.getItem('access_token');
+  }
+
+  getProfile(cb) {
+    const accessToken = this.getAccessToken();
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+      cb(err, profile);
+    });
+  }
+
+  userHasScopes(scopes) {
+    const grantedScopes = JSON.parse(localStorage.getItem('scopes')).split(' ');
+    return scopes.every(scope => grantedScopes.includes(scope));
   }
 
 }

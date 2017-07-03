@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-
 import Header from './components/Header';
 import Main from './components/Main';
 
@@ -19,7 +18,6 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <Header />
           <Main />
         </div>
       </MuiThemeProvider>

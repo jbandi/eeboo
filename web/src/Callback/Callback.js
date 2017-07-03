@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import loading from './loading.svg';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Callback extends Component {
   render() {
     return (
       <div>
-        <img src={loading} alt="loading"/>
+        <CircularProgress />
       </div>
     );
   }

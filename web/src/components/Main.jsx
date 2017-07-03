@@ -6,7 +6,9 @@ import Home from './Home';
 import About from './About';
 import Admin from './Admin';
 import Callback from './../Callback/Callback';
+
 import Auth from './../services/Auth/Auth';
+import Header from './Header';
 
 const auth = new Auth();
 
@@ -16,8 +18,9 @@ const handleAuthentication = (nextState, replace) => {
   }
 }
 
-
 const Main = () => (
+  <div>
+  <Header auth={auth} />
   <main>
     <Switch>
       <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
@@ -29,6 +32,7 @@ const Main = () => (
       }}/>
     </Switch>
   </main>
+  </div>
 )
 
 export default Main;
