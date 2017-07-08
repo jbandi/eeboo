@@ -13,13 +13,20 @@ export default class Auth {
     this.getAccessToken = this.getAccessToken.bind(this);
   }
 
+  // construct redirection uri according to environment variables
+  constructUri() {
+    return ( process.env.REACT_APP_DOMAIN &&  process.env.REACT_APP_PORT )
+      ? `http://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_PORT}/callback`
+      : "http://localhost:3000/callback"
+  }
+
   userProfile;
   requestedScopes = 'openid profile admin';
 
   auth0 = new auth0.WebAuth({
     domain: 'eeboo.eu.auth0.com',
     clientID: 'i0DIt1tg8naYapZb730lh7bpxqv3Gkk1',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: this.constructUri(),
     //audience: 'https://eeboo.eu.auth0.com/userinfo',
     audience: 'https://eboo.herokuapp.com',
     responseType: 'token id_token',
@@ -46,7 +53,6 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
-    // navigate to the admin route
     history.replace('/admin');
   }
 
@@ -55,17 +61,13 @@ export default class Auth {
   }
 
   logout() {
-    // Clear access token and ID token from local storage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    // navigate to the home route
     history.replace('/');
   }
 
   isAuthenticated() {
-    // Check whether the current time is past the
-    // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
