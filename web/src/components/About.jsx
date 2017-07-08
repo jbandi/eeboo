@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import { Button } from 'react-bootstrap';
 
 class About extends Component {
   goTo(route) {
@@ -21,18 +21,18 @@ class About extends Component {
       <div>
             {
               !isAuthenticated() && (
-                  <FlatButton
-                    label="Login"
-                    onClick={this.login.bind(this)}
-                  />
+                  <Button
+                    onClick={this.login.bind(this)} >
+                    Login
+                  </Button>
                 )
             }
             {
               isAuthenticated() && (
-                <FlatButton
-                  label="Logout"
-                  onClick={this.logout.bind(this)}
-                />
+                <Button
+                  onClick={this.logout.bind(this)} >
+                  Logout
+                </Button>
                 )
             }
       </div>

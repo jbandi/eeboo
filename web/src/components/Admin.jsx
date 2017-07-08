@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Row, Col, Grid, Image } from 'react-bootstrap';
 
 class Admin extends Component {
-
 
   componentWillMount() {
     this.setState({ profile: {} });
@@ -18,14 +18,17 @@ class Admin extends Component {
   render() {
     const { profile } = this.state;
     return(
-      <div>
-        <h1>admin</h1>
-
-        <h2>{profile.name}</h2>
-        <h3>{profile.nickname}</h3>
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
-
-      </div>
+      <Grid className="home-content">
+        <Row>
+          <Col xs={6} md={2}></Col>
+          <Col xs={6} md={8}>
+            <h1>{profile.nickname}</h1>
+            <Image src={profile.picture} circle/>
+            <pre>{JSON.stringify(profile, null, 2)}</pre>
+          </Col>
+          <Col xsHidden md={2}></Col>
+        </Row>
+      </Grid>
     )
   }
 }

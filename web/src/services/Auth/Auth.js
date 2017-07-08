@@ -14,13 +14,14 @@ export default class Auth {
   }
 
   userProfile;
-  requestedScopes = 'openid profile read:messages write:messages';
+  requestedScopes = 'openid profile admin';
 
   auth0 = new auth0.WebAuth({
     domain: 'eeboo.eu.auth0.com',
     clientID: 'i0DIt1tg8naYapZb730lh7bpxqv3Gkk1',
     redirectUri: 'http://localhost:3000/callback',
-    audience: 'https://eeboo.eu.auth0.com/userinfo',
+    //audience: 'https://eeboo.eu.auth0.com/userinfo',
+    audience: 'https://eboo.herokuapp.com',
     responseType: 'token id_token',
     // scope: 'openid profile',
     scope: this.requestedScopes

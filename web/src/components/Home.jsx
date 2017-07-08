@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import { Row, Col, Grid } from 'react-bootstrap';
 
 class Home extends Component {
 
@@ -13,18 +13,18 @@ class Home extends Component {
 
   render () {
     return (
-      <div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          <br />
-          ..then be the happiest man..
-        </p>
-        <RaisedButton label="Default" />
-        <h1>Users from API</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
-      </div>
+      <Grid className="home-content">
+        <Row>
+          <Col xs={6} md={2}></Col>
+          <Col xs={6} md={8}>
+            <h1>Users from API</h1>
+            {this.state.users.map(user =>
+              <div key={user.id}>{user.username}</div>
+            )}
+          </Col>
+          <Col xsHidden md={2}></Col>
+        </Row>
+      </Grid>
     )
   }
 }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
-import FlatButton from 'material-ui/FlatButton';
-import { Link } from 'react-router-dom'
+import { Nav, Navbar } from 'react-bootstrap';
+import history from './../services/history';
+import RouteNavItem from './RouteNavItem';
+
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
 
@@ -13,50 +15,44 @@ class Header extends Component {
     this.props.auth.logout();
   }
 
+  handleNavLink = (event) => {
+    event.preventDefault();
+    history.replace(event.currentTarget.getAttribute('href'));
+  }
+
   render() {
     const { isAuthenticated, userHasScopes } = this.props.auth;
     return(
-      <Toolbar>
-        <ToolbarGroup firstChild={true}>
-          <ToolbarTitle text=" ..eeboo.com" />
-        </ToolbarGroup>
-        <ToolbarGroup>
-          <div>
-          <FlatButton
-            label="Home"
-            primary={true}
-            containerElement={<Link to="/"/>}
-          />
-          {
-            isAuthenticated() &&  userHasScopes(['profile']) && (
-              <FlatButton
-                label="Admin"
-                primary={true}
-                containerElement={<Link to="/admin"/>}
-              />
-            )
-          }
-          {
-            !isAuthenticated() && (
-                <FlatButton
-                  label="Login"
-                  primary={true}
-                  onClick={this.login.bind(this)}
-                />
-              )
-          }
-          {
-            isAuthenticated() && (
-              <FlatButton
-                label="Logout"
-                primary={true}
-                onClick={this.logout.bind(this)}
-              />
-              )
-          }
-          </div>
-        </ToolbarGroup>
-      </Toolbar>
+      <header className='app--header'>
+        <Navbar fluid collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">eeboo</Link>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav pullRight>
+              <RouteNavItem onClick={this.handleNavLink} href="/">Home</RouteNavItem>
+              {
+                isAuthenticated() &&  userHasScopes(['admin']) && (
+                  <RouteNavItem onClick={this.handleNavLink} href="/admin">Admin</RouteNavItem>
+                )
+              }
+              {
+                !isAuthenticated() && (
+                    <RouteNavItem onClick={this.login.bind(this)} href="#">Login</RouteNavItem>
+                  )
+              }
+              {
+                isAuthenticated() && (
+                    <RouteNavItem onClick={this.logout.bind(this)} href="#">Logout</RouteNavItem>
+                  )
+              }
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </header>
     )
   }
 }
