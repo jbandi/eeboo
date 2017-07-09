@@ -14,14 +14,11 @@ export default class Auth {
   }
 
   // construct redirection uri according to environment variables
-  constructUri() {
-    console.log("Domain: ", process.env.REACT_APP_DOMAIN);
-    console.log("Port: ", process.env.REACT_APP_PORT);
-    console.log("ENV: ", process.env.NODE_ENV);
-    return ( process.env.REACT_APP_DOMAIN &&  process.env.REACT_APP_PORT )
+  constructUri = () => (
+    ( process.env.REACT_APP_DOMAIN &&  process.env.REACT_APP_PORT )
       ? `https://${process.env.REACT_APP_DOMAIN}:${process.env.REACT_APP_PORT}/callback`
       : "http://localhost:3000/callback"
-  }
+  )
 
   userProfile;
   requestedScopes = 'openid profile roles';
