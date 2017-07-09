@@ -24,14 +24,16 @@ export default class Auth {
   }
 
   userProfile;
-  requestedScopes = 'openid profile admin';
+  requestedScopes = 'openid profile roles';
 
   auth0 = new auth0.WebAuth({
     domain: 'eeboo.eu.auth0.com',
     clientID: 'i0DIt1tg8naYapZb730lh7bpxqv3Gkk1',
     redirectUri: this.constructUri(),
-    //audience: 'https://eeboo.eu.auth0.com/userinfo',
-    audience: 'https://eboo.herokuapp.com',
+    audience: 'https://eeboo.eu.auth0.com/userinfo',
+    // audience: 'https://eeboo.eu.auth0.com/authorize',
+    // audience: 'https://eboo.herokuapp.com',
+    //audience: 'https://eboo.herokuapp.com',
     responseType: 'token id_token',
     // scope: 'openid profile',
     scope: this.requestedScopes
@@ -56,7 +58,9 @@ export default class Auth {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
-    history.replace('/admin');
+    localStorage.setItem('roles', authResult.idTokenPayload['https://eeboo.ch/authorization'].roles);
+    localStorage.setItem('permissions', authResult.idTokenPayload['https://eeboo.ch/authorization'].permissions);
+    // history.replace('/admin');
   }
 
   login() {
@@ -67,6 +71,9 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('scopes');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('permissions');
     history.replace('/');
   }
 
@@ -92,6 +99,11 @@ export default class Auth {
   userHasScopes(scopes) {
     const grantedScopes = JSON.parse(localStorage.getItem('scopes')).split(' ');
     return scopes.every(scope => grantedScopes.includes(scope));
+  }
+
+  userHasRoles(roles) {
+    const grantedScopes = localStorage.getItem('roles').split(',');
+    return roles.every(role => grantedScopes.includes(role));
   }
 
 }

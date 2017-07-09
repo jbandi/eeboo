@@ -21,9 +21,9 @@ class Header extends Component {
   }
 
   render() {
-    const { isAuthenticated, userHasScopes } = this.props.auth;
+    const { isAuthenticated, userHasRoles } = this.props.auth;
     return(
-      <header className='app--header'>
+      <header className='app-header'>
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
@@ -35,7 +35,7 @@ class Header extends Component {
             <Nav pullRight>
               <RouteNavItem onClick={this.handleNavLink} href="/">Home</RouteNavItem>
               {
-                isAuthenticated() &&  userHasScopes(['admin']) && (
+                isAuthenticated() &&  userHasRoles(['admin']) && (
                   <RouteNavItem onClick={this.handleNavLink} href="/admin">Admin</RouteNavItem>
                 )
               }
