@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Home from './Home';
 import About from './About';
@@ -18,6 +18,19 @@ const handleAuthentication = (nextState, replace) => {
   }
 }
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    (auth.isAuthenticated() && auth.userHasRoles(['admin'])) ? (
+      <Component auth={auth} {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
 const Main = () => (
   <div>
   <Header auth={auth} />
@@ -25,7 +38,7 @@ const Main = () => (
     <Switch>
       <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
       <Route path='/about' render={(props) => <About auth={auth} {...props} />} />
-      <Route path='/admin' render={(props) => <Admin auth={auth} {...props} />} />
+      <Route path='/admin' render={(props) => <PrivateRoute component={Admin} auth={auth} {...props} />} />
       <Route path="/callback" render={(props) => {
         handleAuthentication(props);
         return <Callback {...props} />
