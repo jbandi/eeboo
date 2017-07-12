@@ -1,7 +1,10 @@
 const express = require('express');
+const app = express();
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+
 const path = require('path');
 
-const app = express();
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'web/build')));
