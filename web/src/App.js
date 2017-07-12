@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import 'bootstrap/less/bootstrap.less';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 

@@ -5,10 +5,18 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import eeboo from './state/reducers';
+
+const store = createStore(eeboo);
+
 ReactDOM.render((
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 ), document.getElementById('root'));
 
 registerServiceWorker();
