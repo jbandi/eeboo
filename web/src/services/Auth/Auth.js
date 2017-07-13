@@ -11,6 +11,8 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.getProfile = this.getProfile.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
+    this.authFetch = this.authFetch.bind(this);
+    this.checkStatus = this.checkStatus.bind(this);
   }
 
   // construct redirection uri according to environment variables
@@ -21,16 +23,16 @@ export default class Auth {
   )
 
   userProfile;
-  requestedScopes = 'openid profile roles';
+  requestedScopes = 'openid profile openid read:messages';
 
   auth0 = new auth0.WebAuth({
     domain: 'eeboo.eu.auth0.com',
     clientID: 'i0DIt1tg8naYapZb730lh7bpxqv3Gkk1',
     redirectUri: this.constructUri(),
-    audience: 'https://eeboo.eu.auth0.com/userinfo',
     // audience: 'https://eeboo.eu.auth0.com/authorize',
-    // audience: 'https://eboo.herokuapp.com',
-    //audience: 'https://eboo.herokuapp.com',
+    audience: 'https://eboo.herokuapp.com',
+    // audience: 'https://eeboo.eu.auth0.com/api/v2/',
+    //https: 'eeboo.eu.auth0.com/oauth/token',
     responseType: 'token id_token',
     // scope: 'openid profile',
     scope: this.requestedScopes
@@ -80,7 +82,11 @@ export default class Auth {
   }
 
   getAccessToken() {
-    return localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('access_token');
+      if (!accessToken) {
+        throw new Error('No access token found');
+      }
+    return accessToken;
   }
 
   getProfile(cb) {
@@ -101,6 +107,31 @@ export default class Auth {
   userHasRoles(roles) {
     const grantedScopes = localStorage.getItem('roles').split(',');
     return roles.every(role => grantedScopes.includes(role));
+  }
+
+  authFetch(url, options) {
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+
+    if (this.isAuthenticated()) {
+      headers['Authorization'] = 'Bearer ' + this.getAccessToken();
+    }
+
+    return fetch(url, { headers, ...options })
+      .then(this.checkStatus)
+      .then(response => response.json());
+  }
+
+  checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response;
+    } else {
+      let error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
   }
 
 }

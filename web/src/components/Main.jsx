@@ -37,7 +37,7 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-      <Route path='/about' render={(props) => <About auth={auth} {...props} />} />
+      <Route path='/about' render={(props) => <PrivateRoute component={About} auth={auth} {...props} />} />
       <Route path='/admin' render={(props) => <PrivateRoute component={Admin} auth={auth} {...props} />} />
       <Route path="/callback" render={(props) => {
         handleAuthentication(props);

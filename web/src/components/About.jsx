@@ -1,42 +1,22 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 
 class About extends Component {
-  goTo(route) {
-    this.props.history.replace(`/${route}`)
-  }
 
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
+  componentWillMount() {
+    this.setState({ profile: {} });
+    const { authFetch} = this.props.auth;
+    const API_URL = '/api';
+    authFetch(`${API_URL}/private`)
+      .then(data => this.setState({ message: data.message }))
+      .catch(error => this.setState({ message: error.message }));
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
-    return (
+    return(
       <div>
-            {
-              !isAuthenticated() && (
-                  <Button
-                    onClick={this.login.bind(this)} >
-                    Login
-                  </Button>
-                )
-            }
-            {
-              isAuthenticated() && (
-                <Button
-                  onClick={this.logout.bind(this)} >
-                  Logout
-                </Button>
-                )
-            }
+            <pre>{this.state.message}</pre>
       </div>
-    );
+    )
   }
 }
 

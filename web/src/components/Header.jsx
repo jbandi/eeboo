@@ -34,6 +34,7 @@ class Header extends Component {
           <Navbar.Collapse>
             <Nav pullRight>
               <RouteNavItem onClick={this.handleNavLink} href="/">Home</RouteNavItem>
+              <RouteNavItem onClick={this.handleNavLink} href="/about">About</RouteNavItem>
               {
                 isAuthenticated() &&  userHasRoles(['admin']) && (
                   <RouteNavItem onClick={this.handleNavLink} href="/admin">Admin</RouteNavItem>
