@@ -29,12 +29,8 @@ export default class Auth {
     domain: 'eeboo.eu.auth0.com',
     clientID: 'i0DIt1tg8naYapZb730lh7bpxqv3Gkk1',
     redirectUri: this.constructUri(),
-    // audience: 'https://eeboo.eu.auth0.com/authorize',
     audience: 'https://eboo.herokuapp.com',
-    // audience: 'https://eeboo.eu.auth0.com/api/v2/',
-    //https: 'eeboo.eu.auth0.com/oauth/token',
     responseType: 'token id_token',
-    // scope: 'openid profile',
     scope: this.requestedScopes
   });
 
