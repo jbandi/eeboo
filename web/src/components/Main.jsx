@@ -1,6 +1,6 @@
-
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from './Home';
 import About from './About';
@@ -12,40 +12,62 @@ import Header from './Header';
 
 const auth = new Auth();
 
-const handleAuthentication = (nextState, replace) => {
+const handleAuthentication = (nextState) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication();
   }
-}
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    (auth.isAuthenticated() && auth.userHasRoles(['admin'])) ? (
-      <Component auth={auth} {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
+  <Route
+    {...rest}
+    render={props => (
+      (auth.isAuthenticated() && auth.userHasRoles(['admin'])) ? (
+        <Component auth={auth} {...props} />
+      ) : (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location },
+        }}
+        />
+      )
+    )}
+  />
+);
+
+PrivateRoute.propTypes = {
+  component: PropTypes.element.isRequired,
+  location: PropTypes.string.isRequired,
+};
 
 const Main = () => (
   <div>
-  <Header auth={auth} />
-  <main>
-    <Switch>
-      <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-      <Route path='/about' render={(props) => <PrivateRoute component={About} auth={auth} {...props} />} />
-      <Route path='/admin' render={(props) => <PrivateRoute component={Admin} auth={auth} {...props} />} />
-      <Route path="/callback" render={(props) => {
-        handleAuthentication(props);
-        return <Callback {...props} />
-      }}/>
-    </Switch>
-  </main>
+    <Header auth={auth} />
+    <main>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => <Home auth={auth} {...props} />}
+        />
+        <Route
+          path="/about"
+          render={props => <PrivateRoute component={About} auth={auth} {...props} />}
+        />
+        <Route
+          path="/admin"
+          render={props => <PrivateRoute component={Admin} auth={auth} {...props} />}
+        />
+        <Route
+          path="/callback"
+          render={(props) => {
+            handleAuthentication(props);
+            return <Callback {...props} />;
+          }}
+        />
+      </Switch>
+    </main>
   </div>
-)
+);
 
 export default Main;

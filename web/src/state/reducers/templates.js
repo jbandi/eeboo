@@ -6,11 +6,11 @@ const templates = (state = [], action) => {
         {
           id: action.id,
           text: action.description,
-        }
-      ]
+        },
+      ];
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default templates
+export default templates;

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import history from './../services/history';
+import Auth from './../services/Auth/Auth';
 import RouteNavItem from './RouteNavItem';
 
-import { Link } from 'react-router-dom';
-
 class Header extends Component {
+  propTypes = {
+    auth: PropTypes.instanceOf(Auth).isRequired,
+  }
 
   login() {
     this.props.auth.login();
@@ -22,8 +26,8 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, userHasRoles } = this.props.auth;
-    return(
-      <header className='app-header'>
+    return (
+      <header className="app-header">
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
@@ -36,25 +40,25 @@ class Header extends Component {
               <RouteNavItem onClick={this.handleNavLink} href="/">Home</RouteNavItem>
               <RouteNavItem onClick={this.handleNavLink} href="/about">About</RouteNavItem>
               {
-                isAuthenticated() &&  userHasRoles(['admin']) && (
+                isAuthenticated() && userHasRoles(['admin']) && (
                   <RouteNavItem onClick={this.handleNavLink} href="/admin">Admin</RouteNavItem>
                 )
               }
               {
                 !isAuthenticated() && (
-                    <RouteNavItem onClick={this.login.bind(this)} href="#">Login</RouteNavItem>
-                  )
+                  <RouteNavItem onClick={this.login.bind(this)} href="#">Login</RouteNavItem> // eslint-disable-line react/jsx-no-bind
+                )
               }
               {
                 isAuthenticated() && (
-                    <RouteNavItem onClick={this.logout.bind(this)} href="#">Logout</RouteNavItem>
-                  )
+                  <RouteNavItem onClick={this.logout.bind(this)} href="#">Logout</RouteNavItem> // eslint-disable-line react/jsx-no-bind
+                )
               }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
       </header>
-    )
+    );
   }
 }
 

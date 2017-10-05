@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Auth from './../services/Auth/Auth';
 
 class About extends Component {
-
+  propTypes = {
+    auth: PropTypes.instanceOf(Auth).isRequired,
+  }
   componentWillMount() {
     this.setState({ profile: {} });
-    const { authFetch} = this.props.auth;
+    const { authFetch } = this.props.auth;
     const API_URL = '/api';
     authFetch(`${API_URL}/private`)
       .then(data => this.setState({ message: data.message }))
@@ -12,11 +16,11 @@ class About extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
-            <pre>{this.state.message}</pre>
+        <pre>{this.state.message}</pre>
       </div>
-    )
+    );
   }
 }
 
