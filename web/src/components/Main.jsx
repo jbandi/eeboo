@@ -36,8 +36,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 PrivateRoute.propTypes = {
-  component: PropTypes.element.isRequired,
-  location: PropTypes.string.isRequired,
+  component: PropTypes.func.isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 const Main = () => (
@@ -48,6 +48,11 @@ const Main = () => (
         <Route
           exact
           path="/"
+          render={props => <Home auth={auth} {...props} />}
+        />
+        <Route
+          exact
+          path="/home"
           render={props => <Home auth={auth} {...props} />}
         />
         <Route

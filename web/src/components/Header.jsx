@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import history from './../services/history';
+import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../services/Auth/Auth';
-import RouteNavItem from './RouteNavItem';
 
 class Header extends Component {
-  propTypes = {
+  static propTypes = {
     auth: PropTypes.instanceOf(Auth).isRequired,
   }
 
-  login() {
+  login = () => {
     this.props.auth.login();
   }
 
-  logout() {
+  logout = () => {
     this.props.auth.logout();
-  }
-
-  handleNavLink = (event) => {
-    event.preventDefault();
-    history.replace(event.currentTarget.getAttribute('href'));
   }
 
   render() {
@@ -37,21 +31,31 @@ class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <RouteNavItem onClick={this.handleNavLink} href="/">Home</RouteNavItem>
-              <RouteNavItem onClick={this.handleNavLink} href="/about">About</RouteNavItem>
+              <LinkContainer to="/home">
+                <NavItem eventKey={1}>Home</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/about">
+                <NavItem eventKey={2}>About</NavItem>
+              </LinkContainer>
               {
                 isAuthenticated() && userHasRoles(['admin']) && (
-                  <RouteNavItem onClick={this.handleNavLink} href="/admin">Admin</RouteNavItem>
+                  <LinkContainer to="/admin">
+                    <NavItem eventKey={3}>Admin</NavItem>
+                  </LinkContainer>
                 )
               }
               {
                 !isAuthenticated() && (
-                  <RouteNavItem onClick={this.login.bind(this)} href="#">Login</RouteNavItem> // eslint-disable-line react/jsx-no-bind
+                  <LinkContainer to="#">
+                    <NavItem onClick={this.login} eventKey={3}>Login</NavItem>
+                  </LinkContainer>
                 )
               }
               {
                 isAuthenticated() && (
-                  <RouteNavItem onClick={this.logout.bind(this)} href="#">Logout</RouteNavItem> // eslint-disable-line react/jsx-no-bind
+                  <LinkContainer to="#">
+                    <NavItem onClick={this.logout} eventKey={3}>Logout</NavItem>
+                  </LinkContainer>
                 )
               }
             </Nav>
