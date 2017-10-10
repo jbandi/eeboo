@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../services/Auth/Auth';
 
@@ -25,7 +24,7 @@ class Header extends Component {
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">eeboo</Link>
+              <a href="/">eeboo</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

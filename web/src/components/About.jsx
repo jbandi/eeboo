@@ -7,7 +7,7 @@ class About extends Component {
     auth: PropTypes.instanceOf(Auth).isRequired,
   }
   componentWillMount() {
-    this.setState({ profile: {} });
+    this.setState({});
     const { authFetch } = this.props.auth;
     const API_URL = '/api';
     authFetch(`${API_URL}/private`)

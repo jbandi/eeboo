@@ -18,8 +18,7 @@ class Home extends Component {
           <Col xs={6} md={8}>
             <h1>Users from API</h1>
             {this.state.users.map(user =>
-              <div key={user.id}>{user.username}</div>,
-            )}
+              <div key={user.id}>{user.username}</div>)}
           </Col>
           <Col xsHidden md={2} />
         </Row>
