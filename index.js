@@ -38,8 +38,42 @@ app.get('/api/users', (req, res) => {
   }]);
 });
 
-// const checkScopes = jwtAuthz([ 'read:messages' ]);
+app.get('/api/v1/company', (req, res) => {
+  res.json({
+    company: {
+      id: 1,
+      name: "skilsgarden",
+      color: "#01DF74",
+      mail: "ina at example.com",
+    }
+  });
+});
 
+app.get('/api/v1/feedbackers', (req, res) => {
+  res.json([
+    {
+      id: "sie8-19sk-119s-679b",
+      mail: "mathu at example.com",
+      role: 1,
+      questionaire: "8as8-1s57-1uus-9s73",
+      answers: [{
+          question_id: "xy",
+          score: 3
+      }]
+    }, {
+      id: "aaaa-bbbb-cccc-dddd",
+      mail: "max at muster.com",
+      role: 2,
+      questionaire: "8as8-1s57-1uus-9s73",
+      answers: [{
+          question_id: "xy",
+          score: 4
+      }]
+    }]
+  )
+});
+
+// const checkScopes = jwtAuthz([ 'read:messages' ]);
 app.get('/api/private', checkJwt, function(req, res) {
   res.json({
     message: "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
