@@ -38,39 +38,41 @@ app.get('/api/users', (req, res) => {
   }]);
 });
 
+const company = {
+  company: {
+    id: 1,
+    name: "skilsgarden",
+    color: "#01DF74",
+    mail: "ina at example.com",
+  }
+};
 app.get('/api/v1/company', (req, res) => {
-  res.json({
-    company: {
-      id: 1,
-      name: "skilsgarden",
-      color: "#01DF74",
-      mail: "ina at example.com",
-    }
-  });
+  res.json(company);
 });
 
-app.get('/api/v1/feedbackers', (req, res) => {
-  res.json([
-    {
-      id: "sie8-19sk-119s-679b",
-      mail: "mathu at example.com",
-      role: 1,
-      questionaire: "8as8-1s57-1uus-9s73",
-      answers: [{
-          question_id: "xy",
-          score: 3
-      }]
-    }, {
-      id: "aaaa-bbbb-cccc-dddd",
-      mail: "max at muster.com",
-      role: 2,
-      questionaire: "8as8-1s57-1uus-9s73",
-      answers: [{
-          question_id: "xy",
-          score: 4
-      }]
+const feedbackers = [
+  {
+    id: "sie8-19sk-119s-679b",
+    mail: "mathu at example.com",
+    role: 1,
+    questionaire: "8as8-1s57-1uus-9s73",
+    answers: [{
+        question_id: "xy",
+        score: 3
     }]
-  )
+  }, {
+    id: "aaaa-bbbb-cccc-dddd",
+    mail: "max at muster.com",
+    role: 2,
+    questionaire: "8as8-1s57-1uus-9s73",
+    answers: [{
+        question_id: "xy",
+        score: 4
+    }]
+  }
+];
+app.get('/api/v1/feedbackers', (req, res) => {
+  res.json(feedbackers);
 });
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
