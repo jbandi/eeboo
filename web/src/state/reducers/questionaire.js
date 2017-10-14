@@ -43,22 +43,22 @@ const defaultState = {
         {
           lan: 'de',
           role: 1,
-          content: 'Frage 1 für Teamleiter zu Konfliktmanagement',
+          content: 'Frage 2 für Teamleiter zu Konfliktmanagement',
         },
         {
           lan: 'en',
           role: 1,
-          content: 'question 1 for teamleader, conflict management',
+          content: 'question 2 for teamleader, conflict management',
         },
         {
           lan: 'de',
           role: 2,
-          content: 'Frage 1 für Kollegen zu Konfliktmanagement',
+          content: 'Frage 2 für Kollegen zu Konfliktmanagement',
         },
         {
           lan: 'en',
           role: 2,
-          content: 'question 1 for colleagues, conflict management',
+          content: 'question 2 for colleagues, conflict management',
         },
       ],
     },
@@ -70,22 +70,22 @@ const defaultState = {
         {
           lan: 'de',
           role: 1,
-          content: 'Frage 1 für Kunden zu Kommunikation',
+          content: 'Frage 3 für teamleaders zu Kommunikation',
         },
         {
           lan: 'en',
           role: 1,
-          content: 'question 1 for teamleader, conflict management',
+          content: 'question 3 for teamleaders, communication',
         },
         {
           lan: 'de',
           role: 2,
-          content: 'Frage 1 für Kollegen zu Konfliktmanagement',
+          content: 'Frage 3 für Kollegen zu Kommunikation',
         },
         {
           lan: 'en',
           role: 2,
-          content: 'question 1 for colleagues, conflict management',
+          content: 'question 3 for colleagues, communication',
         },
       ],
     },
