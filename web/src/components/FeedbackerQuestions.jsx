@@ -7,7 +7,7 @@ const FeedbackerQuestions = props => (
     {props.questions.map(question =>
       (
         <div key={question.id}>
-          <b >{question.id}</b><br />
+          {question.contents[0].content}:&nbsp;score=
           <b>{question.scores}</b>
         </div>))
     }

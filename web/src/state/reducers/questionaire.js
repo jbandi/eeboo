@@ -1,5 +1,12 @@
+const questionaire = (state = defaultState, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
 const defaultState = {
-  allIds: ['question1', 'question2'],
+  allIds: ['question1', 'question2', 'question3'],
   byId: {
     question1: {
       id: 'question1',
@@ -55,14 +62,35 @@ const defaultState = {
         },
       ],
     },
+    question3: {
+      id: 'question3',
+      scores: 6,
+      context: 2,
+      contents: [
+        {
+          lan: 'de',
+          role: 1,
+          content: 'Frage 1 für Kunden zu Kommunikation',
+        },
+        {
+          lan: 'en',
+          role: 1,
+          content: 'question 1 for teamleader, conflict management',
+        },
+        {
+          lan: 'de',
+          role: 2,
+          content: 'Frage 1 für Kollegen zu Konfliktmanagement',
+        },
+        {
+          lan: 'en',
+          role: 2,
+          content: 'question 1 for colleagues, conflict management',
+        },
+      ],
+    },
   },
 };
 
-const questionaire = (state = defaultState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
 
 export default questionaire;
