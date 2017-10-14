@@ -16,9 +16,10 @@ export const getQuestionById = (state, questionId) => (
   idx(state, _ => _.byId[questionId]) || {}
 );
 
-export const getContextIds = state => (
-  state.allIds.map(id => idx(state, _ => _.byId[id].context) || -1)
-);
+export const getUniqueContextIds = (state) => {
+  const all = state.allIds.map(id => idx(state, _ => _.byId[id].context) || -1);
+  return [...new Set(all)]; // unique values only
+};
 
 export const getQuestionsByContextId = (state, contextId) => {
   const arr = Object.keys(state.byId).map(k => state.byId[k]);

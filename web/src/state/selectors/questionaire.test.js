@@ -1,7 +1,8 @@
 import {
   getQuestionaire,
   getQuestionIds,
-  getContextIds, getQuestionById,
+  getUniqueContextIds,
+  getQuestionById,
   getQuestionsByContextId,
 } from './questionaire';
 
@@ -24,17 +25,12 @@ describe('test selectors for questionairies', () => {
             role: 1,
             content: 'question 1 for teamleader, conflict management',
           },
-          {
-            lan: 'de',
-            role: 2,
-            content: 'Frage 1 für Kollegen zu Konfliktmanagement',
-          },
-          {
-            lan: 'en',
-            role: 2,
-            content: 'question 1 for colleagues, conflict management',
-          },
         ],
+      },
+      questison2: {
+        id: 'questison2',
+        scores: 5,
+        context: 1,
       },
     },
   };
@@ -56,9 +52,9 @@ describe('test selectors for questionairies', () => {
     expect(getQuestionIds(state)[0]).toEqual('question1');
   });
 
-  it('should return a list of all context ids', () => {
-    expect(getContextIds(state).length).toEqual(1);
-    expect(getContextIds(state)[0]).toEqual(1);
+  it('should return a list of all unique context ids', () => {
+    expect(getUniqueContextIds(state).length).toEqual(1);
+    expect(getUniqueContextIds(state)[0]).toEqual(1);
   });
 
   it('should return a question by id', () => {
@@ -66,6 +62,6 @@ describe('test selectors for questionairies', () => {
   });
 
   it('should return an array of all contexts', () => {
-    expect(getQuestionsByContextId(state, 1).length).toEqual(1);
+    expect(getQuestionsByContextId(state, 1).length).toEqual(2);
   });
 });
