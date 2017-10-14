@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import templates from './templates';
+import company from './company';
 
 const eeboo = combineReducers({
-  templates,
+  company,
 });
 
 export default eeboo;

@@ -1,15 +1,15 @@
 module.exports = {
-  setLocalStorage: function() {
+  setLocalStorage() {
     global.localStorage = {
-        getItem: function (key) {
-            return this[key] || null;
-        },
-        setItem: function (key, value) {
-            this[key] = value;
-        },
-        removeItem: function (key) {
-            delete this[key];
-        }
+      getItem(key) {
+        return this[key] || null;
+      },
+      setItem(key, value) {
+        this[key] = value;
+      },
+      removeItem(key) {
+        delete this[key];
+      },
     };
 
     const jwt = require('jsonwebtoken');

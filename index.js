@@ -75,6 +75,7 @@ app.get('/api/v1/feedbackers', (req, res) => {
   res.json(feedbackers);
 });
 
+
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
 app.get('/api/private', checkJwt, function(req, res) {
   res.json({
