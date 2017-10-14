@@ -2,8 +2,6 @@ import deepFreeze from 'deep-freeze';
 import feedbacker from './feedbacker';
 
 import {
-  REQUEST_FEEDBACKER,
-  RECEIVE_FEEDBACKER,
   UPDATE_ANSWER,
 } from '../actions/feedbacker';
 
@@ -16,6 +14,7 @@ describe('feedbacker reducer', () => {
         mail: 'mathu at example.com',
         role: 1,
         questionaire: '8as8-1s57-1uus-9s73',
+        lastUpdated: '10',
         answers: {
           xy: { score: 3 },
         },
@@ -25,6 +24,7 @@ describe('feedbacker reducer', () => {
         mail: 'email address',
         role: 1,
         questionaire: '8as8-1s57-1uus-9s73',
+        lastUpdated: '10',
         answers: {
           xy: { score: 3 },
           cd: { score: 3 },
@@ -39,7 +39,8 @@ describe('feedbacker reducer', () => {
     const changedState = feedbacker(state, {
       type: UPDATE_ANSWER,
       id: '1',
-      question_id: 'ab',
+      questionId: 'ab',
+      lastUpdated: '10',
       score: 4,
     });
     expect(changedState[1].answers.xy.score).toBe(3);
@@ -50,7 +51,8 @@ describe('feedbacker reducer', () => {
     const changedState = feedbacker(state, {
       type: UPDATE_ANSWER,
       id: '2',
-      question_id: 'cd',
+      questionId: 'cd',
+      lastUpdated: '10',
       score: 4,
     });
     expect(changedState[2].answers.xy.score).toBe(3);

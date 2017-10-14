@@ -5,31 +5,23 @@ import {
 } from '../actions/feedbacker';
 
 const defaultState = {
-  byId: ['sie8-19sk-119s-679b', 'aaaa-bbbb-cccc-dddd'],
+  byId: ['1', '2'],
   byHash: {
-    'sie8-19sk-119s-679b': {
-      id: 'sie8-19sk-119s-679b',
+    1: {
+      id: '1',
       mail: 'mathu at example.com',
       role: 1,
       questionaire: '8as8-1s57-1uus-9s73',
-      answers: [
-        {
-          question_id: 'xy',
-          score: 3,
-        },
-      ],
+      lastUpdated: '0',
+      answers: { xy: { score: 3 } },
     },
-    'aaaa-bbbb-cccc-dddd': {
-      id: 'aaaa-bbbb-cccc-dddd',
+    2: {
+      id: '2',
       mail: 'max at muster.com',
       role: 2,
       questionaire: '8as8-1s57-1uus-9s73',
-      answers: [
-        {
-          question_id: 'xy',
-          score: 4,
-        },
-      ],
+      lastUpdated: '0',
+      answers: { xy: { score: 4 } },
     },
   },
 };
@@ -54,7 +46,7 @@ const feedbacker = (state = defaultState, action) => {
           ...state.byHash[action.id],
           answers: {
             ...state.byHash[action.id].answers,
-            [action.question_id]: { score: action.score },
+            [action.questionId]: { score: action.score },
           },
         },
       };

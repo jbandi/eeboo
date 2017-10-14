@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Grid, Button } from 'react-bootstrap';
+import FeedbackerQuestions from '../containers/FeedbackerQuestions';
 
 const Home = props => (
   <Grid className="home-content">
@@ -9,6 +10,10 @@ const Home = props => (
       <Col xs={6} md={8}>
         <Button bsStyle="primary" onClick={props.onClick}>Get Company Data</Button>
       </Col>
+      <Col xsHidden md={2} />
+    </Row>
+    <Row>
+      <Col xs={6} md={2} />
       <Col xs={6} md={8}>
         {props.company.id} <br />
         {props.company.name} <br />
@@ -16,7 +21,12 @@ const Home = props => (
         {props.company.color} <br />
         {props.company.lastUpdated} <br />
       </Col>
-      <Col xsHidden md={2} />
+      <Col xs={6} md={2} />
+    </Row>
+    <Row>
+      { props.contextIds.map(el =>
+        <FeedbackerQuestions key={el} contextId={el} />)
+      }
     </Row>
   </Grid>
 );
@@ -30,6 +40,7 @@ Home.propTypes = {
     lastUpdated: PropTypes.number,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
+  contextIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default Home;
