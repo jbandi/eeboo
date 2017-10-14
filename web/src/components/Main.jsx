@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Home from './Home';
+import Home from './../containers/Home';
 import About from './About';
 import Admin from './Admin';
 import Callback from './../Callback/Callback';

@@ -3,6 +3,8 @@ const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
+const dateFormat = require('dateformat');
+
 const path = require('path');
 
 // authentication middleware
@@ -24,6 +26,13 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
+var logger = function(req, res, next) {
+    const { method, url } = req;
+    console.log(dateFormat(new Date(), "isoDateTime"), method, url);
+    next(); // Passing the request to the next handler in the stack.
+}
+app.use(logger);
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'web/build')));
 
@@ -39,14 +48,13 @@ app.get('/api/users', (req, res) => {
 });
 
 const company = {
-  company: {
-    id: 1,
+    id: 2,
     name: "skilsgarden",
     color: "#01DF74",
     mail: "ina at example.com",
-  }
 };
 app.get('/api/v1/company', (req, res) => {
+  console.log(company);
   res.json(company);
 });
 

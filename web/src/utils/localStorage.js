@@ -12,7 +12,7 @@ module.exports = {
       },
     };
 
-    const jwt = require('jsonwebtoken');
+    const jwt = require('jsonwebtoken'); // eslint-disable-line global-require
     const token = jwt.sign({ foo: 'bar', exp: Math.floor(Date.now() / 1000) + 3000 }, 'shhhhh');
     localStorage.setItem('id_token', token);
   },
