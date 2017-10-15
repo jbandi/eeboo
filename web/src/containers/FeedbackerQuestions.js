@@ -3,7 +3,7 @@ import FeedbackerQuestions from '../components/FeedbackerQuestions';
 import { getQuestionsByContextId } from '../state/selectors/questionaire';
 
 const mapStateToProps = (state, ownProps) => ({
-  questions: getQuestionsByContextId(state.questionaire, ownProps.contextId),
+  questions: getQuestionsByContextId(state, ownProps.contextId),
 });
 
 export default connect(mapStateToProps)(FeedbackerQuestions);

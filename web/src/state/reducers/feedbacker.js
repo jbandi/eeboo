@@ -4,29 +4,9 @@ import {
   UPDATE_ANSWER,
 } from '../actions/feedbacker';
 
-const defaultState = {
-  byId: ['1', '2'],
-  byHash: {
-    1: {
-      id: '1',
-      mail: 'mathu at example.com',
-      role: 1,
-      questionaire: '8as8-1s57-1uus-9s73',
-      lastUpdated: '0',
-      answers: { xy: { score: 3 } },
-    },
-    2: {
-      id: '2',
-      mail: 'max at muster.com',
-      role: 2,
-      questionaire: '8as8-1s57-1uus-9s73',
-      lastUpdated: '0',
-      answers: { xy: { score: 4 } },
-    },
-  },
-};
+import { defaultFeedbacker } from './defaultState';
 
-const feedbacker = (state = defaultState, action) => {
+const feedbacker = (state = defaultFeedbacker, action) => {
   switch (action.type) {
     case REQUEST_FEEDBACKER:
       return Object.assign({}, state, {

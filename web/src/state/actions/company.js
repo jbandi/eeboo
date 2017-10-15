@@ -19,7 +19,7 @@ export function receiveCompany(company) {
 }
 
 export function fetchCompany() {
-  return function d(dispatch) {
+  return (dispatch) => {
     dispatch(requestCompany());
     return fetch('api/v1/company')
       .then(

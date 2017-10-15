@@ -3,16 +3,9 @@ import {
   REQUEST_COMPANY,
 } from '../actions/company';
 
-const defaultState = {
-  idFechting: false,
-  id: 1,
-  name: 'eeboo',
-  color: '#01DF74',
-  mail: 'mathu at example.com',
-  lastUpdated: Date.now(),
-};
+import { defaultCompany } from './defaultState';
 
-const company = (state = defaultState, action) => {
+const company = (state = defaultCompany, action) => {
   switch (action.type) {
     case REQUEST_COMPANY:
       return Object.assign({}, state, {

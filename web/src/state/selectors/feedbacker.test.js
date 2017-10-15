@@ -2,32 +2,34 @@ import { getFeedbacker, getFeedbackerAnswers, getFeedbackerIds } from './feedbac
 
 describe('test selectors for feedbackers', () => {
   const state = {
-    byId: ['1', '2'],
-    byHash: {
-      1: {
-        id: '1',
-        mail: 'mathu at example.com',
-        role: 1,
-        questionaire: '8as8-1s57-1uus-9s73',
-        answers: {
-          xy: { score: 3 },
+    feedbacker: {
+      byId: ['1', '2'],
+      byHash: {
+        1: {
+          id: '1',
+          mail: 'mathu at example.com',
+          role: 1,
+          questionaire: '8as8-1s57-1uus-9s73',
+          answers: {
+            xy: { score: 3 },
+          },
         },
-      },
-      2: {
-        id: 2,
-        mail: 'email address',
-        role: 1,
-        questionaire: '8as8-1s57-1uus-9s73',
-        answers: {
-          xy: { score: 3 },
-          cd: { score: 4 },
+        2: {
+          id: 2,
+          mail: 'email address',
+          role: 1,
+          questionaire: '8as8-1s57-1uus-9s73',
+          answers: {
+            xy: { score: 3 },
+            cd: { score: 4 },
+          },
         },
       },
     },
   };
 
   it('it should return a specific feedbacker from state', () => {
-    expect(getFeedbacker(state, 2)).toEqual(state.byHash[2]);
+    expect(getFeedbacker(state, 2)).toEqual(state.feedbacker.byHash[2]);
   });
 
   it('should return an empty object if id is missing', () => {

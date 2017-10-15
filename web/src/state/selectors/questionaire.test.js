@@ -8,35 +8,37 @@ import {
 
 describe('test selectors for questionairies', () => {
   const state = {
-    allIds: ['question1'],
-    byId: {
-      question1: {
-        id: 'question1',
-        scores: 5,
-        context: 1,
-        contents: [
-          {
-            lan: 'de',
-            role: 1,
-            content: 'Frage 1 für Teamleiter zu Konfliktmanagement',
-          },
-          {
-            lan: 'en',
-            role: 1,
-            content: 'question 1 for teamleader, conflict management',
-          },
-        ],
-      },
-      questison2: {
-        id: 'questison2',
-        scores: 5,
-        context: 1,
+    questionaire: {
+      allIds: ['question1'],
+      byId: {
+        question1: {
+          id: 'question1',
+          scores: 5,
+          context: 1,
+          contents: [
+            {
+              lan: 'de',
+              role: 1,
+              content: 'Frage 1 für Teamleiter zu Konfliktmanagement',
+            },
+            {
+              lan: 'en',
+              role: 1,
+              content: 'question 1 for teamleader, conflict management',
+            },
+          ],
+        },
+        questison2: {
+          id: 'questison2',
+          scores: 5,
+          context: 1,
+        },
       },
     },
   };
 
   it('it should return a specific questionaire from state', () => {
-    expect(getQuestionaire(state, 'question1')).toEqual(state.byId.question1);
+    expect(getQuestionaire(state, 'question1')).toEqual(state.questionaire.byId.question1);
   });
 
   it('should return an empty object if id is missing', () => {

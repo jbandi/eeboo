@@ -5,7 +5,7 @@ import { getUniqueContextIds } from '../state/selectors/questionaire';
 
 const mapStateToProps = state => ({
   company: state.company,
-  contextIds: getUniqueContextIds(state.questionaire),
+  contextIds: getUniqueContextIds(state),
 });
 
 const mapDispatchToProps = dispatch => ({
