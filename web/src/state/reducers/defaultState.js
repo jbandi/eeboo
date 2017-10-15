@@ -94,6 +94,39 @@ export const defaultQuestionaire = {
   },
 };
 
+export const defaultContext = {
+  allIds: ['1', '2'],
+  byId: {
+    1: {
+      id: 1,
+      contents: [
+        {
+          lan: 'de',
+          content: 'Konfliktfähigkeit',
+        },
+        {
+          lan: 'en',
+          content: 'abilitity to manage conflicts',
+        },
+      ],
+    },
+    2: {
+      id: 2,
+      contents: [
+        {
+          lan: 'de',
+          content: 'Teamfähigkeit',
+        },
+        {
+          lan: 'en',
+          content: 'ability to work in team',
+        },
+      ],
+    },
+  },
+};
+
+
 export const defaultFeedbacker = {
   byId: ['1', '2'],
   byHash: {

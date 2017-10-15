@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel } from 'react-bootstrap';
 
 const FeedbackerQuestions = props => (
-  <Panel header={props.contextId}>
+  <Panel header={props.contextContent.content}>
     {props.questions.map(question =>
       (
         <div key={question.id}>
@@ -16,7 +16,10 @@ const FeedbackerQuestions = props => (
 
 FeedbackerQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  contextId: PropTypes.number.isRequired,
+  contextContent: PropTypes.shape({
+    lan: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
 };
 
 export default FeedbackerQuestions;

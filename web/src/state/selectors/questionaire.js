@@ -6,12 +6,14 @@ export const getQuestionaire = (state, id) => (
   idx(state, _ => _.questionaire.byId[id]) || {}
 );
 
-// get a list of all questionairies
+// get a list of all questionairy ids
 // return: array
 export const getQuestionIds = state => (
-  state.questionaire.allIds || []
+  idx(state, _ => _.questionaire.allIds) || []
 );
 
+// get a specific question by its id
+// return object
 export const getQuestionById = (state, questionId) => (
   idx(state, _ => _.questionaire.byId[questionId]) || {}
 );
