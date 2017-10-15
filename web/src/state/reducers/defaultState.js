@@ -72,22 +72,22 @@ export const defaultQuestionaire = {
         {
           lan: 'de',
           role: 1,
-          content: 'Frage 3 für teamleaders zu Kommunikation',
+          content: 'Frage 3 für teamleaders zu Teamfähigkeit',
         },
         {
           lan: 'en',
           role: 1,
-          content: 'question 3 for teamleaders, communication',
+          content: 'question 3 for teamleaders, work in teams',
         },
         {
           lan: 'de',
           role: 2,
-          content: 'Frage 3 für Kollegen zu Kommunikation',
+          content: 'Frage 3 für Kollegen zu Teamfähigkeit',
         },
         {
           lan: 'en',
           role: 2,
-          content: 'question 3 for colleagues, communication',
+          content: 'question 3 for colleagues, work in teams',
         },
       ],
     },
