@@ -58,7 +58,7 @@ const Main = () => (
         />
         <Route
           exact
-          path="/:id"
+          path="/feedbacker/:id"
           render={props => <Feedbacker auth={auth} {...props} />}
         />
         <Route
