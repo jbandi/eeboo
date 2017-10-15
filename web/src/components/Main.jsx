@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Home from './../containers/Home';
+import Home from './Home';
 import About from './About';
 import Admin from './Admin';
+import Feedbacker from './../containers/Feedbacker';
 import Callback from './../Callback/Callback';
 
 import Auth from './../services/Auth/Auth';
@@ -54,6 +55,11 @@ const Main = () => (
           exact
           path="/home"
           render={props => <Home auth={auth} {...props} />}
+        />
+        <Route
+          exact
+          path="/:id"
+          render={props => <Feedbacker auth={auth} {...props} />}
         />
         <Route
           path="/about"

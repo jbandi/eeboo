@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Home from '../components/Home';
+import Feedbacker from '../components/Feedbacker';
 import { fetchCompany } from '../state/actions/company';
 import { getUniqueContextIds } from '../state/selectors/questionaire';
 
@@ -14,4 +14,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedbacker);
