@@ -45,7 +45,7 @@ describe('test selectors for feedbackers', () => {
     expect(getFeedbacker(state, -1)).toEqual({});
   });
 
-  it('should return all answers of a specific feedbacker as array', () => {
+  it('should return all answers of a specific feedbacker', () => {
     expect(getFeedbackerAnswers(state, 2).xy.score).toEqual(3);
     expect(getFeedbackerAnswers(state, 2).cd.score).toEqual(4);
   });

@@ -5428,6 +5428,10 @@ react-scripts@^1.0.14:
   optionalDependencies:
     fsevents "1.1.2"
 
+react-style@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/react-style/-/react-style-0.5.5.tgz#b03bd5f58fce36fd78237fe60211063fac0b5596"
+
 react-tap-event-plugin@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-tap-event-plugin/-/react-tap-event-plugin-3.0.2.tgz#280371677b881c31376e0027a0b86d2c6de039ee"

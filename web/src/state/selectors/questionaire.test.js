@@ -4,12 +4,13 @@ import {
   getUniqueContextIds,
   getQuestionById,
   getQuestionsByContextId,
+  countAnswersByContextId,
 } from './questionaire';
 
 describe('test selectors for questionairies', () => {
   const state = {
     questionaire: {
-      allIds: ['question1'],
+      allIds: ['question1', 'question2', 'question3'],
       byId: {
         question1: {
           id: 'question1',
@@ -28,8 +29,13 @@ describe('test selectors for questionairies', () => {
             },
           ],
         },
-        questison2: {
-          id: 'questison2',
+        question2: {
+          id: 'question2',
+          scores: 5,
+          context: 1,
+        },
+        question3: {
+          id: 'question3',
           scores: 5,
           context: 1,
         },
@@ -50,7 +56,7 @@ describe('test selectors for questionairies', () => {
   });
 
   it('should return an array containing all questionaire ids', () => {
-    expect(getQuestionIds(state).length).toEqual(1);
+    expect(getQuestionIds(state).length).toEqual(3);
     expect(getQuestionIds(state)[0]).toEqual('question1');
   });
 
@@ -64,6 +70,13 @@ describe('test selectors for questionairies', () => {
   });
 
   it('should return an array of all contexts', () => {
-    expect(getQuestionsByContextId(state, 1).length).toEqual(2);
+    expect(getQuestionsByContextId(state, 1).length).toEqual(3);
+  });
+
+  it('should return a count of all answers for a specific context', () => {
+    expect(countAnswersByContextId(state, {
+      question2: { score: 3 },
+      question3: { score: 4 },
+    }, 1)).toEqual(2);
   });
 });

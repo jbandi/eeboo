@@ -6,14 +6,14 @@ export const getFeedbacker = (state, feedbackerId) => (
   idx(state, _ => _.feedbacker.byHash[feedbackerId]) || {}
 );
 
-// get a list of all feedbackers
-// return: array
+// get a list of all feedbacker ids
+// return array
 export const getFeedbackerIds = state => (
   idx(state, _ => _.feedbacker.byId) || []
 );
 
 // get all answers by feedbacker id
-// return array
+// return list of objects
 export const getFeedbackerAnswers = (state, feedbackerId) => {
   const { answers } = getFeedbacker(state, feedbackerId);
   return answers;

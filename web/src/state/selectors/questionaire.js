@@ -29,4 +29,13 @@ export const getQuestionsByContextId = (state, contextId) => {
   return arr.filter(e => e.context === contextId);
 };
 
+export const countAnswersByContextId = (state, answers, contextId) => {
+  const answerIds = Object.keys(answers);
+  const questionIds = getQuestionsByContextId(state, contextId).map(q => q.id);
+
+  return answerIds.filter(function def(e) {
+    return this.indexOf(e) >= 0;
+  }, questionIds).length;
+};
+
 export default getQuestionaire;

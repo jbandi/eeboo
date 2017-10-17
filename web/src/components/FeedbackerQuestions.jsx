@@ -17,7 +17,7 @@ const FeedbackerQuestions = props => (
           (
             <tr key={question.id}>
               <td align="center">{question.contents[0].content}</td>
-              <td align="align-right"><FeedbackerAnswer questionId={question.id} maxScore={5} /></td>
+              <td align="align-right"><FeedbackerAnswer questionId={question.id} maxScore={question.scores} /></td>
             </tr>
           ))
         }
