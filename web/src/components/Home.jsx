@@ -8,7 +8,7 @@ const Home = () => (
       <Col md={8}>
         <Jumbotron>
           <h1>270 Grad Analyse</h1>
-          <p>Hier entsteht ein 270-Grad Feedbackanalyse Tool im Rahmen einer Masterarbeit an
+          <p>Hier entsteht ein 270-Grad Feedbackanalyse Tool im Rahmen einer Masterarbeit
           im Bereich Softwareentwicklung der BFH Bern</p>
         </Jumbotron>
       </Col>
