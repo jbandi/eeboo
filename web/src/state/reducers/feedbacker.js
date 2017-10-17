@@ -20,13 +20,15 @@ const feedbacker = (state = defaultFeedbacker, action) => {
       });
     case UPDATE_ANSWER: {
       const newState = {
-        ...state.byId,
-        ...state.byHash,
-        [action.id]: {
-          ...state.byHash[action.id],
-          answers: {
-            ...state.byHash[action.id].answers,
-            [action.questionId]: { score: action.score },
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [action.id]: {
+            ...state.byHash[action.id],
+            answers: {
+              ...state.byHash[action.id].answers,
+              [action.questionId]: { score: action.score },
+            },
           },
         },
       };

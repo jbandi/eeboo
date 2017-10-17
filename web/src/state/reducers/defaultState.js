@@ -136,7 +136,7 @@ export const defaultFeedbacker = {
       role: 1,
       questionaire: '8as8-1s57-1uus-9s73',
       lastUpdated: '0',
-      answers: { xy: { score: 3 } },
+      answers: { question1: { score: 3 } },
     },
     2: {
       id: '2',
@@ -144,7 +144,7 @@ export const defaultFeedbacker = {
       role: 2,
       questionaire: '8as8-1s57-1uus-9s73',
       lastUpdated: '0',
-      answers: { xy: { score: 4 } },
+      answers: { question1: { score: 4 } },
     },
   },
 };

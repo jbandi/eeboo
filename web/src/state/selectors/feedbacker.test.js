@@ -1,4 +1,9 @@
-import { getFeedbacker, getFeedbackerAnswers, getFeedbackerIds } from './feedbacker';
+import {
+  getFeedbacker,
+  getFeedbackerAnswers,
+  getFeedbackerIds,
+  getFeedbackerAnswer,
+} from './feedbacker';
 
 describe('test selectors for feedbackers', () => {
   const state = {
@@ -48,5 +53,13 @@ describe('test selectors for feedbackers', () => {
   it('should return an array containing all feedbacker ids', () => {
     expect(getFeedbackerIds(state).length).toEqual(2);
     expect(getFeedbackerIds(state)[1]).toEqual('2');
+  });
+
+  it('should return the score of an answer for a specific question of a given feedbacker', () => {
+    expect(getFeedbackerAnswer(state, 2, 'cd')).toEqual(4);
+  });
+
+  it('should return -1 if no answer or no score was found', () => {
+    expect(getFeedbackerAnswer(state, 2, 'doesNotExist')).toEqual(-1);
   });
 });

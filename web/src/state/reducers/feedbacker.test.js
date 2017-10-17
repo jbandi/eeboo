@@ -43,8 +43,9 @@ describe('feedbacker reducer', () => {
       lastUpdated: '10',
       score: 4,
     });
-    expect(changedState[1].answers.xy.score).toBe(3);
-    expect(changedState[1].answers.ab.score).toBe(4);
+    expect(changedState.byHash[1].answers.xy.score).toBe(3);
+    expect(changedState.byHash[1].answers.ab.score).toBe(4);
+    expect(changedState.byId).toEqual(['1', '2']);
   });
 
   it('should update an existing answer of a specific feedbacker', () => {
@@ -55,7 +56,8 @@ describe('feedbacker reducer', () => {
       lastUpdated: '10',
       score: 4,
     });
-    expect(changedState[2].answers.xy.score).toBe(3);
-    expect(changedState[2].answers.cd.score).toBe(4);
+    expect(changedState.byHash[2].answers.xy.score).toBe(3);
+    expect(changedState.byHash[2].answers.cd.score).toBe(4);
+    expect(changedState.byId).toEqual(['1', '2']);
   });
 });
