@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
+import { getFeedbacker } from '../state/selectors/feedbacker';
 import Feedbacker from '../components/Feedbacker';
 import { getUniqueContextIds } from '../state/selectors/questionaire';
 
-const mapStateToProps = state => ({
-  company: state.company,
+const mapStateToProps = (state, ownProps) => ({
+  feedbacker: getFeedbacker(state, ownProps.feedbackerId),
   contextIds: getUniqueContextIds(state),
 });
 

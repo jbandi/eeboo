@@ -7,10 +7,11 @@ import PanelHeader from '../containers/PanelHeader';
 class Feedbacker extends Component {
   static propTypes = {
     contextIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+    feedbackerId: PropTypes.string,
   };
 
   static defaultProps = {
-    feedbackerId: '',
+    feedbackerId: 'default',
   }
 
   constructor() {
@@ -31,6 +32,7 @@ class Feedbacker extends Component {
   render() {
     return (
       <div>
+        {this.props.location.pathname}
         <Grid className="home-content">
           <Row>
             <Col xs={6} md={2} />
@@ -39,7 +41,7 @@ class Feedbacker extends Component {
                 <table>
                   <tbody>
                     <tr>
-                      <td ><div align="left">Rolle: &nbsp;</div></td>
+                      <td ><div align="left">Rolle:</div></td>
                       <td style={{ paddingLeft: '10px' }}>
                         <div align="left">
                           <DropdownButton title="bitte auswählen" id="bg-nested-dropdown">

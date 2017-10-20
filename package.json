@@ -1,22 +1,37 @@
 {
   "name": "analyzeyou",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd web && yarn --production=false && yarn run build"
+    "heroku-postbuild": "cd web && yarn --production=false && yarn run build",
+    "lint": "eslint --ext .js *.js",
+    "lint-fix": "eslint --ext .js --fix *.js"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "dateformat": "^3.0.2",
     "debug": "~2.6.3",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "express": "~4.15.2",
     "express-jwt": "^5.3.0",
     "express-jwt-authz": "^1.0.0",
+    "firebase": "^4.6.0",
+    "firebase-admin": "^5.4.2",
     "jade": "~1.11.0",
     "jwks-rsa": "^1.2.0",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-react": "^7.4.0"
   }
 }
