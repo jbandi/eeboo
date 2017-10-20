@@ -42,7 +42,6 @@ class AppState {
           });
         } else {
           // first initialization
-          console.log('empty');
           resolve({
             feedbackers: [],
           });
@@ -59,7 +58,6 @@ class AppState {
         const dbSnapshot = snapshot.val();
         if (dbSnapshot) {
           const fbFeedbackers = dbSnapshot || [];
-
           // map firebase json list to array
           const feedbackers = Object.keys(fbFeedbackers).map(k => fbFeedbackers[k]);
           resolve({
@@ -67,7 +65,6 @@ class AppState {
           });
         } else {
           // first initialization
-          console.log('empty');
           resolve({
             feedbackers: [],
           });
