@@ -4,6 +4,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "eslintConfig": {
+    "extends": [
+      ".eslintrc-node"
+    ]
+  },
   "private": true,
   "scripts": {
     "start": "node index.js",
