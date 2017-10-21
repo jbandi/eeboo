@@ -9,7 +9,7 @@ const dateFormat = require('dateformat');
 const path = require('path');
 
 // Setup firebase backend
-const appState = require('./app-state');
+const appState = require('./src/v1/app-state');
 
 // authentication middleware
 const checkJwt = jwt({
@@ -62,6 +62,7 @@ app.get('/api/v1/company', (req, res) => {
   res.json(company);
 });
 
+// TODO: remove this comment
 // const feedbackers = [
 //   {
 //     id: 'sie8-19sk-119s-679b',
