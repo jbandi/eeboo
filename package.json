@@ -11,13 +11,15 @@
   },
   "private": true,
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=dev node server.js",
+    "test": "NODE_ENV=test node server.js",
     "heroku-postbuild": "cd web && yarn --production=false && yarn run build",
-    "lint": "eslint --ext .js *.js",
-    "lint-fix": "eslint --ext .js --fix *.js"
+    "lint": "eslint --ext .js *.js controllers/ test/",
+    "lint-fix": "eslint --ext .js --fix *.js controllers/ test/"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
+    "config": "^1.27.0",
     "cookie-parser": "~1.4.3",
     "dateformat": "^3.0.2",
     "debug": "~2.6.3",
@@ -34,9 +36,15 @@
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.9.0",
+    "eslint-plugin-chai": "^0.0.1",
+    "eslint-plugin-chai-expect": "^1.1.1",
     "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^4.0.1"
   }
 }

@@ -3,13 +3,16 @@ const express = require('express');
 const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+const bodyParser = require('body-parser');
 
 const dateFormat = require('dateformat');
 
 const path = require('path');
+const feedbacker = require('./controllers/routes/feedbacker');
+const company = require('./controllers/routes/company');
 
 // Setup firebase backend
-const appState = require('./src/v1/app-state');
+// const appState = require('./controllers/models/v1/app-state.js');
 
 // authentication middleware
 const checkJwt = jwt({
@@ -30,6 +33,12 @@ const checkJwt = jwt({
   algorithms: ['RS256'],
 });
 
+// parse application/json and look for raw text
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: 'application/json' }));
+
 const logger = (req, res, next) => {
   const { method, url } = req;
   console.log(dateFormat(new Date(), 'isoDateTime'), method, url);
@@ -38,29 +47,10 @@ const logger = (req, res, next) => {
 app.use(logger);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'web/build')));
+// app.use(express.static(path.join(__dirname, 'web/build')));
 
-// Put all API endpoints under '/api'
-app.get('/api/users', (req, res) => {
-  res.json([{
-    id: 1,
-    username: 'iam',
-  }, {
-    id: 2,
-    username: 'seeyousoon',
-  }]);
-});
-
-const company = {
-  id: 2,
-  name: 'skilsgarden',
-  color: '#01DF74',
-  mail: 'ina at example.com',
-};
-app.get('/api/v1/company', (req, res) => {
-  console.log(company);
-  res.json(company);
-});
+app.route('/api/v1/company')
+  .get(company.getCompany);
 
 // TODO: remove this comment
 // const feedbackers = [
@@ -84,17 +74,11 @@ app.get('/api/v1/company', (req, res) => {
 //     }],
 //   },
 // ];
-app.get('/api/v1/feedbackers', (req, res) => {
-  appState.getFeedbackers().then((data) => {
-    res.json(data.feedbackers);
-  });
-});
+app.route('/api/v1/feedbackers')
+  .get(feedbacker.getFeedbackers);
 
-app.get('/api/v1/feedbackers/:id', (req, res) => {
-  appState.getFeedbacker(req.params.id).then((data) => {
-    res.json(data.feedbacker);
-  });
-});
+app.route('/api/v1/feedbackers/:id')
+  .get(feedbacker.getFeedbacker);
 
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
@@ -106,7 +90,7 @@ app.get('/api/private', checkJwt, (req, res) => {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(`${__dirname}/web/build/index.html`));
   console.log('sending: ', path.join(`${__dirname}/web/build/index.html`));
 });

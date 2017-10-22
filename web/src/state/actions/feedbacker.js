@@ -11,3 +11,31 @@ export function updateAnswer(answer) {
     score: answer.score,
   };
 }
+
+function requestFeedbacker() {
+  return {
+    type: REQUEST_FEEDBACKER,
+  };
+}
+
+function receiveFeedbacker(json) {
+  return {
+    type: RECEIVE_FEEDBACKER,
+    feedbacker: json.data,
+    receivedAt: Date.now(),
+  };
+}
+
+export function fetchFeedbacker(id) {
+  return (dispatch) => {
+    dispatch(requestFeedbacker());
+    return fetch(`api/vi/feedbacker/${id}`)
+      .then(
+        response => response.json(),
+        error => console.log('An error occured.', error),
+      )
+      .then(json =>
+        dispatch(receiveFeedbacker(json)),
+      );
+  };
+}

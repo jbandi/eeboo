@@ -1,17 +1,20 @@
 const admin = require('firebase-admin');
+const config = require('config');
+
+const serviceAccount = require(`./${config.firebaseToken}`); // eslint-disable-line import/no-dynamic-require
 
 let db;
 
 class AppState {
   constructor() {
     // set firebase reference variables
-    this.fbRootRef = 'eeboo-skillsgarden-001';
+    this.fbRootRef = config.FirebaseDb;
     this.fbFeedbackerRef = 'feedbackers/';
 
     // Setup firebase for persistent storage
     admin.initializeApp({
-      credential: admin.credential.cert('./conf/eeboo-skillsgarden-7d4f7ef51c72.json'),
-      databaseURL: 'https://eeboo-skillsgarden-001.firebaseio.com',
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: config.firebaseUrl,
     });
 
     db = admin.database();
