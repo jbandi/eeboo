@@ -4,11 +4,11 @@ process.env.NODE_ENV = 'test';
 const appState = require('../controllers/models/v1/app-state');
 
 // Require the dev-dependencies
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const chai = require('chai'); // eslint-disable-line node/no-unpublished-require
+const chaiHttp = require('chai-http'); // eslint-disable-line node/no-unpublished-require
 const server = require('../server');
 
-const should = chai.should();
+const should = chai.should(); // eslint-disable-line no-unused-vars
 
 chai.use(chaiHttp);
 // Our parent block
