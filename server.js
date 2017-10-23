@@ -75,10 +75,13 @@ app.route('/api/v1/company')
 //   },
 // ];
 app.route('/api/v1/feedbackers')
-  .get(feedbacker.getFeedbackers);
+  .get(feedbacker.getFeedbackers)
+  .delete(feedbacker.deleteFeedbackers)
+  .post(feedbacker.addFeedbacker);
 
 app.route('/api/v1/feedbackers/:id')
-  .get(feedbacker.getFeedbacker);
+  .get(feedbacker.getFeedbacker)
+  .delete(feedbacker.deleteFeedbacker);
 
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
@@ -96,6 +99,8 @@ app.get('/', (req, res) => {
 });
 
 const port = process.env.PORT || 3001;
-app.listen(port);
+const server = app.listen(port);
+
+module.exports = server;
 
 console.log(`eeboo server listening on ${port}`);

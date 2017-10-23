@@ -6,10 +6,40 @@ function getFeedbackers(req, res) {
   });
 }
 
+function addFeedbacker(req, res) {
+  appState.addFeedbacker(req.body).then((m) => {
+    res.json({ message: m.message });
+  }).catch((e) => {
+    res.json({ message: e.message });
+  });
+}
+
+function deleteFeedbacker(req, res) {
+  appState.deleteFeedbacker(req.params.id).then(() => {
+    res.json({ message: `Feedbacker ${req.params.id} successfully deleted!` });
+  }).catch(() => {
+    res.json({ message: `Could not delete Feedbacker with id ${req.params.id}!` });
+  });
+}
+
+function deleteFeedbackers(req, res) {
+  appState.deleteFeedbackers().then(() => {
+    res.json({ message: 'All Feedbackers successfully deleted!' });
+  }).catch(() => {
+    res.json({ message: 'Could not delete all Feedbackers!' });
+  });
+}
+
 function getFeedbacker(req, res) {
   appState.getFeedbacker(req.params.id).then((data) => {
     res.json(data.feedbacker);
   });
 }
 
-module.exports = { getFeedbackers, getFeedbacker };
+module.exports = {
+  getFeedbackers,
+  addFeedbacker,
+  getFeedbacker,
+  deleteFeedbacker,
+  deleteFeedbackers,
+};

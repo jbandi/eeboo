@@ -53,6 +53,33 @@ class AppState {
     }));
   }
 
+  addFeedbacker(data) {
+    return new Promise(((resolve, reject) => {
+      if (data.id) {
+        const dbReference = db.ref(`${this.fbFeedbackerRef}${data.id}`);
+        dbReference.set(data).then(() => {
+          resolve({
+            message: `Feedbacker with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Feedbacker with id ${data.id}`));
+        });
+      } else {
+        reject(new Error('Could not add Feedbacker with missing id'));
+      }
+    }));
+  }
+
+  deleteFeedbacker(id) {
+    const dbReference = db.ref(`${this.fbFeedbackerRef}${id}`);
+    return dbReference.set(null);
+  }
+
+  deleteFeedbackers() {
+    const dbReference = db.ref(`${this.fbFeedbackerRef}`);
+    return dbReference.set(null);
+  }
+
   getFeedbackers() {
     return new Promise(((resolve) => {
       const dbReference = db.ref(this.fbFeedbackerRef);
