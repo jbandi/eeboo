@@ -98,7 +98,7 @@ app.get('*', (req, res) => {
   console.log('sending: ', path.join(`${__dirname}/web/build/index.html`));
 });
 
-app.use('/test-coverage', express.static('coverage'));
+// app.use('/test-coverage', express.static('coverage'));
 
 const port = process.env.PORT || 3001;
 const server = app.listen(port);
