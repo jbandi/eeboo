@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from './Home';
 import About from './About';
 import Admin from './Admin';
-import Feedbacker from './../containers/Feedbacker';
+import FeedbackerWithId from './../containers/Feedbacker';
 import Callback from './../Callback/Callback';
 
 import Auth from './../services/Auth/Auth';
@@ -41,6 +41,16 @@ PrivateRoute.propTypes = {
   location: PropTypes.shape({}).isRequired,
 };
 
+const Feedbacker = ({ component: Component, ...rest }) => {
+  const id = rest.location.pathname.split('/')[rest.location.pathname.split('/').length - 1];
+  return <Component feedbackerId={id} {...rest} />;
+};
+
+Feedbacker.propTypes = {
+  component: PropTypes.func.isRequired,
+  location: PropTypes.shape({}).isRequired,
+};
+
 const Main = () => (
   <div>
     <Header auth={auth} />
@@ -59,7 +69,7 @@ const Main = () => (
         <Route
           exact
           path="/feedbacker/:id"
-          render={props => <Feedbacker auth={auth} {...props} />}
+          render={props => <Feedbacker component={FeedbackerWithId} auth={auth} {...props} />}
         />
         <Route
           path="/about"

@@ -3,6 +3,8 @@ import feedbacker from './feedbacker';
 
 import {
   UPDATE_ANSWER,
+  REQUEST_FEEDBACKER,
+  RECEIVE_FEEDBACKER,
 } from '../actions/feedbacker';
 
 describe('feedbacker reducer', () => {
@@ -59,5 +61,28 @@ describe('feedbacker reducer', () => {
     expect(changedState.byHash[2].answers.xy.score).toBe(3);
     expect(changedState.byHash[2].answers.cd.score).toBe(4);
     expect(changedState.byId).toEqual(['1', '2']);
+  });
+
+  it('should request a new feedbacker', () => {
+    const changedState = feedbacker(state, {
+      type: REQUEST_FEEDBACKER,
+    });
+    expect(changedState.isFetchingFeedbacker).toBe(true);
+  });
+
+  it('should receive a new feedbacker', () => {
+    const changedState = feedbacker(state, {
+      type: RECEIVE_FEEDBACKER,
+      feedbacker: {
+        id: '3',
+        mail: 'mathu at example.com',
+        role: 3,
+        questionaire: '8as8-1s57-1uus-9s73',
+        lastUpdated: '0',
+        answers: { question1: { score: 5 } },
+      },
+    });
+    expect(changedState.byHash[3].answers.question1.score).toBe(5);
+    expect(changedState.byId.length).toBe(3);
   });
 });

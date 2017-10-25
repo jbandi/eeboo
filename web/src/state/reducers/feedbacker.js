@@ -4,20 +4,27 @@ import {
   UPDATE_ANSWER,
 } from '../actions/feedbacker';
 
-import { defaultFeedbacker } from './defaultState';
+// import { defaultFeedbacker } from './defaultState';
 
-const feedbacker = (state = defaultFeedbacker, action) => {
+const feedbacker = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_FEEDBACKER:
       return Object.assign({}, state, {
         isFetchingFeedbacker: true,
       });
     case RECEIVE_FEEDBACKER:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetchingFeedbacker: false,
-        lastUpdated: action.receivedAt,
-        feedbacker: action.feedbacker,
-      });
+        byId: [
+          ...state.byId || [],
+          action.feedbacker.id,
+        ],
+        byHash: {
+          ...state.byHash,
+          [action.feedbacker.id]: action.feedbacker,
+        },
+      };
     case UPDATE_ANSWER: {
       const newState = {
         ...state,

@@ -5,7 +5,6 @@ export const UPDATE_ANSWER = 'UPDATE_ANSWER';
 export function updateAnswer(answer) {
   return {
     type: UPDATE_ANSWER,
-    lastUpdated: Date.now(),
     id: answer.id,
     questionId: answer.questionId,
     score: answer.score,
@@ -18,18 +17,17 @@ function requestFeedbacker() {
   };
 }
 
-function receiveFeedbacker(json) {
+function receiveFeedbacker(feedbacker) {
   return {
     type: RECEIVE_FEEDBACKER,
-    feedbacker: json.data,
-    receivedAt: Date.now(),
+    feedbacker,
   };
 }
 
 export function fetchFeedbacker(id) {
   return (dispatch) => {
     dispatch(requestFeedbacker());
-    return fetch(`api/vi/feedbacker/${id}`)
+    return fetch(`api/v1/feedbackers/${id}`)
       .then(
         response => response.json(),
         error => console.log('An error occured.', error),

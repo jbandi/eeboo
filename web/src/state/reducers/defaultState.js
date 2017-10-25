@@ -128,7 +128,7 @@ export const defaultContext = {
 
 
 export const defaultFeedbacker = {
-  byId: ['1', '2'],
+  byId: [1, 2],
   byHash: {
     1: {
       id: '1',

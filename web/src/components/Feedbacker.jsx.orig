@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Grid, Panel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Row, Col, Grid, PanelGroup, Panel, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import FeedbackerQuestions from '../containers/FeedbackerQuestions';
 import PanelHeader from '../containers/PanelHeader';
 import { fetchFeedbacker } from '../state/actions/feedbacker';
 
 class Feedbacker extends Component {
   static propTypes = {
+    contextIds: PropTypes.arrayOf(PropTypes.number).isRequired,
+    feedbackerId: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
-    feedbacker: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      mail: PropTypes.string,
-      role: PropTypes.number,
-      answers: PropTypes.shape({}),
-      questionaire: PropTypes.string,
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
   };
 
   static defaultProps = {
@@ -33,8 +25,9 @@ class Feedbacker extends Component {
 
   componentWillMount() {
     const pathArray = this.props.location.pathname;
-    const id = pathArray[pathArray.length - 1];
+    const id = pathArray[pathArray.length-1];
     this.props.dispatch(fetchFeedbacker(id));
+    console.log(id);
   }
 
   handleSelect = (activeKey) => {
@@ -47,7 +40,7 @@ class Feedbacker extends Component {
 
   render() {
     return (
-      (this.props.feedbacker && this.props.feedbacker.id !== 'default')
+      (this.props.feedbackerId !== 'default')
         ? <div>
           <Grid className="home-content">
             <Row>
@@ -70,15 +63,11 @@ class Feedbacker extends Component {
                       </tr>
                       <tr>
                         <td><div align="left">Feedbacknehmer: &nbsp;</div></td>
-                        <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.name}</div></td>
+                        <td style={{ paddingLeft: '10px' }}><div align="left">Mathias Herzog</div></td>
                       </tr>
                       <tr>
-                        <td><div align="left">Mail:</div></td>
-                        <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.mail}</div></td>
-                      </tr>
-                      <tr>
-                        <td><div align="left">Fragebogen</div></td>
-                        <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.questionaire}</div></td>
+                        <td><div align="left">Laufzeit:</div></td>
+                        <td style={{ paddingLeft: '10px' }}><div align="left">31. Oktober 2017</div></td>
                       </tr>
                     </tbody>
                   </table>
@@ -87,6 +76,27 @@ class Feedbacker extends Component {
               <Col xsHidden md={2} />
             </Row>
             <hr />
+            <Row>
+              <Col md={2} />
+              <Col md={8}>
+                <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
+                  { this.props.contextIds.map(contextId => (
+                    <Panel
+                      key={contextId}
+                      collapsible
+                      header={this.header(contextId)}
+                      eventKey={contextId}
+                    >
+                      <FeedbackerQuestions contextId={contextId} />
+                    </Panel>))
+                  }
+                </PanelGroup>
+              </Col>
+              <Col md={2} />
+            </Row>
+            <Col md={10}>
+              <div align="right"><Button>Absenden</Button></div>
+            </Col>
             <Col md={2} />
           </Grid>
         </div>
