@@ -33,7 +33,7 @@ describe('Feedbackers', () => {
   * Test the /GET route
   */
   describe('/GET feedbackers', () => {
-    it('it should GET all the feedbackers', (done) => {
+    it('it should GET empty array if no feedbackers found', (done) => {
       chai.request(server)
         .get('/api/v1/feedbackers')
         .end((err, res) => {
@@ -73,9 +73,26 @@ describe('Feedbackers', () => {
         });
     });
   });
+  /*
+  * Test the /GET route with content
+  */
+  describe('/GET feedbackers', () => {
+    it('it should GET all the feedbackers', (done) => {
+      appState.addFeedbacker(feedbacker1).then(() => {
+        chai.request(server)
+          .get('/api/v1/feedbackers')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('array');
+            res.body.length.should.be.eql(1);
+            done();
+          });
+      });
+    });
+  });
   // TEST the /GET/:id route
   describe('/GET/:id feedbacker', () => {
-    it('it should GET a book by the given id', (done) => {
+    it('it should GET a feedbacker by the given id', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
         chai.request(server)
           .get(`/api/v1/feedbackers/${feedbacker1.id}`)

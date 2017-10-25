@@ -9,6 +9,7 @@ const dateFormat = require('dateformat');
 
 const path = require('path');
 const feedbacker = require('./controllers/routes/feedbacker');
+const questionaire = require('./controllers/routes/questionaire');
 const company = require('./controllers/routes/company');
 
 // Setup firebase backend
@@ -82,6 +83,15 @@ app.route('/api/v1/feedbackers')
 app.route('/api/v1/feedbackers/:id')
   .get(feedbacker.getFeedbacker)
   .delete(feedbacker.deleteFeedbacker);
+
+app.route('/api/v1/questionaires/')
+  .get(questionaire.getQuestionaires)
+  .delete(questionaire.deleteQuestionaires)
+  .post(questionaire.addQuestionaire);
+
+app.route('/api/v1/questionaires/:id')
+  .get(questionaire.getQuestionaire)
+  .delete(questionaire.deleteQuestionaire);
 
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);

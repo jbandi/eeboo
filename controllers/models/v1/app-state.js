@@ -10,6 +10,7 @@ class AppState {
     // set firebase reference variables
     this.fbRootRef = config.FirebaseDb;
     this.fbFeedbackerRef = 'feedbackers/';
+    this.fbQuestionaireRef = 'questionaires/';
 
     // Setup firebase for persistent storage
     admin.initializeApp({
@@ -26,10 +27,6 @@ class AppState {
     //   console.log('Done loading feedbackers. Server is now ready to use.');
     //   console.log(this.feedbackers);
     // });
-
-    this.getFeedbacker(1).then((data) => {
-      console.log('feedbacker-1:', data.feedbacker);
-    });
   }
 
   getFeedbacker(id) {
@@ -46,7 +43,7 @@ class AppState {
         } else {
           // first initialization
           resolve({
-            feedbackers: [],
+            feedbacker: {},
           });
         }
       });
@@ -101,6 +98,77 @@ class AppState {
         }
       });
     }));
+  }
+
+  getQuestionaires() {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(this.fbQuestionaireRef);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const fbQuestionaires = dbSnapshot || [];
+          // map firebase json list to array
+          const questionaires = Object.keys(fbQuestionaires);
+          resolve({
+            questionaires,
+          });
+        } else {
+          // first initialization
+          resolve({
+            questionaires: [],
+          });
+        }
+      });
+    }));
+  }
+
+  getQuestionaire(id) {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(`${this.fbQuestionaireRef}${id}`);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const questionaire = dbSnapshot || [];
+          resolve({
+            questionaire,
+          });
+        } else {
+          // first initialization
+          resolve({
+            questionaire: {},
+          });
+        }
+      });
+    }));
+  }
+
+  addQuestionaire(data) {
+    return new Promise(((resolve, reject) => {
+      if (data.id) {
+        const dbReference = db.ref(`${this.fbQuestionaireRef}${data.id}`);
+        dbReference.set(data).then(() => {
+          resolve({
+            message: `Questionaire with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Questionaire with id ${data.id}`));
+        });
+      } else {
+        reject(new Error('Could not add Questionaire with missing id'));
+      }
+    }));
+  }
+
+  deleteQuestionaires() {
+    const dbReference = db.ref(`${this.fbQuestionaireRef}`);
+    return dbReference.set(null);
+  }
+
+  deleteQuestionaire(id) {
+    const dbReference = db.ref(`${this.fbQuestionaireRef}${id}`);
+    return dbReference.set(null);
   }
 }
 
