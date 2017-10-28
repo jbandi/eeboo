@@ -10,6 +10,7 @@ const dateFormat = require('dateformat');
 const path = require('path');
 const feedbacker = require('./controllers/routes/feedbacker');
 const questionaire = require('./controllers/routes/questionaire');
+const client = require('./controllers/routes/client');
 const company = require('./controllers/routes/company');
 
 // Setup firebase backend
@@ -88,6 +89,15 @@ app.route('/api/v1/questionaires/')
   .get(questionaire.getQuestionaires)
   .delete(questionaire.deleteQuestionaires)
   .post(questionaire.addQuestionaire);
+
+app.route('/api/v1/clients')
+  .get(client.getClients)
+  .delete(client.deleteClients)
+  .post(client.addClient);
+
+app.route('/api/v1/clients/:id')
+  .get(client.getClient)
+  .delete(client.deleteClient);
 
 app.route('/api/v1/questionaires/:id')
   .get(questionaire.getQuestionaire)

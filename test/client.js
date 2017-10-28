@@ -12,30 +12,27 @@ const should = chai.should(); // eslint-disable-line no-unused-vars
 
 chai.use(chaiHttp);
 // Our parent block
-describe('Feedbackers', () => {
+describe('Clients', () => {
   beforeEach((done) => { // Before each test we empty the database
-    appState.deleteFeedbackers().then(() => {
+    appState.deleteClients().then(() => {
       done();
     });
   });
 
-  const feedbacker1 = {
+  const client1 = {
     id: '1',
     mail: 'mathu at example.com',
-    role: 1,
-    client: '1',
-    answers: {
-      xy: { score: 3 },
-    },
+    questionaire: '8as8-1s57-1uus-9s73',
+    feedbackers: [1, 2],
   };
 
   /*
   * Test the /GET route
   */
-  describe('/GET feedbackers', () => {
-    it('it should GET empty array if no feedbackers found', (done) => {
+  describe('/GET Clients', () => {
+    it('it should GET empty array if no clients found', (done) => {
       chai.request(server)
-        .get('/api/v1/feedbackers')
+        .get('/api/v1/clients')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
@@ -48,27 +45,27 @@ describe('Feedbackers', () => {
   /*
   * Test the /POST route
   */
-  describe('/POST feedbacker', () => {
-    it('it should not POST a Feedbacker without id field', (done) => {
-      const feedbacker = {};
+  describe('/POST Client', () => {
+    it('it should not POST a client without id field', (done) => {
+      const client = {};
       chai.request(server)
-        .post('/api/v1/feedbackers')
-        .send(feedbacker)
+        .post('/api/v1/clients')
+        .send(client)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Could not add Feedbacker with missing id');
+          res.body.should.have.property('message').eql('Could not add Client with missing id');
           done();
         });
     });
-    it('it should POST a Feedbacker with id field', (done) => {
+    it('it should POST a client with id field', (done) => {
       chai.request(server)
-        .post('/api/v1/feedbackers')
-        .send(feedbacker1)
+        .post('/api/v1/Clients')
+        .send(client1)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Feedbacker with id 1 added');
+          res.body.should.have.property('message').eql('Client with id 1 added');
           done();
         });
     });
@@ -76,11 +73,11 @@ describe('Feedbackers', () => {
   /*
   * Test the /GET route with content
   */
-  describe('/GET feedbackers', () => {
-    it('it should GET all the feedbackers', (done) => {
-      appState.addFeedbacker(feedbacker1).then(() => {
+  describe('/GET clients', () => {
+    it('it should GET all the Clients', (done) => {
+      appState.addClient(client1).then(() => {
         chai.request(server)
-          .get('/api/v1/feedbackers')
+          .get('/api/v1/clients')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('array');
@@ -91,35 +88,34 @@ describe('Feedbackers', () => {
     });
   });
   // TEST the /GET/:id route
-  describe('/GET/:id feedbacker', () => {
-    it('it should GET a feedbacker by the given id', (done) => {
-      appState.addFeedbacker(feedbacker1).then(() => {
+  describe('/GET/:id Client', () => {
+    it('it should GET a client by the given id', (done) => {
+      appState.addClient(client1).then(() => {
         chai.request(server)
-          .get(`/api/v1/feedbackers/${feedbacker1.id}`)
+          .get(`/api/v1/Clients/${client1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('id');
             res.body.should.have.property('mail');
-            res.body.should.have.property('answers');
-            res.body.answers.should.be.a('object');
-            res.body.answers.xy.should.be.a('object');
-            res.body.answers.xy.should.have.property('score').eql(feedbacker1.answers.xy.score);
+            res.body.should.have.property('feedbackers');
+            res.body.feedbackers.should.be.a('array');
+            res.body.feedbackers.length.should.be.eql(2);
             done();
           });
       });
     });
   });
   // TEST the /DELETE/:id route
-  describe('/DELETE/:id feedbacker', () => {
-    it('it should GET a book by the given id', (done) => {
-      appState.addFeedbacker(feedbacker1).then(() => {
+  describe('/DELETE/:id client', () => {
+    it('it should GET a client by the given id', (done) => {
+      appState.addClient(client1).then(() => {
         chai.request(server)
-          .delete(`/api/v1/feedbackers/${feedbacker1.id}`)
+          .delete(`/api/v1/clients/${client1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.have.property('message').eql(`Feedbacker ${feedbacker1.id} successfully deleted!`);
+            res.body.should.have.property('message').eql(`Client ${client1.id} successfully deleted!`);
             done();
           });
       });

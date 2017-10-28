@@ -11,6 +11,7 @@ class AppState {
     this.fbRootRef = config.FirebaseDb;
     this.fbFeedbackerRef = 'feedbackers/';
     this.fbQuestionaireRef = 'questionaires/';
+    this.fbClientRef = 'clients/';
 
     // Setup firebase for persistent storage
     admin.initializeApp({
@@ -169,6 +170,77 @@ class AppState {
   deleteQuestionaire(id) {
     const dbReference = db.ref(`${this.fbQuestionaireRef}${id}`);
     return dbReference.set(null);
+  }
+
+  getClient(id) {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(`${this.fbClientRef}${id}`);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const client = dbSnapshot || [];
+          resolve({
+            client,
+          });
+        } else {
+          // first initialization
+          resolve({
+            client: {},
+          });
+        }
+      });
+    }));
+  }
+
+  addClient(data) {
+    return new Promise(((resolve, reject) => {
+      if (data.id) {
+        const dbReference = db.ref(`${this.fbClientRef}${data.id}`);
+        dbReference.set(data).then(() => {
+          resolve({
+            message: `Client with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Client with id ${data.id}`));
+        });
+      } else {
+        reject(new Error('Could not add Client with missing id'));
+      }
+    }));
+  }
+
+  deleteClient(id) {
+    const dbReference = db.ref(`${this.fbClientRef}${id}`);
+    return dbReference.set(null);
+  }
+
+  deleteClients() {
+    const dbReference = db.ref(`${this.fbClientRef}`);
+    return dbReference.set(null);
+  }
+
+  getClients() {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(this.fbClientRef);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const fbClients = dbSnapshot || [];
+          // map firebase json list to array
+          const clients = Object.keys(fbClients);
+          resolve({
+            clients,
+          });
+        } else {
+          // first initialization
+          resolve({
+            clients: [],
+          });
+        }
+      });
+    }));
   }
 }
 
