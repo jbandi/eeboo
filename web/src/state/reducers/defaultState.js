@@ -126,6 +126,24 @@ export const defaultContext = {
   },
 };
 
+export const defaultClient = {
+  byId: [1, 2],
+  byHash: {
+    1: {
+      id: '1',
+      questionaire: '8as8-1s57-1uus-9s73',
+      mail: 'client1.example.com',
+      feedbackers: [1, 2],
+    },
+    2: {
+      id: '2',
+      questionaire: '8as8-1s57-1uus-9s73',
+      mail: 'client2.example.com',
+      feedbackers: [3, 4],
+    },
+  },
+};
+
 
 export const defaultFeedbacker = {
   byId: [1, 2],
@@ -135,16 +153,21 @@ export const defaultFeedbacker = {
       mail: 'mathu at example.com',
       role: 1,
       questionaire: '8as8-1s57-1uus-9s73',
-      lastUpdated: '0',
-      answers: { question1: { score: 3 } },
+      lastUpdated: '10',
+      answers: {
+        xy: { score: 3 },
+      },
     },
     2: {
-      id: '2',
-      mail: 'max at muster.com',
-      role: 2,
+      id: 2,
+      mail: 'email address',
+      role: 1,
       questionaire: '8as8-1s57-1uus-9s73',
-      lastUpdated: '0',
-      answers: { question1: { score: 4 } },
+      lastUpdated: '10',
+      answers: {
+        xy: { score: 3 },
+        cd: { score: 3 },
+      },
     },
   },
 };
