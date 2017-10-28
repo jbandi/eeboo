@@ -15,10 +15,10 @@ function addFeedbacker(req, res) {
 }
 
 function deleteFeedbacker(req, res) {
-  appState.deleteFeedbacker(req.params.id).then(() => {
-    res.json({ message: `Feedbacker ${req.params.id} successfully deleted!` });
+  appState.deleteFeedbacker(req.params.feedbackerid).then(() => {
+    res.json({ message: `Feedbacker ${req.params.feedbackerid} successfully deleted!` });
   }).catch(() => {
-    res.json({ message: `Could not delete Feedbacker with id ${req.params.id}!` });
+    res.json({ message: `Could not delete Feedbacker with id ${req.params.feedbackerid}!` });
   });
 }
 
@@ -31,7 +31,7 @@ function deleteFeedbackers(req, res) {
 }
 
 function getFeedbacker(req, res) {
-  appState.getFeedbacker(req.params.id).then((data) => {
+  appState.getFeedbacker(req.params.feedbackerid).then((data) => {
     res.json(data.feedbacker);
   });
 }

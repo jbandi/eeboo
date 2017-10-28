@@ -131,7 +131,7 @@ describe('Questionaires', () => {
   describe('/GET questionaires', () => {
     it('it should GET all the questionaire ids', (done) => {
       chai.request(server)
-        .get('/api/v1/questionaires')
+        .get('/api/v1/procs/1/questionaires')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
@@ -147,7 +147,7 @@ describe('Questionaires', () => {
     it('it should not POST a questionaire without id field', (done) => {
       const qEmpty = {};
       chai.request(server)
-        .post('/api/v1/questionaires')
+        .post('/api/v1/procs/1/questionaires')
         .send(qEmpty)
         .end((err, res) => {
           res.should.have.status(200);
@@ -158,7 +158,7 @@ describe('Questionaires', () => {
     });
     it('it should POST a questionaire with id field', (done) => {
       chai.request(server)
-        .post('/api/v1/questionaires')
+        .post('/api/v1/procs/1/questionaires')
         .send(questionaire)
         .end((err, res) => {
           res.should.have.status(200);
@@ -173,7 +173,7 @@ describe('Questionaires', () => {
     it('it should GET a questionaire by the given id', (done) => {
       appState.addQuestionaire(questionaire).then(() => {
         chai.request(server)
-          .get(`/api/v1/questionaires/${questionaire.id}`)
+          .get(`/api/v1/procs/1/questionaires/${questionaire.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');

@@ -4,8 +4,8 @@ process.env.NODE_ENV = 'test';
 const appState = require('../controllers/models/v1/app-state');
 
 // Require the dev-dependencies
-const chai = require('chai'); // eslint-disable-line node/no-unpublished-require
-const chaiHttp = require('chai-http'); // eslint-disable-line node/no-unpublished-require
+const chai = require('chai'); // eslint-disable-line
+const chaiHttp = require('chai-http'); // eslint-disable-line
 const server = require('../server');
 
 const should = chai.should(); // eslint-disable-line no-unused-vars
@@ -112,7 +112,7 @@ describe('Feedbackers', () => {
   });
   // TEST the /DELETE/:id route
   describe('/DELETE/:id feedbacker', () => {
-    it('it should GET a book by the given id', (done) => {
+    it('it should GET a feedbacker by the given id', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
         chai.request(server)
           .delete(`/api/v1/feedbackers/${feedbacker1.id}`)

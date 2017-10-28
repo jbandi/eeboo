@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const dateFormat = require('dateformat');
 
 const path = require('path');
+const proc = require('./controllers/routes/process');
 const feedbacker = require('./controllers/routes/feedbacker');
 const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
@@ -76,32 +77,42 @@ app.route('/api/v1/company')
 //     }],
 //   },
 // ];
+
+app.route('/api/v1/procs')
+  .get(proc.getProcs)
+  .delete(proc.deleteProc)
+  .post(proc.addProc);
+
+app.route('/api/v1/procs/:procid')
+  .get(proc.getProc)
+  .delete(proc.deleteProc);
+
 app.route('/api/v1/feedbackers')
   .get(feedbacker.getFeedbackers)
   .delete(feedbacker.deleteFeedbackers)
   .post(feedbacker.addFeedbacker);
 
-app.route('/api/v1/feedbackers/:id')
+app.route('/api/v1/feedbackers/:feedbackerid')
   .get(feedbacker.getFeedbacker)
   .delete(feedbacker.deleteFeedbacker);
 
-app.route('/api/v1/questionaires/')
+app.route('/api/v1/procs/:procid/questionaires')
   .get(questionaire.getQuestionaires)
   .delete(questionaire.deleteQuestionaires)
   .post(questionaire.addQuestionaire);
 
-app.route('/api/v1/clients')
+app.route('/api/v1/procs/:procid/questionaires/:questionaireid')
+  .get(questionaire.getQuestionaire)
+  .delete(questionaire.deleteQuestionaire);
+
+app.route('/api/v1/procs/:procid/clients')
   .get(client.getClients)
   .delete(client.deleteClients)
   .post(client.addClient);
 
-app.route('/api/v1/clients/:id')
+app.route('/api/v1/procs/:procid/clients/:clientid')
   .get(client.getClient)
   .delete(client.deleteClient);
-
-app.route('/api/v1/questionaires/:id')
-  .get(questionaire.getQuestionaire)
-  .delete(questionaire.deleteQuestionaire);
 
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);

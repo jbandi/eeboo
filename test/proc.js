@@ -12,27 +12,32 @@ const should = chai.should(); // eslint-disable-line no-unused-vars
 
 chai.use(chaiHttp);
 // Our parent block
-describe('Clients', () => {
+describe('Procs', () => {
   beforeEach((done) => { // Before each test we empty the database
-    appState.deleteClients().then(() => {
+    appState.deleteProcs().then(() => {
       done();
     });
   });
 
-  const client1 = {
+  const proc1 = {
     id: '1',
-    mail: 'mathu at example.com',
-    questionaire: '8as8-1s57-1uus-9s73',
-    feedbackers: [1, 2],
+    clients: {
+      client1: { id: 'client1' },
+      client2: { id: 'client2' },
+    },
+    questionaires: {
+      questiooaire1: { id: 'questionaire1' },
+      questionaire2: { id: 'questionaire2' },
+    },
   };
 
   /*
   * Test the /GET route
   */
-  describe('/GET Clients', () => {
-    it('it should GET empty array if no clients found', (done) => {
+  describe('/GET Procs', () => {
+    it('it should GET empty array if no procs found', (done) => {
       chai.request(server)
-        .get('/api/v1/procs/1/clients')
+        .get('/api/v1/procs')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
@@ -45,27 +50,27 @@ describe('Clients', () => {
   /*
   * Test the /POST route
   */
-  describe('/POST Client', () => {
-    it('it should not POST a client without id field', (done) => {
-      const client = {};
+  describe('/POST Proc', () => {
+    it('it should not POST a proc without id field', (done) => {
+      const proc = {};
       chai.request(server)
-        .post('/api/v1/procs/1/clients')
-        .send(client)
+        .post('/api/v1/procs')
+        .send(proc)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Could not add Client with missing id');
+          res.body.should.have.property('message').eql('Could not add Process with missing id');
           done();
         });
     });
-    it('it should POST a client with id field', (done) => {
+    it('it should POST a proc with id field', (done) => {
       chai.request(server)
-        .post('/api/v1/procs/1/clients')
-        .send(client1)
+        .post('/api/v1/procs')
+        .send(proc1)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Client with id 1 added');
+          res.body.should.have.property('message').eql('Process with id 1 added');
           done();
         });
     });
@@ -73,11 +78,11 @@ describe('Clients', () => {
   /*
   * Test the /GET route with content
   */
-  describe('/GET clients', () => {
-    it('it should GET all the Clients', (done) => {
-      appState.addClient(client1).then(() => {
+  describe('/GET procs', () => {
+    it('it should GET all the Procs', (done) => {
+      appState.addProc(proc1).then(() => {
         chai.request(server)
-          .get('/api/v1/procs/1/clients')
+          .get('/api/v1/procs')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('array');
@@ -88,34 +93,33 @@ describe('Clients', () => {
     });
   });
   // TEST the /GET/:id route
-  describe('/GET/:id Client', () => {
-    it('it should GET a client by the given id', (done) => {
-      appState.addClient(client1).then(() => {
+  describe('/GET/:id Proc', () => {
+    it('it should GET a proc by the given id', (done) => {
+      appState.addProc(proc1).then(() => {
         chai.request(server)
-          .get(`/api/v1/procs/1/clients/${client1.id}`)
+          .get(`/api/v1/procs/${proc1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('id');
-            res.body.should.have.property('mail');
-            res.body.should.have.property('feedbackers');
-            res.body.feedbackers.should.be.a('array');
-            res.body.feedbackers.length.should.be.eql(2);
+            res.body.should.have.property('questionaires');
+            res.body.should.have.property('clients');
+            //res.body.clients.client1.should.have.property('id').eql('client1');
             done();
           });
       });
     });
   });
   // TEST the /DELETE/:id route
-  describe('/DELETE/:id client', () => {
-    it('it should GET a client by the given id', (done) => {
-      appState.addClient(client1).then(() => {
+  describe('/DELETE/:id proc', () => {
+    it('it should GET a proc by the given id', (done) => {
+      appState.addProc(proc1).then(() => {
         chai.request(server)
-          .delete(`/api/v1/procs/1/clients/${client1.id}`)
+          .delete(`/api/v1/procs/${proc1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.have.property('message').eql(`Client ${client1.id} successfully deleted!`);
+            res.body.should.have.property('message').eql(`Process ${proc1.id} successfully deleted!`);
             done();
           });
       });

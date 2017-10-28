@@ -9,6 +9,7 @@ class AppState {
   constructor() {
     // set firebase reference variables
     this.fbRootRef = config.FirebaseDb;
+    this.fbProcRef = 'procs/';
     this.fbFeedbackerRef = 'feedbackers/';
     this.fbQuestionaireRef = 'questionaires/';
     this.fbClientRef = 'clients/';
@@ -30,9 +31,33 @@ class AppState {
     // });
   }
 
+  feedbackerPathById(id) {
+    return `${this.fbFeedbackerRef}${id}`;
+  }
+
+  feedbackerPath() {
+    return `${this.fbFeedbackerRef}`;
+  }
+
+  clientPathById(procid, clientId) {
+    return `${this.fbProcRef}${procid}/${this.fbClientRef}${clientId}`;
+  }
+
+  clientPath(procid) {
+    return `${this.fbProcRef}${procid}/${this.fbClientRef}`;
+  }
+
+  questionairePathById(procid, questionaireId) {
+    return `${this.fbProcRef}${procid}/${this.fbQuestionaireRef}${questionaireId}`;
+  }
+
+  questionairePath(procid) {
+    return `${this.fbProcRef}${procid}/${this.fbQuestionaireRef}`;
+  }
+
   getFeedbacker(id) {
     return new Promise(((resolve) => {
-      const dbReference = db.ref(`${this.fbFeedbackerRef}${id}`);
+      const dbReference = db.ref(this.feedbackerPathById(id));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();
@@ -54,7 +79,7 @@ class AppState {
   addFeedbacker(data) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        const dbReference = db.ref(`${this.fbFeedbackerRef}${data.id}`);
+        const dbReference = db.ref(this.feedbackerPathById(data.id));
         dbReference.set(data).then(() => {
           resolve({
             message: `Feedbacker with id ${data.id} added`,
@@ -69,7 +94,7 @@ class AppState {
   }
 
   deleteFeedbacker(id) {
-    const dbReference = db.ref(`${this.fbFeedbackerRef}${id}`);
+    const dbReference = db.ref(this.feedbackerPathById(id));
     return dbReference.set(null);
   }
 
@@ -101,9 +126,9 @@ class AppState {
     }));
   }
 
-  getQuestionaires() {
+  getQuestionaires(procId) {
     return new Promise(((resolve) => {
-      const dbReference = db.ref(this.fbQuestionaireRef);
+      const dbReference = db.ref(this.questionairePath(procId));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();
@@ -124,9 +149,9 @@ class AppState {
     }));
   }
 
-  getQuestionaire(id) {
+  getQuestionaire(procId, questionaireId) {
     return new Promise(((resolve) => {
-      const dbReference = db.ref(`${this.fbQuestionaireRef}${id}`);
+      const dbReference = db.ref(this.questionairePathById(procId, questionaireId));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();
@@ -145,10 +170,10 @@ class AppState {
     }));
   }
 
-  addQuestionaire(data) {
+  addQuestionaire(data, procId) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        const dbReference = db.ref(`${this.fbQuestionaireRef}${data.id}`);
+        const dbReference = db.ref(this.questionairePathById(procId, data.id));
         dbReference.set(data).then(() => {
           resolve({
             message: `Questionaire with id ${data.id} added`,
@@ -162,19 +187,20 @@ class AppState {
     }));
   }
 
-  deleteQuestionaires() {
-    const dbReference = db.ref(`${this.fbQuestionaireRef}`);
+  deleteQuestionaires(procId) {
+    const dbReference = db.ref(this.questionairePath(procId));
     return dbReference.set(null);
   }
 
-  deleteQuestionaire(id) {
-    const dbReference = db.ref(`${this.fbQuestionaireRef}${id}`);
+  deleteQuestionaire(procId, questionaireId) {
+    const dbReference = db.ref(this.questionairePathById(procId, questionaireId));
     return dbReference.set(null);
   }
 
-  getClient(id) {
+  getClient(procId, clientId) {
     return new Promise(((resolve) => {
-      const dbReference = db.ref(`${this.fbClientRef}${id}`);
+      const dbReference = db.ref(this.clientPathById(procId, clientId));
+      console.log(this.clientPathById(procId, clientId));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();
@@ -193,10 +219,10 @@ class AppState {
     }));
   }
 
-  addClient(data) {
+  addClient(data, procId) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        const dbReference = db.ref(`${this.fbClientRef}${data.id}`);
+        const dbReference = db.ref(this.clientPathById(procId, data.id));
         dbReference.set(data).then(() => {
           resolve({
             message: `Client with id ${data.id} added`,
@@ -210,19 +236,19 @@ class AppState {
     }));
   }
 
-  deleteClient(id) {
-    const dbReference = db.ref(`${this.fbClientRef}${id}`);
+  deleteClient(procId, clientId) {
+    const dbReference = db.ref(this.clientPathById(procId, clientId));
     return dbReference.set(null);
   }
 
-  deleteClients() {
-    const dbReference = db.ref(`${this.fbClientRef}`);
+  deleteClients(procId) {
+    const dbReference = db.ref(this.clientPath(procId));
     return dbReference.set(null);
   }
 
-  getClients() {
+  getClients(procId) {
     return new Promise(((resolve) => {
-      const dbReference = db.ref(this.fbClientRef);
+      const dbReference = db.ref(this.clientPath(procId));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();
@@ -237,6 +263,78 @@ class AppState {
           // first initialization
           resolve({
             clients: [],
+          });
+        }
+      });
+    }));
+  }
+
+  // Processes
+  getProc(id) {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(`${this.fbProcRef}${id}`);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const proc = dbSnapshot || [];
+          resolve({
+            proc,
+          });
+        } else {
+          // first initialization
+          resolve({
+            proc: {},
+          });
+        }
+      });
+    }));
+  }
+
+  addProc(data) {
+    return new Promise(((resolve, reject) => {
+      if (data.id) {
+        const dbReference = db.ref(`${this.fbProcRef}${data.id}`);
+        dbReference.set(data).then(() => {
+          resolve({
+            message: `Process with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Process with id ${data.id}`));
+        });
+      } else {
+        reject(new Error('Could not add Process with missing id'));
+      }
+    }));
+  }
+
+  deleteProc(id) {
+    const dbReference = db.ref(`${this.fbProcRef}${id}`);
+    return dbReference.set(null);
+  }
+
+  deleteProcs() {
+    const dbReference = db.ref(`${this.fbProcRef}`);
+    return dbReference.set(null);
+  }
+
+  getProcs() {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(this.fbProcRef);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const fbProcs = dbSnapshot || [];
+          // map firebase json list to array
+          const procs = Object.keys(fbProcs);
+          resolve({
+            procs,
+          });
+        } else {
+          // first initialization
+          resolve({
+            procs: [],
           });
         }
       });
