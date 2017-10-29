@@ -1,13 +1,21 @@
-export const REQUEST_FEEDBACKER = 'REQUEST_FEEDBACKER';
-export const RECEIVE_FEEDBACKER = 'RECEIVE_FEEDBACKER';
-export const UPDATE_ANSWER = 'UPDATE_ANSWER';
+export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
+export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
+export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
+export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 
 export function updateAnswer(answer) {
   return {
     type: UPDATE_ANSWER,
-    id: answer.id,
     questionId: answer.questionId,
+    clientId: answer.clientId,
     score: answer.score,
+  };
+}
+
+export function updateRole(role) {
+  return {
+    type: UPDATE_ROLE,
+    role,
   };
 }
 
@@ -17,17 +25,18 @@ function requestFeedbacker() {
   };
 }
 
-function receiveFeedbacker(feedbacker) {
+function receiveFeedbacker(data) {
   return {
     type: RECEIVE_FEEDBACKER,
-    feedbacker,
+    feedbacker: data.feedbacker,
+    proc: data.proc,
   };
 }
 
 export function fetchFeedbacker(id) {
   return (dispatch) => {
     dispatch(requestFeedbacker());
-    return fetch(`api/v1/feedbackers/${id}`)
+    return fetch(`api/v1/singlefeedbacker/${id}`)
       .then(
         response => response.json(),
         error => console.log('An error occured.', error),

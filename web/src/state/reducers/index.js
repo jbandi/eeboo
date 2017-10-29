@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import company from './company';
-import singleFeedbacker from './singleFeedbacker';
-import questionaire from './questionaire';
-import context from './context';
+import feedbacker from './feedbacker';
+import proc from './proc';
 
 const eeboo = combineReducers({
   company,
-  singleFeedbacker,
-  questionaire,
-  context,
+  feedbacker,
+  proc,
 });
 
 export default eeboo;

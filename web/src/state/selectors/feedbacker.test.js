@@ -1,65 +1,38 @@
+import { feedbacker } from './feedbacker-data';
+
 import {
   getFeedbacker,
-  getFeedbackerAnswers,
-  getFeedbackerIds,
-  getFeedbackerAnswer,
+  getFeedbackerClientIds,
+  getContexts,
+  getContextIds,
 } from './feedbacker';
 
-describe('test selectors for feedbackers', () => {
+describe('test selectors for feedbacker', () => {
   const state = {
-    feedbacker: {
-      byId: ['1', '2'],
-      byHash: {
-        1: {
-          id: '1',
-          mail: 'mathu at example.com',
-          role: 1,
-          questionaire: '8as8-1s57-1uus-9s73',
-          answers: {
-            xy: { score: 3 },
-          },
-        },
-        2: {
-          id: 2,
-          mail: 'email address',
-          role: 1,
-          questionaire: '8as8-1s57-1uus-9s73',
-          answers: {
-            xy: { score: 3 },
-            cd: { score: 4 },
-          },
-        },
-      },
-    },
+    feedbacker,
   };
 
   it('it should return a specific feedbacker from state', () => {
-    expect(getFeedbacker(state, 2)).toEqual(state.feedbacker.byHash[2]);
+    expect(getFeedbacker(state).id).toEqual('feedbacker1');
   });
 
-  it('should return an empty object if id is missing', () => {
-    expect(getFeedbacker([{ mail: '2' }], 2)).toEqual({});
+  it('should return an empty object if state is empty', () => {
+    expect(getFeedbacker({})).toEqual({});
   });
 
-  it('should return an empty object if id not found', () => {
-    expect(getFeedbacker(state, -1)).toEqual({});
+  it('should return an empty list if feedbacker does not include clients', () => {
+    expect(getFeedbackerClientIds({}).length).toEqual(0);
   });
 
-  it('should return all answers of a specific feedbacker', () => {
-    expect(getFeedbackerAnswers(state, 2).xy.score).toEqual(3);
-    expect(getFeedbackerAnswers(state, 2).cd.score).toEqual(4);
+  it('should return a list of all clients', () => {
+    expect(getFeedbackerClientIds(state).length).toEqual(2);
   });
 
-  it('should return an array containing all feedbacker ids', () => {
-    expect(getFeedbackerIds(state).length).toEqual(2);
-    expect(getFeedbackerIds(state)[1]).toEqual('2');
+  it('should return a list of context objects', () => {
+    expect(getContexts(state, 1234)[1].contents[0].content).toEqual('Teamfähigkeit');
   });
 
-  it('should return the score of an answer for a specific question of a given feedbacker', () => {
-    expect(getFeedbackerAnswer(state, 2, 'cd')).toEqual(4);
-  });
-
-  it('should return -1 if no answer or no score was found', () => {
-    expect(getFeedbackerAnswer(state, 2, 'doesNotExist')).toEqual(-1);
+  it('should return contextIds as array', () => {
+    expect(getContextIds(state, 1234).length).toEqual(2);
   });
 });

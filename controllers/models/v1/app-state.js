@@ -231,7 +231,6 @@ class AppState {
   getClient(procId, clientId) {
     return new Promise(((resolve) => {
       const dbReference = db.ref(this.clientPathById(procId, clientId));
-      console.log(this.clientPathById(procId, clientId));
       dbReference.once('value').then((snapshot) => {
         dbReference.off('value');
         const dbSnapshot = snapshot.val();

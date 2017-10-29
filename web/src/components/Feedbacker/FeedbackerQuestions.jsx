@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import FeedbackerAnswer from './../containers/FeedbackerAnswer';
+import FeedbackerAnswer from './../../containers/Feedbacker/FeedbackerAnswer';
 
 const FeedbackerQuestions = props => (
   <div>
