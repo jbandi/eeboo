@@ -15,7 +15,9 @@ chai.use(chaiHttp);
 describe('Feedbackers', () => {
   beforeEach((done) => { // Before each test we empty the database
     appState.deleteFeedbackers().then(() => {
-      done();
+      appState.deleteProcs().then(() => {
+        done();
+      });
     });
   });
 
@@ -23,9 +25,21 @@ describe('Feedbackers', () => {
     id: '1',
     mail: 'mathu at example.com',
     role: 1,
-    client: '1',
+    proc: 1,
     answers: {
       xy: { score: 3 },
+    },
+  };
+
+  const proc = {
+    id: 1,
+    clients: {
+      client1: { id: 'client1' },
+      client2: { id: 'client2' },
+    },
+    questionaires: {
+      questiooaire1: { id: 'questionaire1' },
+      questionaire2: { id: 'questionaire2' },
     },
   };
 
@@ -90,7 +104,7 @@ describe('Feedbackers', () => {
       });
     });
   });
-  // TEST the /GET/:id route
+  // TEST the /GET/:id for feedbacker
   describe('/GET/:id feedbacker', () => {
     it('it should GET a feedbacker by the given id', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
@@ -107,6 +121,54 @@ describe('Feedbackers', () => {
             res.body.answers.xy.should.have.property('score').eql(feedbacker1.answers.xy.score);
             done();
           });
+      });
+    });
+  });
+  // TEST the /GET/:id for single feedbacker
+  describe('/GET/:id single feedbacker', () => {
+    it('it should GET empty objects if feedbacker not found', (done) => {
+      chai.request(server)
+        .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('feedbacker').eql({});
+          res.body.should.have.property('proc').eql({});
+          done();
+        });
+    });
+
+    it('it should GET empty proc if proc not found', (done) => {
+      appState.addFeedbacker(feedbacker1).then(() => {
+        chai.request(server)
+          .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.feedbacker.should.have.property('id').eql(feedbacker1.id);
+            res.body.should.have.property('proc').eql({});
+            done();
+          });
+      });
+    });
+
+    it('it should GET a single feedbacker by the given id', (done) => {
+      appState.addFeedbacker(feedbacker1).then(() => {
+        appState.addProc(proc).then(() => {
+          chai.request(server)
+            .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('feedbacker');
+              res.body.should.have.property('proc');
+              res.body.proc.should.be.a('object');
+              res.body.feedbacker.should.be.a('object');
+              res.body.feedbacker.should.have.property('id').eql(feedbacker1.id);
+              res.body.proc.should.have.property('id').eql(proc.id);
+              done();
+            });
+        });
       });
     });
   });

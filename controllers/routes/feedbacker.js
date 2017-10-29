@@ -36,10 +36,17 @@ function getFeedbacker(req, res) {
   });
 }
 
+function getSingleFeedbacker(req, res) {
+  appState.getSingleFeedbacker(req.params.feedbackerid).then((data) => {
+    res.json(data);
+  });
+}
+
 module.exports = {
   getFeedbackers,
   addFeedbacker,
   getFeedbacker,
   deleteFeedbacker,
   deleteFeedbackers,
+  getSingleFeedbacker,
 };

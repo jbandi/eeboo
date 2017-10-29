@@ -104,7 +104,7 @@ describe('Procs', () => {
             res.body.should.have.property('id');
             res.body.should.have.property('questionaires');
             res.body.should.have.property('clients');
-            //res.body.clients.client1.should.have.property('id').eql('client1');
+            // res.body.clients.client1.should.have.property('id').eql('client1');
             done();
           });
       });

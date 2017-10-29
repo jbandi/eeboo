@@ -1,5 +1,6 @@
 const admin = require('firebase-admin');
 const config = require('config');
+const idx = require('idx');
 
 const serviceAccount = require(`./${config.firebaseToken}`); // eslint-disable-line import/no-dynamic-require
 
@@ -70,6 +71,36 @@ class AppState {
           // first initialization
           resolve({
             feedbacker: {},
+          });
+        }
+      });
+    }));
+  }
+
+  getSingleFeedbacker(id) {
+    return new Promise(((resolve, reject) => {
+      const dbReference = db.ref(this.feedbackerPathById(id));
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const feedbacker = dbSnapshot || [];
+          const procId = idx(feedbacker, _ => _.proc) || -1;
+          if (procId > -1) {
+            this.getProc(procId).then((proc) => {
+              resolve({
+                feedbacker,
+                proc: proc.proc,
+              });
+            });
+          } else {
+            reject(new Error(`Could not get data for single Feedbacker with id ${id}`));
+          }
+        } else {
+          // first initialization
+          resolve({
+            feedbacker: {},
+            proc: {},
           });
         }
       });
