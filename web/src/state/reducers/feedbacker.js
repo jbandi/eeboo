@@ -34,8 +34,8 @@ const feedbacker = (state = {}, action) => {
     case RECEIVE_FEEDBACKER: {
       return {
         isFetchingFeedbacker: false,
-        id: idx(action, _ => _.feedbacker.id) || {},
-        mail: idx(action, _ => _.feedbacker.mail) || {},
+        id: idx(action, _ => _.feedbacker.id) || '',
+        mail: idx(action, _ => _.feedbacker.mail) || '',
         proc: idx(action, _ => _.proc) || {},
         clients: idx(action, _ => _.feedbacker.clients) || {},
       };

@@ -45,7 +45,7 @@ class Feedbacker extends Component {
 
   render() {
     return (
-      (this.props.feedbacker.proc && this.props.feedbacker.id !== 'default')
+      (this.props.feedbacker.proc && this.props.feedbacker.id !== '')
         ? <div>
           <Grid className="home-content">
             <Row>
@@ -88,7 +88,8 @@ class Feedbacker extends Component {
           </Grid>
         </div>
         : <div>
-          id not found
+          <div>... loading data</div> <br />
+          <div>data should load within seconds. if not, please talk to the administrator</div>
         </div>
     );
   }
