@@ -22,7 +22,7 @@ export class Client extends React.Component {
   }
 
   header = contextId => (
-    <div><PanelHeader contextId={contextId} /></div>
+    <div><PanelHeader contextId={contextId} clientId={this.props.clientId} /></div>
   );
 
   render() {

@@ -13,18 +13,17 @@ export const getFeedbackerClientIds = state => (
     _.feedbacker.clients) || {}).map(key => key)
 );
 
-// get all answers by client id
-// return list of objects
-export const getFeedbackerAnswers = (state, clientId, questionId) => (
+// get a specific answer by client id and question Id
+// return number
+export const getFeedbackerAnswer = (state, clientId, questionId) => (
   idx(state, _ => _.feedbacker.clients[clientId].answers[questionId]) || -1
 );
 
-// get a specific answer by feedbacker- and question id
-// return number
-export const getFeedbackerAnswer = (state, feedbackerId, questionId) => {
-  const { answers } = getFeedbacker(state, feedbackerId);
-  return idx(answers, _ => _[questionId].score) || -1;
-};
+// get all answers by client id
+// return list of objects
+export const getFeedbackerAnswers = (state, clientId) => (
+  (idx(state, _ => _.feedbacker.clients[clientId].answers) || {})
+);
 
 // get a specific client by Id
 // return object

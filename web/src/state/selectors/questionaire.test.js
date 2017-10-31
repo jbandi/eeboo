@@ -46,8 +46,8 @@ describe('test selectors for questionairies', () => {
 
   it('should return a count of all answers for a specific context', () => {
     expect(countAnswersByContextId(questions, {
-      question2: { score: 3 },
-      question3: { score: 4 },
+      question2: 3,
+      question3: 5,
     }, 1)).toEqual(2);
   });
 });
