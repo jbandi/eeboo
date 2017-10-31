@@ -55,7 +55,7 @@ class Feedbacker extends Component {
                   <table>
                     <tbody>
                       <tr>
-                        <td><div align="left">Feedbacknehmer: &nbsp;</div></td>
+                        <td><div align="left">Feedbackgeber: &nbsp;</div></td>
                         <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.id}</div></td>
                       </tr>
                       <tr>
