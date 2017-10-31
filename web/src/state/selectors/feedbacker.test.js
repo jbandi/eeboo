@@ -5,6 +5,7 @@ import {
   getFeedbackerClientIds,
   getContexts,
   getContextIds,
+  getFeedbackerAnswers,
 } from './feedbacker';
 
 describe('test selectors for feedbacker', () => {
@@ -34,5 +35,17 @@ describe('test selectors for feedbacker', () => {
 
   it('should return contextIds as array', () => {
     expect(getContextIds(state, 1234).length).toEqual(2);
+  });
+
+  it('should return a specific answer', () => {
+    expect(getFeedbackerAnswers(state, 'client1', 'question1')).toEqual(3);
+  });
+
+  it('should return -1 if question not found', () => {
+    expect(getFeedbackerAnswers(state, 'client1', 'undef')).toEqual(-1);
+  });
+
+  it('should return -1 if client not found', () => {
+    expect(getFeedbackerAnswers(state, 'undef', 'question1')).toEqual(-1);
   });
 });

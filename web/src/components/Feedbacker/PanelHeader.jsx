@@ -5,7 +5,6 @@ import Badge from '../../containers/Badge';
 const PanelHeader = props => (
   <div style={{ cursor: 'pointer' }}>
     {props.contextContent.content} .. &nbsp;
-    <Badge contextId={props.contextId} />
   </div>
 );
 

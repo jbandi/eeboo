@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Grid, Panel } from 'react-bootstrap';
-import Client from './Client';
+import Client from '../../containers/Feedbacker/Client';
 import PanelHeader from '../../containers/Feedbacker/PanelHeader';
 import { fetchFeedbacker } from '../../state/actions/feedbacker';
 
@@ -77,7 +77,10 @@ class Feedbacker extends Component {
               <Col md={2} />
               <Col md={8}>
                 {this.props.clientIds.map(id => (
-                  <Client clientId={id} />
+                  <div>
+                    <Client key={id} clientId={id} />
+                    <hr />
+                  </div>
                 ))}
               </Col>
               <Col md={2} />

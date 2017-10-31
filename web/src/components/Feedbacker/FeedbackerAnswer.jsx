@@ -8,7 +8,7 @@ const FeedbackerAnswer = (props) => {
     rows.push(<Button
       key={`${props.questionId}-${i}`}
       onClick={() => props.updateAnswer({
-        id: 1, // TODO: this is the feedbacker id
+        clientId: props.clientId,
         questionId: props.questionId,
         score: i,
       })}
@@ -29,6 +29,7 @@ FeedbackerAnswer.propTypes = {
   maxScore: PropTypes.number.isRequired,
   score: PropTypes.number,
   updateAnswer: PropTypes.func.isRequired,
+  clientId: PropTypes.string.isRequired,
 };
 
 FeedbackerAnswer.defaultProps = {

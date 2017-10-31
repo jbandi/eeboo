@@ -17,7 +17,13 @@ const FeedbackerQuestions = props => (
           (
             <tr key={question.id}>
               <td align="center">{question.contents[0].content}</td>
-              <td align="align-right"><FeedbackerAnswer questionId={question.id} maxScore={question.scores} /></td>
+              <td align="align-right">
+                <FeedbackerAnswer
+                  questionId={question.id}
+                  maxScore={question.scores}
+                  clientId={props.clientId}
+                />
+              </td>
             </tr>
           ))
         }
@@ -28,6 +34,7 @@ const FeedbackerQuestions = props => (
 
 FeedbackerQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  clientId: PropTypes.string.isRequired,
 };
 
 export default FeedbackerQuestions;
