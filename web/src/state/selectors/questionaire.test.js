@@ -4,6 +4,7 @@ import {
   getQuestionsByContextId,
   countAnswersByContextId,
   getRolesByLanguage,
+  getRoleById,
 } from './questionaire';
 
 import feedbacker from './feedbacker-data';
@@ -62,5 +63,10 @@ describe('test selectors for questionairies', () => {
   it('should return "not found" as content if langauge not found', () => {
     const questionaire = feedbacker.proc.questionaires;
     expect(getRolesByLanguage(questionaire[1234], 'undef')[0].contents.content).toEqual('not found');
+  });
+
+  it('should return a role for a given id', () => {
+    const questionaire = feedbacker.proc.questionaires;
+    expect(getRoleById(questionaire[1234], 'role1', 'de').content).toEqual('Arbeitskollege');
   });
 });

@@ -8,6 +8,11 @@ export class Client extends React.Component {
   static propTypes = {
     clientId: PropTypes.string.isRequired,
     contextList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    roles: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      contents: PropTypes.arrayOf(PropTypes.shape({})),
+    })).isRequired,
+    role: PropTypes.shape({}).isRequired,
   }
 
   constructor() {
@@ -32,9 +37,10 @@ export class Client extends React.Component {
           <tr>
             <td align="align-left" style={{ paddingRight: '15px' }}>Ihre Rolle:</td>
             <td>
-              <DropdownButton title="Teamleiter" id="bg-nested-dropdown" bsSize="small" pullRight>
-                <MenuItem eventKey="1">Teamleiter</MenuItem>
-                <MenuItem eventKey="2">Arbeitskollege</MenuItem>
+              <DropdownButton title={this.props.role.content} id="bg-nested-dropdown" bsSize="small" pullRight>
+                {this.props.roles.map(role => (
+                  <MenuItem eventKey={role.id}>{role.contents.content}</MenuItem>
+                ))}
               </DropdownButton>
             </td>
           </tr>

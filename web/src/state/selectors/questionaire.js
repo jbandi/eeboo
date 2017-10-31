@@ -6,6 +6,13 @@ export const getQuestionById = (questions, questionId) => (
   idx(questions, _ => _[questionId]) || {}
 );
 
+// get a role by Id
+// return object
+export const getRoleById = (questionaire, roleId, language) => {
+  const roles = idx(questionaire, _ => _.roles[roleId].contents) || [];
+  return roles.find(role => role.lan === language);
+};
+
 // get all questions by contextId
 // return array
 export const getQuestionsByContextId = (questions, contextId) => {
