@@ -14,8 +14,10 @@ export class Client extends React.Component {
     })).isRequired,
     role: PropTypes.shape({
       content: PropTypes.string,
+      id: PropTypes.string,
     }).isRequired,
     updateRole: PropTypes.func.isRequired,
+    language: PropTypes.string.isRequired,
   }
 
   constructor() {
@@ -63,7 +65,12 @@ export class Client extends React.Component {
   );
 
   contextHeader = contextId => (
-    <div><PanelHeader contextId={contextId} clientId={this.props.clientId} /></div>
+    <div><PanelHeader
+      contextId={contextId}
+      clientId={this.props.clientId}
+      roleId={this.props.role.id}
+      language={this.props.language}
+    /></div>
   );
 
   render() {
@@ -79,7 +86,12 @@ export class Client extends React.Component {
                 eventKey={context.id}
                 bsStyle="warning"
               >
-                <Context context={context} clientId={this.props.clientId} />
+                <Context
+                  context={context}
+                  clientId={this.props.clientId}
+                  roleId={this.props.role.id}
+                  language={this.props.language}
+                />
               </Panel>))
             }
           </PanelGroup>

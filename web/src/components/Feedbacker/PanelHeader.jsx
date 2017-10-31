@@ -5,7 +5,12 @@ import Badge from '../../containers/Feedbacker/Badge';
 const PanelHeader = props => (
   <div style={{ cursor: 'pointer' }}>
     {props.contextContent.content} .. &nbsp;
-    <Badge clientId={props.clientId} contextId={props.contextId} />
+    <Badge
+      clientId={props.clientId}
+      contextId={props.contextId}
+      language={props.language}
+      roleId={props.roleId}
+    />
   </div>
 );
 
@@ -16,6 +21,8 @@ PanelHeader.propTypes = {
   }).isRequired,
   contextId: PropTypes.number.isRequired,
   clientId: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  roleId: PropTypes.string.isRequired,
 };
 
 export default PanelHeader;

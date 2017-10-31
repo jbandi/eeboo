@@ -4,7 +4,9 @@ import { getContentByLanguage } from '../../state/selectors/context';
 
 const mapStateToProps = (state, ownProps) => ({
   contextContent: getContentByLanguage(
-    state.feedbacker.proc.questionaires[1234].contexts, ownProps.contextId, 'de'),
+    state.feedbacker.proc.questionaires[1234].contexts,
+    ownProps.contextId,
+    state.feedbacker.language),
 });
 
 export default connect(mapStateToProps)(PanelHeader);

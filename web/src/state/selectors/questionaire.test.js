@@ -45,14 +45,16 @@ describe('test selectors for questionairies', () => {
   });
 
   it('should return an array of all questions by context id', () => {
-    expect(getQuestionsByContextId(questions, 1).length).toEqual(3);
+    const q = feedbacker.proc.questionaires[1234].questions;
+    expect(getQuestionsByContextId(q, 1, 'role1', 'de').length).toEqual(2);
   });
 
   it('should return a count of all answers for a specific context', () => {
-    expect(countAnswersByContextId(questions, {
+    const q = feedbacker.proc.questionaires[1234].questions;
+    expect(countAnswersByContextId(q, {
       question2: 3,
       question3: 5,
-    }, 1)).toEqual(2);
+    }, 1)).toEqual(1);
   });
 
   it('should return a list of all roles for a given questionaire', () => {
@@ -68,5 +70,10 @@ describe('test selectors for questionairies', () => {
   it('should return a role for a given id', () => {
     const questionaire = feedbacker.proc.questionaires;
     expect(getRoleById(questionaire[1234], 'role1', 'de').content).toEqual('Arbeitskollege');
+  });
+
+  it('should return a role for a given id', () => {
+    const questionaire = feedbacker.proc.questionaires;
+    expect(getRoleById(questionaire[1234], 'role1', 'de').id).toEqual('role1');
   });
 });

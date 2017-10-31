@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
+import idx from 'idx';
 import FeedbackerAnswer from './../../containers/Feedbacker/FeedbackerAnswer';
 
 const FeedbackerQuestions = props => (
@@ -16,7 +17,7 @@ const FeedbackerQuestions = props => (
         {props.questions.map(question =>
           (
             <tr key={question.id}>
-              <td align="center">{question.contents[0].content}</td>
+              <td align="center">{idx(question, _ => _.contents[0].content) || 'undef'}</td>
               <td align="align-right">
                 <FeedbackerAnswer
                   questionId={question.id}

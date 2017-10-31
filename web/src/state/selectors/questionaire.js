@@ -10,21 +10,31 @@ export const getQuestionById = (questions, questionId) => (
 // return object
 export const getRoleById = (questionaire, roleId, language) => {
   const roles = idx(questionaire, _ => _.roles[roleId].contents) || [];
-  return roles.find(role => role.lan === language);
+  const r = roles.find(role => role.lan === language);
+  return ({
+    content: r.content,
+    lan: r.lan,
+    id: roleId,
+  });
 };
 
 // get all questions by contextId
 // return array
-export const getQuestionsByContextId = (questions, contextId) => {
+export const getQuestionsByContextId = (questions, contextId, roleId, language) => {
   const questionsArr = Object.keys(questions).map(k => questions[k]);
-  return questionsArr.filter(q => q.context === contextId);
+  const l = questionsArr.filter(q => q.context === contextId);
+  return l.map(c => ({
+    ...c,
+    contents: c.contents.filter(content => content.lan === language && content.role === roleId),
+  }));
 };
 
 // get count of answers by context id
 // return number
-export const countAnswersByContextId = (questions, answers, contextId) => {
+export const countAnswersByContextId = (questions, answers, contextId, roleId, language) => {
   const answerIds = Object.keys(answers);
-  const questionIds = getQuestionsByContextId(questions, contextId).map(q => q.id);
+  const questionIds = getQuestionsByContextId(
+    questions, contextId, roleId, language).map(q => q.id);
   return answerIds.filter(function def(e) {
     return this.indexOf(e) >= 0;
   }, questionIds).length;

@@ -6,7 +6,8 @@ import { updateRole } from '../../state/actions/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
   contextList: getContexts(state, 1234),
-  roles: getRolesByLanguage(state.feedbacker.proc.questionaires[1234], 'de'),
+  roles: getRolesByLanguage(state.feedbacker.proc.questionaires[1234],
+    state.feedbacker.language),
   role: getRoleById(
     state.feedbacker.proc.questionaires[1234],
     getRoleIdByClientId(state, ownProps.clientId),

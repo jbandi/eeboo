@@ -9,7 +9,7 @@ import {
 
 // import { defaultFeedbacker } from './defaultState';
 
-const feedbacker = (state = {}, action) => {
+const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
     case UPDATE_ROLE:
       return Object.assign({}, state, {
@@ -45,6 +45,7 @@ const feedbacker = (state = {}, action) => {
       });
     case RECEIVE_FEEDBACKER: {
       return {
+        language: 'de',
         isFetchingFeedbacker: false,
         id: idx(action, _ => _.feedbacker.id) || '',
         mail: idx(action, _ => _.feedbacker.mail) || '',

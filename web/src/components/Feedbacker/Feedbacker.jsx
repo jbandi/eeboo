@@ -78,7 +78,7 @@ class Feedbacker extends Component {
               <Col md={8}>
                 { this.props.clientIds.map(id => (
                   <div key={id}>
-                    <Client clientId={id} />
+                    <Client clientId={id} language="de" />
                     <hr />
                   </div>),
                 )}
