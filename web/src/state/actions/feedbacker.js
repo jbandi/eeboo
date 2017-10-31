@@ -12,10 +12,11 @@ export function updateAnswer(answer) {
   };
 }
 
-export function updateRole(role) {
+export function updateRole(data) {
   return {
     type: UPDATE_ROLE,
-    role,
+    clientId: data.clientId,
+    roleId: data.roleId,
   };
 }
 

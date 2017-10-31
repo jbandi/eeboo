@@ -10,9 +10,12 @@ export class Client extends React.Component {
     contextList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     roles: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
-      contents: PropTypes.arrayOf(PropTypes.shape({})),
+      contents: PropTypes.PropTypes.shape({}),
     })).isRequired,
-    role: PropTypes.shape({}).isRequired,
+    role: PropTypes.shape({
+      content: PropTypes.string,
+    }).isRequired,
+    updateRole: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -20,6 +23,13 @@ export class Client extends React.Component {
     this.state = {
       activeKey: 1,
     };
+  }
+
+  handleRoleSelect = (roleId) => {
+    this.props.updateRole({
+      clientId: this.props.clientId,
+      roleId,
+    });
   }
 
   handleSelect = (activeKey) => {
@@ -39,7 +49,10 @@ export class Client extends React.Component {
             <td>
               <DropdownButton title={this.props.role.content} id="bg-nested-dropdown" bsSize="small" pullRight>
                 {this.props.roles.map(role => (
-                  <MenuItem eventKey={role.id}>{role.contents.content}</MenuItem>
+                  <MenuItem
+                    key={role.id}
+                    onSelect={() => this.handleRoleSelect(role.id)}
+                  >{role.contents.content}</MenuItem>
                 ))}
               </DropdownButton>
             </td>

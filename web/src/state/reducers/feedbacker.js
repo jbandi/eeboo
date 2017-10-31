@@ -4,12 +4,24 @@ import {
   RECEIVE_FEEDBACKER,
   REQUEST_FEEDBACKER,
   UPDATE_ANSWER,
+  UPDATE_ROLE,
 } from '../actions/feedbacker';
 
 // import { defaultFeedbacker } from './defaultState';
 
 const feedbacker = (state = {}, action) => {
   switch (action.type) {
+    case UPDATE_ROLE:
+      return Object.assign({}, state, {
+        ...state,
+        clients: {
+          ...state.clients,
+          [action.clientId]: {
+            ...state.clients[action.clientId],
+            role: action.roleId,
+          },
+        },
+      });
     case UPDATE_ANSWER: {
       const clientId = action.clientId;
       const questionId = action.questionId;

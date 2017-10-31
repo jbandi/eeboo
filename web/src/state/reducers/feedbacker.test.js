@@ -5,6 +5,7 @@ import {
   REQUEST_FEEDBACKER,
   RECEIVE_FEEDBACKER,
   UPDATE_ANSWER,
+  UPDATE_ROLE,
 } from '../actions/feedbacker';
 
 describe('feedbacker reducer', () => {
@@ -85,5 +86,14 @@ describe('feedbacker reducer', () => {
       score: 5,
     });
     expect(changedState.clients.client1.answers.question1).toBe(5);
+  });
+
+  it('should update rold', () => {
+    const changedState = feedbacker(state.feedbacker, {
+      type: UPDATE_ROLE,
+      clientId: 'client1',
+      roleId: 'role5',
+    });
+    expect(changedState.clients.client1.role).toBe('role5');
   });
 });
