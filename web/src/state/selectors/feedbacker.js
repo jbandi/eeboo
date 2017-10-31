@@ -6,6 +6,12 @@ export const getFeedbacker = state => (
   idx(state, _ => _.feedbacker) || {}
 );
 
+// get a role by a blient id
+// return object
+export const getRoleByClientId = (state, clientId) => (
+  idx(state, _ => _.feedbacker.clients[clientId])
+);
+
 // get Client Ids
 // return array
 export const getFeedbackerClientIds = state => (

@@ -3,7 +3,10 @@ import {
   getQuestionById,
   getQuestionsByContextId,
   countAnswersByContextId,
+  getRolesByLanguage,
 } from './questionaire';
+
+import feedbacker from './feedbacker-data';
 
 describe('test selectors for questionairies', () => {
   const questions = {
@@ -49,5 +52,15 @@ describe('test selectors for questionairies', () => {
       question2: 3,
       question3: 5,
     }, 1)).toEqual(2);
+  });
+
+  it('should return a list of all roles for a given questionaire', () => {
+    const questionaire = feedbacker.proc.questionaires;
+    expect(getRolesByLanguage(questionaire[1234], 'de')[0].contents.content).toEqual('Arbeitskollege');
+  });
+
+  it('should return "not found" as content if langauge not found', () => {
+    const questionaire = feedbacker.proc.questionaires;
+    expect(getRolesByLanguage(questionaire[1234], 'undef')[0].contents.content).toEqual('not found');
   });
 });

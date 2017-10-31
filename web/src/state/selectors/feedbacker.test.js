@@ -7,6 +7,7 @@ import {
   getContextIds,
   getFeedbackerAnswer,
   getFeedbackerAnswers,
+  getRoleByClientId,
 } from './feedbacker';
 
 describe('test selectors for feedbacker', () => {
@@ -52,5 +53,9 @@ describe('test selectors for feedbacker', () => {
 
   it('should return an array of answers for a client', () => {
     expect(getFeedbackerAnswers(state, 'client1').question1).toEqual(3);
+  });
+
+  it('should return a role for a client', () => {
+    expect(getRoleByClientId(state, 'client1').role).toEqual('role1');
   });
 });
