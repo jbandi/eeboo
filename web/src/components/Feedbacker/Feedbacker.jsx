@@ -76,12 +76,12 @@ class Feedbacker extends Component {
             <Row>
               <Col md={2} />
               <Col md={8}>
-                {this.props.clientIds.map(id => (
-                  <div>
-                    <Client key={id} clientId={id} />
+                { this.props.clientIds.map(id => (
+                  <div key={id}>
+                    <Client clientId={id} />
                     <hr />
-                  </div>
-                ))}
+                  </div>),
+                )}
               </Col>
               <Col md={2} />
             </Row>
