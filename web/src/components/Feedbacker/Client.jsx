@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, PanelGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, Panel, PanelGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import Context from './Context';
 import PanelHeader from '../../containers/Feedbacker/PanelHeader';
 
@@ -18,13 +18,23 @@ export class Client extends React.Component {
     }).isRequired,
     updateRole: PropTypes.func.isRequired,
     language: PropTypes.string.isRequired,
+    clearAnswers: PropTypes.func.isRequired,
+    saveAnswers: PropTypes.func.isRequired,
   }
 
   constructor() {
     super();
     this.state = {
-      activeKey: 1,
+      activeKey: 0,
     };
+  }
+
+  handleClear = (clientId) => {
+    this.props.clearAnswers(clientId);
+  }
+
+  handleSave = () => {
+    this.props.saveAnswers();
   }
 
   handleRoleSelect = (roleId) => {
@@ -95,6 +105,10 @@ export class Client extends React.Component {
               </Panel>))
             }
           </PanelGroup>
+          <div style={{ textAlign: 'right' }}>
+            <Button bsStyle="default" onClick={() => this.handleClear(this.props.clientId)}>Clear</Button>
+            <Button bsStyle="default" onClick={this.handleSave}>Save</Button>
+          </div>
         </Panel>
       </div>
     );

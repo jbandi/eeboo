@@ -5,12 +5,24 @@ import {
   REQUEST_FEEDBACKER,
   UPDATE_ANSWER,
   UPDATE_ROLE,
+  CLEAR_ANSWERS,
 } from '../actions/feedbacker';
 
 // import { defaultFeedbacker } from './defaultState';
 
 const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
+    case CLEAR_ANSWERS:
+      return Object.assign({}, state, {
+        ...state,
+        clients: {
+          ...state.clients,
+          [action.clientId]: {
+            ...state.clients[action.clientId],
+            answers: {},
+          },
+        },
+      });
     case UPDATE_ROLE:
       return Object.assign({}, state, {
         ...state,

@@ -49,8 +49,8 @@ class Feedbacker extends Component {
         ? <div>
           <Grid className="home-content">
             <Row>
-              <Col xs={6} md={2} />
-              <Col xs={6} md={8}>
+              <Col md={2} />
+              <Col md={8}>
                 <Panel collapsible expanded>
                   <table>
                     <tbody>
@@ -70,7 +70,7 @@ class Feedbacker extends Component {
                   </table>
                 </Panel>
               </Col>
-              <Col xs={6} md={2} />
+              <Col md={2} />
             </Row>
             <hr />
             <Row>

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { getContexts, getRoleIdByClientId } from '../../state/selectors/feedbacker';
 import { getRolesByLanguage, getRoleById } from '../../state/selectors/questionaire';
 import { Client } from '../../components/Feedbacker/Client';
-import { updateRole } from '../../state/actions/feedbacker';
+import { updateRole, postFeedbacker, clearAnswers } from '../../state/actions/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
   contextList: getContexts(state, 1234),
@@ -14,8 +14,10 @@ const mapStateToProps = (state, ownProps) => ({
     'de'),
 });
 
-const mapDispatchToProps = dispatch => (
-  { updateRole: (data) => { dispatch(updateRole(data)); } }
-);
+const mapDispatchToProps = dispatch => ({
+  updateRole: (data) => { dispatch(updateRole(data)); },
+  clearAnswers: (clientId) => { dispatch(clearAnswers(clientId)); },
+  saveAnswers: () => { dispatch(postFeedbacker()); },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Client);
