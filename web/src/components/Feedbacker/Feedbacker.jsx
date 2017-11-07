@@ -17,9 +17,7 @@ class Feedbacker extends Component {
       clients: PropTypes.shape({}),
     }).isRequired,
     clientIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
+    feedbackerId: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -30,9 +28,7 @@ class Feedbacker extends Component {
   }
 
   componentWillMount() {
-    const pathArray = this.props.location.pathname.split('/');
-    const id = pathArray[pathArray.length - 1];
-    this.props.dispatch(fetchFeedbacker(id));
+    this.props.dispatch(fetchFeedbacker(this.props.feedbackerId));
   }
 
   handleSelect = (activeKey) => {

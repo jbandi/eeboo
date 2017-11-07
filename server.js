@@ -55,29 +55,6 @@ app.use(express.static(path.join(__dirname, 'web/build')));
 app.route('/api/v1/company')
   .get(company.getCompany);
 
-// TODO: remove this comment
-// const feedbackers = [
-//   {
-//     id: 'sie8-19sk-119s-679b',
-//     mail: 'mathu at example.com',
-//     role: 1,
-//     questionaire: '8as8-1s57-1uus-9s73',
-//     answers: [{
-//       question_id: 'xy',
-//       score: 3,
-//     }],
-//   }, {
-//     id: 'aaaa-bbbb-cccc-dddd',
-//     mail: 'max at muster.com',
-//     role: 2,
-//     questionaire: '8as8-1s57-1uus-9s73',
-//     answers: [{
-//       question_id: 'xy',
-//       score: 4,
-//     }],
-//   },
-// ];
-
 app.route('/api/v1/procs')
   .get(proc.getProcs)
   .delete(proc.deleteProc)

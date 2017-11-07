@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from './Home';
 import About from './About';
-import Admin from './Admin';
+import Admin from './Admin/Admin';
 import FeedbackerWithId from './../containers/Feedbacker/Feedbacker';
 import Callback from './../Callback/Callback';
 

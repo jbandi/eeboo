@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Grid, Image } from 'react-bootstrap';
-import Auth from './../services/Auth/Auth';
+import Auth from './../../services/Auth/Auth';
+import ProcessList from './../../containers/Admin/ProcessList';
+import ProcessDetail from './ProcessDetail';
 
 class Admin extends Component {
-  propTypes = {
+  static propTypes = {
     auth: PropTypes.instanceOf(Auth).isRequired,
   }
+
   componentWillMount() {
     this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
@@ -20,19 +22,10 @@ class Admin extends Component {
   }
 
   render() {
-    const { profile } = this.state;
     return (
-      <Grid className="home-content">
-        <Row>
-          <Col xs={6} md={2} />
-          <Col xs={6} md={8}>
-            <h1>{profile.nickname}</h1>
-            <Image src={profile.picture} circle />
-            <pre>{JSON.stringify(profile, null, 2)}</pre>
-          </Col>
-          <Col xsHidden md={2} />
-        </Row>
-      </Grid>
+      <div>
+        <ProcessList {...this.props} />
+      </div>
     );
   }
 }

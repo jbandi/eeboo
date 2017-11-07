@@ -357,7 +357,7 @@ class AppState {
         if (dbSnapshot) {
           const fbProcs = dbSnapshot || [];
           // map firebase json list to array
-          const procs = Object.keys(fbProcs);
+          const procs = Object.keys(fbProcs).map(k => fbProcs[k]);
           resolve({
             procs,
           });

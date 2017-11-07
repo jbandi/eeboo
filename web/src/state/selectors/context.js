@@ -1,6 +1,5 @@
 import idx from 'idx';
 
-
 // get a specific context by its id
 // return object
 export const getContextById = (contexts, contextId) => (
