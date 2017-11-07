@@ -67,7 +67,6 @@ const Main = () => (
           render={props => <Home auth={auth} {...props} />}
         />
         <Route
-          exact
           path="/feedbacker/:id"
           render={props => <Feedbacker component={FeedbackerWithId} auth={auth} {...props} />}
         />
@@ -77,7 +76,7 @@ const Main = () => (
         />
         <Route
           path="/admin"
-          render={props => <PrivateRoute component={Admin} auth={auth} {...props} />}
+          render={props => <Admin auth={auth} {...props} />}
         />
         <Route
           path="/callback"
