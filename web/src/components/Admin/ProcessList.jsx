@@ -39,6 +39,9 @@ class ProcessList extends Component {
                   <tr>
                     <th>Id</th>
                     <th>Firma</th>
+                    <th>Start</th>
+                    <th>Ende</th>
+                    <th>Status</th>
                     <th>&nbsp;</th>
                   </tr>
                 </thead>

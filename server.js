@@ -69,11 +69,11 @@ app.route('/api/v1/feedbackers')
   .delete(feedbacker.deleteFeedbackers)
   .post(feedbacker.addFeedbacker);
 
-app.route('/feedbacker/api/v1/feedbackers/:feedbackerid')
+app.route('/api/v1/feedbackers/:feedbackerid')
   .get(feedbacker.getFeedbacker)
   .delete(feedbacker.deleteFeedbacker);
 
-app.route('/feedbacker/api/v1/singlefeedbacker/:feedbackerid')
+app.route('/api/v1/singlefeedbacker/:feedbackerid')
   .get(feedbacker.getSingleFeedbacker);
 
 app.route('/api/v1/procs/:procid/questionaires')

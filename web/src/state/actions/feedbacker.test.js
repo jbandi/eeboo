@@ -39,7 +39,7 @@ describe('test feedbacker actions', () => {
 
   it('should receive a feedbacker and handle coorect action', () => {
     fetchMock
-      .getOnce('api/v1/singlefeedbacker/1', {
+      .getOnce('/api/v1/singlefeedbacker/1', {
         body,
         headers: { 'content-type': 'application/json' },
       });

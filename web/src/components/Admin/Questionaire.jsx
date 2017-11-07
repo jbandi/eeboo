@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-class Questionaire extends Component {
-
-  render() {
-    return (
-      <div>
-        <pre>questions?</pre>
-      </div>
-    );
-  }
-}
+const Questionaire = () => (
+  <div>
+    <pre>questions?</pre>
+  </div>
+);
 
 export default Questionaire;

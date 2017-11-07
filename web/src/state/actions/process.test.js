@@ -23,7 +23,7 @@ describe('test process actions', () => {
 
   it('should receive list of process Ids', () => {
     fetchMock
-      .getOnce('api/v1/procs', {
+      .getOnce('/api/v1/procs', {
         body,
         headers: { 'content-type': 'application/json' },
       });

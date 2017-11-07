@@ -17,7 +17,7 @@ function receiveProcs(procs) {
 export function fetchProcs() {
   return (dispatch) => {
     dispatch(requestProcs());
-    return fetch('api/v1/procs')
+    return fetch('/api/v1/procs')
       .then(
         response => response.json(),
         error => console.log('An error occured while receiving process list', error),

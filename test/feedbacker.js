@@ -109,7 +109,7 @@ describe('Feedbackers', () => {
     it('it should GET a feedbacker by the given id', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
         chai.request(server)
-          .get(`/feedbacker/api/v1/feedbackers/${feedbacker1.id}`)
+          .get(`/api/v1/feedbackers/${feedbacker1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -128,7 +128,7 @@ describe('Feedbackers', () => {
   describe('/GET/:id single feedbacker', () => {
     it('it should GET empty objects if feedbacker not found', (done) => {
       chai.request(server)
-        .get(`/feedbacker/api/v1/singlefeedbacker/${feedbacker1.id}`)
+        .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -141,7 +141,7 @@ describe('Feedbackers', () => {
     it('it should GET empty proc if proc not found', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
         chai.request(server)
-          .get(`/feedbacker/api/v1/singlefeedbacker/${feedbacker1.id}`)
+          .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -156,7 +156,7 @@ describe('Feedbackers', () => {
       appState.addFeedbacker(feedbacker1).then(() => {
         appState.addProc(proc).then(() => {
           chai.request(server)
-            .get(`/feedbacker/api/v1/singlefeedbacker/${feedbacker1.id}`)
+            .get(`/api/v1/singlefeedbacker/${feedbacker1.id}`)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -177,7 +177,7 @@ describe('Feedbackers', () => {
     it('it should GET a feedbacker by the given id', (done) => {
       appState.addFeedbacker(feedbacker1).then(() => {
         chai.request(server)
-          .delete(`/feedbacker/api/v1/feedbackers/${feedbacker1.id}`)
+          .delete(`/api/v1/feedbackers/${feedbacker1.id}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');

@@ -12,7 +12,10 @@ const routes = [
     main: () => <Questionaire />,
   },
   { path: '/admin/proc/:id/feedbackers',
-    main: () => <h2>Feedbackers</h2>,
+    main: () => <h2>Feedbackgeber</h2>,
+  },
+  { path: '/admin/proc/:id/clients',
+    main: () => <h2>Feedbacknehmer</h2>,
   },
   { path: '/admin/proc/:id/analysis',
     main: () => <h2>Analyis</h2>,
@@ -25,6 +28,11 @@ const routes = [
 class ProcessDetail extends Component {
   static propTypes = {
     auth: PropTypes.instanceOf(Auth).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }),
+    }).isRequired,
   }
 
   componentWillMount() {
@@ -40,25 +48,34 @@ class ProcessDetail extends Component {
   }
 
   render() {
-    const id = this.props.id;
+    const id = this.props.match.params.id;
     return (
       <Grid className="home-content">
+        <Row>
+          <Col>
+            Feedbackprozess: {id}
+          </Col>
+        </Row>
+        <hr />
         <Row>
           <Col md={2}>
             <Row>
               <Col>
                 <ListGroup>
                   <LinkContainer to={`/admin/proc/${id}/questionaires`}>
-                    <ListGroupItem eventKey={1}>Fragebogen</ListGroupItem>
+                    <ListGroupItem eventkey={1}>Fragebogen</ListGroupItem>
                   </LinkContainer>
-                  <LinkContainer to="/admin/proc/1/feedbackers">
-                    <ListGroupItem eventKey={2}>Feedbackers</ListGroupItem>
+                  <LinkContainer to={`/admin/proc/${id}/feedbackers`}>
+                    <ListGroupItem eventkey={2}>Feedbackgeber</ListGroupItem>
                   </LinkContainer>
-                  <LinkContainer to="/admin/proc/1/analysis">
-                    <ListGroupItem eventKey={2}>Analyse</ListGroupItem>
+                  <LinkContainer to={`/admin/proc/${id}/clients`}>
+                    <ListGroupItem eventkey={3}>Feedbacknehmer</ListGroupItem>
                   </LinkContainer>
-                  <LinkContainer to="/admin/proc/1/data">
-                    <ListGroupItem eventKey={2}>Stammdaten</ListGroupItem>
+                  <LinkContainer to={`/admin/proc/${id}/analysis`}>
+                    <ListGroupItem eventkey={4}>Analyse</ListGroupItem>
+                  </LinkContainer>
+                  <LinkContainer to={`/admin/proc/${id}/data`}>
+                    <ListGroupItem eventkey={5}>Stammdaten</ListGroupItem>
                   </LinkContainer>
                 </ListGroup>
               </Col>

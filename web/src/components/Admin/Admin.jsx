@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Auth from './../../services/Auth/Auth';
 import ProcessList from './../../containers/Admin/ProcessList';
-import ProcessDetail from './ProcessDetail';
 
 class Admin extends Component {
   static propTypes = {

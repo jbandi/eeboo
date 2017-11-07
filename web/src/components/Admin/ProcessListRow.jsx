@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
 
 const ProcessListRow = props => (
   <tr>
@@ -11,15 +10,27 @@ const ProcessListRow = props => (
       {props.process.company}
     </td>
     <td>
-      <Button onClick={() => this.props.setId(1)}>Details</Button>
+      {props.process.start}
+    </td>
+    <td>
+      {props.process.end}
+    </td>
+    <td>
+      {props.process.state}
+    </td>
+    <td>
+      <a href={`/admin/proc/${props.process.id}/questionaires`}>Detail</a>
     </td>
   </tr>
 );
 
 ProcessListRow.propTypes = {
   process: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    company: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    company: PropTypes.string,
+    start: PropTypes.string,
+    end: PropTypes.string,
+    state: PropTypes.string,
   }).isRequired,
 };
 

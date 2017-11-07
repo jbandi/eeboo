@@ -33,13 +33,18 @@ class Header extends Component {
               <LinkContainer to="/home">
                 <NavItem eventKey={1}>Home</NavItem>
               </LinkContainer>
-              <LinkContainer to="/about">
-                <NavItem eventKey={2}>About</NavItem>
-              </LinkContainer>
+              {
+                !isAuthenticated() && (
+                  <LinkContainer to="/about">
+                    <NavItem eventKey={2}>About</NavItem>
+                  </LinkContainer>
+                )
+              }
+
               {
                 isAuthenticated() && userHasRoles(['admin']) && (
                   <LinkContainer to="/admin">
-                    <NavItem eventKey={3}>Admin</NavItem>
+                    <NavItem eventKey={3}>Prozesse</NavItem>
                   </LinkContainer>
                 )
               }

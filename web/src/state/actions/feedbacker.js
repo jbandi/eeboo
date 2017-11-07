@@ -45,7 +45,7 @@ function receiveFeedbacker(data) {
 export function fetchFeedbacker(id) {
   return (dispatch) => {
     dispatch(requestFeedbacker());
-    return fetch(`api/v1/singlefeedbacker/${id}`)
+    return fetch(`/api/v1/singlefeedbacker/${id}`)
       .then(
         response => response.json(),
         error => console.log('An error occured.', error),
