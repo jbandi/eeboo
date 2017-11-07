@@ -5,6 +5,8 @@ import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../../services/Auth/Auth';
 import Questionaire from './Questionaire';
+import Client from './../../containers/Admin/Client';
+import { fetchProcs } from '../../state/actions/process';
 
 
 const routes = [
@@ -12,10 +14,10 @@ const routes = [
     main: () => <Questionaire />,
   },
   { path: '/admin/proc/:id/feedbackers',
-    main: () => <h2>Feedbackgeber</h2>,
+    main: () => <h2>Feedbacker</h2>,
   },
   { path: '/admin/proc/:id/clients',
-    main: () => <h2>Feedbacknehmer</h2>,
+    main: id => <Client procId={id} />,
   },
   { path: '/admin/proc/:id/analysis',
     main: () => <h2>Analyis</h2>,
@@ -88,7 +90,7 @@ class ProcessDetail extends Component {
                   key={route.path}
                   path={route.path}
                   exact={route.exact}
-                  component={route.main}
+                  component={() => route.main(id)}
                 />
               ))}
             </div>

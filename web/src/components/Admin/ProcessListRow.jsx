@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ProcessListRow = props => (
@@ -18,8 +19,8 @@ const ProcessListRow = props => (
     <td>
       {props.process.state}
     </td>
-    <td>
-      <a href={`/admin/proc/${props.process.id}/questionaires`}>Detail</a>
+    <td className="detail-link">
+      <Link to={`admin/proc/${props.process.id}/questionaires`}>Details</Link>
     </td>
   </tr>
 );

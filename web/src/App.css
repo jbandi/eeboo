@@ -49,3 +49,15 @@
 li:hover {
   background-color: lightgray;
 }
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: left;
+}
+
+.detail-link {
+  text-align: center;
+}

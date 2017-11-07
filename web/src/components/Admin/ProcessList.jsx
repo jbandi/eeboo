@@ -34,7 +34,7 @@ class ProcessList extends Component {
           <Col md={2} />
           <Col md={8}>
             {(!this.props.procs.length <= 0)
-              ? <Table striped bordered hover>
+              ? <Table striped bordered hover responsive>
                 <thead>
                   <tr>
                     <th>Id</th>
