@@ -6,8 +6,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../../services/Auth/Auth';
 import Questionaire from './Questionaire';
 import Client from './../../containers/Admin/Client';
-import { fetchProcs } from '../../state/actions/process';
-
 
 const routes = [
   { path: '/admin/proc/:id/questionaires',

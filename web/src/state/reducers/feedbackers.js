@@ -1,7 +1,6 @@
 import {
   RECEIVE_FEEDBACKER,
   REQUEST_FEEDBACKER,
-  UPDATE_ANSWER,
 } from '../actions/feedbacker';
 
 // import { defaultFeedbacker } from './defaultState';

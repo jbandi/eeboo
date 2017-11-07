@@ -1,4 +1,4 @@
-import { getContextIds, getContextById, getContentByLanguage } from './context';
+import { getContextById, getContentByLanguage } from './context';
 
 describe('test selectors for feedbackers', () => {
   const contexts = {

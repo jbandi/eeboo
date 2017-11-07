@@ -1,5 +1,4 @@
 import {
-  getUniqueContextIds,
   getQuestionById,
   getQuestionsByContextId,
   countAnswersByContextId,
@@ -7,7 +6,7 @@ import {
   getRoleById,
 } from './questionaire';
 
-import feedbacker from './feedbacker-data';
+import { feedbacker } from './feedbacker-data';
 
 describe('test selectors for questionairies', () => {
   const questions = {
