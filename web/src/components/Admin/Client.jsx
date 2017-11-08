@@ -5,6 +5,11 @@ import { Table } from 'react-bootstrap';
 
 const Client = props => (
   <div>
+    <p align="right">
+      <Link to="#">import</Link> |&nbsp;
+      <Link to="#">export</Link> |&nbsp;
+      <Link to="#">add</Link>
+    </p>
     <Table responsive striped hover bordered>
       <thead>
         <tr>

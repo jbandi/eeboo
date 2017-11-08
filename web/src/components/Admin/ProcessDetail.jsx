@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../../services/Auth/Auth';
+import { fetchProcs } from './../../state/actions/process';
 import Questionaire from './Questionaire';
 import Client from './../../containers/Admin/Client';
 
@@ -33,6 +34,7 @@ class ProcessDetail extends Component {
         id: PropTypes.string.isRequired,
       }),
     }).isRequired,
+    dispatch: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
@@ -45,6 +47,7 @@ class ProcessDetail extends Component {
     } else {
       this.setState({ profile: userProfile });
     }
+    this.props.dispatch(fetchProcs());
   }
 
   render() {

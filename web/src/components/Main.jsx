@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from './Home';
 import About from './About';
 import Admin from './Admin/Admin';
-import ProcessDetail from './Admin/ProcessDetail';
+import ProcessDetail from './../containers/Admin/ProcessDetail';
 import FeedbackerWithId from './../containers/Feedbacker/Feedbacker';
 import Callback from './../Callback/Callback';
 
@@ -78,11 +78,11 @@ const Main = () => (
         <Route
           exact
           path="/admin"
-          render={props => <Admin auth={auth} {...props} />}
+          render={props => <PrivateRoute component={Admin} auth={auth} {...props} />}
         />
         <Route
           path="/admin/proc/:id"
-          render={props => <ProcessDetail auth={auth} {...props} />}
+          render={props => <PrivateRoute component={ProcessDetail} auth={auth} {...props} />}
         />
         <Route
           path="/callback"
