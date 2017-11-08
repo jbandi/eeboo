@@ -2,6 +2,8 @@ import {
   getProcs,
   getProcess,
   getClients,
+  getQuestionaires,
+  getQuestionaire,
 } from './process';
 
 describe('test selectors for processes', () => {
@@ -15,14 +17,22 @@ describe('test selectors for processes', () => {
             client2: { id: 'client2' },
           },
           id: '1',
-          questionaires: {},
+          questionaires: {
+            1: {
+              id: 1,
+            },
+          },
         },
         2: {
           clients: {
             client1: { id: 'client1' },
           },
           id: '2',
-          questionaires: {},
+          questionaires: {
+            1: {
+              id: 1,
+            },
+          },
         },
       },
     },
@@ -33,7 +43,7 @@ describe('test selectors for processes', () => {
   });
 
   it('it should return an empty list if no procs found', () => {
-    expect(getProcs({})).toEqual([]);
+    expect(getProcs({}).length).toEqual(0);
   });
 
   it('it should return a process by Id', () => {
@@ -42,5 +52,21 @@ describe('test selectors for processes', () => {
 
   it('it should return a list of clients for a specific process', () => {
     expect(getClients(state, 1)[1].id).toEqual('client2');
+  });
+
+  it('it should return an empty list if process id not found', () => {
+    expect(getClients(state, 3).length).toEqual(0);
+  });
+
+  it('it should return a list of questionaires for a specific process', () => {
+    expect(getQuestionaires(state, 1)[0].id).toEqual(1);
+  });
+
+  it('it should return an empty list if procId not found', () => {
+    expect(getQuestionaires(state, 3).length).toEqual(0);
+  });
+
+  it('it should return specific questionaire', () => {
+    expect(getQuestionaire(state, 2, 1).id).toEqual(1);
   });
 });

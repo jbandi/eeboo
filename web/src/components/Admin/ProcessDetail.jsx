@@ -5,12 +5,12 @@ import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../../services/Auth/Auth';
 import { fetchProcs } from './../../state/actions/process';
-import Questionaire from './Questionaire';
+import QuestionaireList from './../../containers/Admin/QuestionaireList';
 import Client from './../../containers/Admin/Client';
 
 const routes = [
   { path: '/admin/proc/:id/questionaires',
-    main: () => <Questionaire />,
+    main: id => <QuestionaireList procId={id} />,
   },
   { path: '/admin/proc/:id/feedbackers',
     main: () => <h2>Feedbacker</h2>,

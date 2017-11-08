@@ -18,3 +18,16 @@ export const getClients = (state, procId) => {
   const clients = idx(state, _ => _.process.byHash[procId].clients) || [];
   return Object.keys(clients).map(k => clients[k]);
 };
+
+// get a list of questionaires for a specific process
+// return array
+export const getQuestionaires = (state, procId) => {
+  const questionaires = idx(state, _ => _.process.byHash[procId].questionaires) || [];
+  return Object.keys(questionaires).map(k => questionaires[k]);
+};
+
+// get a specific questionaire
+// return object
+export const getQuestionaire = (state, procId, questionaireId) => (
+  idx(state, _ => _.process.byHash[procId].questionaires[questionaireId]) || {}
+);
