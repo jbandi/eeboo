@@ -22,3 +22,6 @@ yarn-error.log*
 
 # firebase
 # eeboo-skillsgarden*.json
+
+# nyc
+.nyc_output

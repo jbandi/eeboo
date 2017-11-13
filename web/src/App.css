@@ -58,6 +58,10 @@ td {
   text-align: left;
 }
 
+.td-center {
+  text-align: center;
+}
+
 .detail-link {
   text-align: center;
 }
