@@ -5,6 +5,7 @@ import expect from 'expect';
 
 import {
   fetchProcs,
+  addProc,
   REQUEST_PROCS,
   RECEIVE_PROCS,
 } from './process';
@@ -38,6 +39,24 @@ describe('test process actions', () => {
 
     return store.dispatch(fetchProcs()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('should add a new process', () => {
+    fetchMock
+      .postOnce('/api/v1/procs', {
+        body: { message: 'Process with id  added' },
+        headers: { 'content-type': 'application/json' },
+      });
+
+    const store = mockStore({});
+
+    return store.dispatch(addProc({
+      company: 'pf',
+      start: '4',
+      end: '5',
+    })).then(() => {
+      expect(fetchMock.called('/api/v1/procs')).toBe(true);
     });
   });
 });

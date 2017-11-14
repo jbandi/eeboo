@@ -56,7 +56,7 @@ class ProcessDetail extends Component {
   render() {
     const id = this.props.match.params.id;
     return (
-      <Grid className="home-content">
+      <Grid className="process-detail">
         <Row>
           <Col>
             Feedbackprozess: {id}

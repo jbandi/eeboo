@@ -20,7 +20,8 @@ const ProcessListRow = props => (
       {props.process.state}
     </td>
     <td className="detail-link">
-      <Link to={`admin/proc/${props.process.id}/questionaires`}>Details</Link>
+      <Link to={`admin/proc/${props.process.id}/questionaires`}>Details</Link> |&nbsp;
+      <Link to="/admin" onClick={() => props.deleteProc(props.process.id)}>Löschen</Link>
     </td>
   </tr>
 );
@@ -33,6 +34,7 @@ ProcessListRow.propTypes = {
     end: PropTypes.string,
     state: PropTypes.string,
   }).isRequired,
+  deleteProc: PropTypes.func.isRequired,
 };
 
 export default ProcessListRow;

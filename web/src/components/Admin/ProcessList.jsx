@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Table, Grid, Row, Col } from 'react-bootstrap';
 import Auth from './../../services/Auth/Auth';
 import { fetchProcs } from '../../state/actions/process';
@@ -31,8 +32,11 @@ class ProcessList extends Component {
     return (
       <Grid>
         <Row>
-          <Col md={2} />
-          <Col md={8}>
+          <Col md={1} />
+          <Col md={10}>
+            <p align="right">
+              <Link to="/admin/proc">add</Link>
+            </p>
             {(!this.props.procs.length <= 0)
               ? <Table striped bordered hover responsive>
                 <thead>
@@ -54,7 +58,7 @@ class ProcessList extends Component {
               : <div>fetching process list</div>
             }
           </Col>
-          <Col md={2} />
+          <Col md={1} />
         </Row>
       </Grid>
     );

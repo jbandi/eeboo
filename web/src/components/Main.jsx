@@ -7,6 +7,7 @@ import About from './About';
 import Admin from './Admin/Admin';
 import ProcessDetail from './../containers/Admin/ProcessDetail';
 import FeedbackerWithId from './../containers/Feedbacker/Feedbacker';
+import ProcessAdd from './../containers/Admin/ProcessAdd';
 import Callback from './../Callback/Callback';
 
 import Auth from './../services/Auth/Auth';
@@ -79,6 +80,11 @@ const Main = () => (
           exact
           path="/admin"
           render={props => <PrivateRoute component={Admin} auth={auth} {...props} />}
+        />
+        <Route
+          exact
+          path="/admin/proc"
+          render={props => <PrivateRoute component={ProcessAdd} auth={auth} {...props} />}
         />
         <Route
           path="/admin/proc/:id"
