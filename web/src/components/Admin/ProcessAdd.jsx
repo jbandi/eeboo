@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col, FormGroup, FormControl, Table, Button } from 'react-bootstrap';
+import Datetime from 'react-datetime';
+import moment from 'moment';
+import { Grid, Row, Col, FormGroup, FormControl, Table, Button, ControlLabel } from 'react-bootstrap';
 import Auth from './../../services/Auth/Auth';
+
+import './datepicker.css';
 
 class ProcessAdd extends Component {
   static propTypes = {
@@ -13,8 +17,8 @@ class ProcessAdd extends Component {
     super(props);
     this.state = {
       company: '',
-      start: '',
-      end: '',
+      start: moment().valueOf(),
+      end: moment().valueOf(),
     };
   }
 
@@ -30,15 +34,14 @@ class ProcessAdd extends Component {
     }
   }
 
-  handleCompany = (e) => {
-    this.setState({ company: e.target.value });
-  }
-  handleStart = (e) => {
-    this.setState({ start: e.target.value });
-  }
-  handleEnd = (e) => {
-    this.setState({ end: e.target.value });
-  }
+  getStartValidation = () => {
+    if (!moment(this.state.start).isValid()) return 'error';
+    return null;
+  };
+  getEndValidation = () => {
+    if (!moment(this.state.end).isValid()) return 'error';
+    return null;
+  };
 
   handleSubmit = (event) => {
     this.props.addProc({
@@ -49,56 +52,80 @@ class ProcessAdd extends Component {
     event.preventDefault();
   }
 
+  handleCompany = (e) => {
+    this.setState({ company: e.target.value });
+  }
+
+  handleStart = (e) => {
+    this.setState({ start: e.valueOf() });
+  }
+  handleEnd = (e) => {
+    this.setState({ end: e.valueOf() });
+  }
+
   render() {
     return (
       <Grid className="process-detail">
         <Row>
           <Col md={2} />
           <Col md={8}>
-            <FormGroup
-              controlId="processAdd"
-            >
-              <Table>
-                <tbody>
-                  <tr>
-                    <td>Company:</td>
-                    <td>
-                      <FormControl
-                        type="text"
-                        value={this.state.company}
-                        onChange={this.handleCompany}
-                        placeholder="Company"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Start Datum:</td>
-                    <td>
-                      <FormControl
-                        type="text"
-                        value={this.state.start}
+            <Table>
+              <tbody>
+                <tr>
+                  <td>Company:</td>
+                  <td>
+                    <FormControl
+                      type="text"
+                      value={this.state.company}
+                      onChange={this.handleCompany}
+                      placeholder="Company"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Start Datum:</td>
+                  <td>
+                    <FormGroup
+                      controlId="procAddStart"
+                      validationState={this.getStartValidation()}
+                    >
+                      <ControlLabel>Start Date</ControlLabel>
+                      <Datetime
+                        id="example-datepicker"
+                        closeOnSelect
+                        value={this.state.value}
                         onChange={this.handleStart}
-                        placeholder="Start"
+                        dateFormat="DD.MM.YYYY"
+                        timeFormat={false}
+                        defaultValue={moment().valueOf()}
                       />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>End Datum:</td>
-                    <td>
-                      <FormControl
-                        type="text"
-                        value={this.state.end}
+                    </FormGroup>
+                  </td>
+                </tr>
+                <tr>
+                  <td>End Datum:</td>
+                  <td>
+                    <FormGroup
+                      controlId="procAddEnd"
+                      validationState={this.getEndValidation()}
+                    >
+                      <Datetime
+                        id="example-datepicker"
+                        closeOnSelect
+                        value={this.state.value}
                         onChange={this.handleEnd}
-                        placeholder="End"
+                        dateFormat="DD.MM.YYYY"
+                        timeFormat={false}
+                        defaultValue={moment().valueOf()}
                       />
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-              <p align="right">
-                <Button onClick={this.handleSubmit}>Add</Button>
-              </p>
-            </FormGroup>
+                    </FormGroup>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+            <p align="right">
+              <Button onClick={this.handleSubmit}>Add</Button>
+            </p>
           </Col>
           <Col md={2} />
         </Row>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import PropTypes from 'prop-types';
+
+import './datepicker.css';
 
 const ProcessListRow = props => (
   <tr>
@@ -11,10 +14,10 @@ const ProcessListRow = props => (
       {props.process.company}
     </td>
     <td>
-      {props.process.start}
+      {moment(props.process.start).format('DD.MM.YYYY')}
     </td>
     <td>
-      {props.process.end}
+      {moment(props.process.end).format('DD.MM.YYYY')}
     </td>
     <td>
       {props.process.state}
@@ -30,8 +33,8 @@ ProcessListRow.propTypes = {
   process: PropTypes.shape({
     id: PropTypes.string,
     company: PropTypes.string,
-    start: PropTypes.string,
-    end: PropTypes.string,
+    start: PropTypes.number,
+    end: PropTypes.number,
     state: PropTypes.string,
   }).isRequired,
   deleteProc: PropTypes.func.isRequired,
