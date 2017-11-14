@@ -6,8 +6,10 @@ import expect from 'expect';
 import {
   fetchProcs,
   addProc,
+  deleteQuestion,
   REQUEST_PROCS,
   RECEIVE_PROCS,
+  DELETE_QUESTION,
 } from './process';
 
 
@@ -40,6 +42,16 @@ describe('test process actions', () => {
     return store.dispatch(fetchProcs()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('should delete a specific question', () => {
+    const expectedAction = {
+      type: DELETE_QUESTION,
+      procId: 1,
+      questionaireId: 2,
+      questionId: 3,
+    };
+    expect(deleteQuestion(1, 2, 3)).toEqual(expectedAction);
   });
 
   it('should add a new process', () => {

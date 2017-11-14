@@ -11,12 +11,18 @@ const QuestionaireDetail = props => (
   <div>
     <Panel header={`Fragebogen: ${props.questionaire.id}`}>
       <Tabs defaultActiveKey={1} id="questionaire-tabs">
-        <Tab eventKey={1} title="Fragen"><QuestionTab questionaire={props.questionaire} /></Tab>
+        <Tab eventKey={1} title="Fragen">
+          <QuestionTab
+            questionaire={props.questionaire}
+            procId={props.procId}
+            deleteQuestion={props.deleteQuestion}
+          />
+        </Tab>
         <Tab eventKey={2} title="Themen"><ContextTab questionaire={props.questionaire} /></Tab>
         <Tab eventKey={3} title="Rollen"><RoleTab questionaire={props.questionaire} /></Tab>
       </Tabs>
       <p align="right">
-        <Button>save</Button>
+        <Button onClick={() => props.save(props.procId)}>save</Button>
       </p>
     </Panel>
   </div>
@@ -27,6 +33,9 @@ QuestionaireDetail.propTypes = {
     id: PropTypes.number,
     questions: PropTypes.shape({}),
   }).isRequired,
+  procId: PropTypes.string.isRequired,
+  deleteQuestion: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
 };
 
 export default QuestionaireDetail;

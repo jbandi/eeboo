@@ -26,7 +26,17 @@ export const QuestionTab = props => (
           <td>{idx(q, _ => _.contents[0].content) || 'no content'}</td>
           <td>{getContentByLanguage(props.questionaire.contexts, q.context, 'de').content}</td>
           <td className="td-center">{q.scores}</td>
-          <td className="detail-link"><Link to="#">Edit</Link> | <Link to="#">Delete</Link></td>
+          <td className="detail-link">
+            <Link to="#">Edit</Link> |&nbsp;
+            <Link
+              to="#"
+              onClick={() => props.deleteQuestion({
+                procId: props.procId,
+                questionaireId: props.questionaire.id,
+                questionId: q.id,
+              })}
+            >Delete</Link>
+          </td>
         </tr>
       ))}
     </tbody>

@@ -1,8 +1,11 @@
 import uuidv4 from 'uuid/v4';
 import history from '../../services/history';
 
+import { getProcess } from '../selectors/process';
+
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
+export const DELETE_QUESTION = 'process/DELETE_QUESTION';
 
 function requestProcs() {
   return {
@@ -14,6 +17,15 @@ function receiveProcs(procs) {
   return {
     type: RECEIVE_PROCS,
     procs,
+  };
+}
+
+export function deleteQuestion(procId, questionaireId, questionId) {
+  return {
+    type: DELETE_QUESTION,
+    procId,
+    questionaireId,
+    questionId,
   };
 }
 
@@ -33,15 +45,22 @@ export function fetchProcs() {
 
 export function addProc(process) {
   return () => {
-    const body = {
-      id: uuidv4(),
-      company: process.company,
-      start: process.start,
-      end: process.end,
-      clients: {},
-      questionaires: {},
-      state: 'configure',
-    };
+    let body = {};
+    if (process.id) {
+      // it is an existing process -> update existing
+      body = process;
+    } else {
+      // it is a new process -> add new
+      body = {
+        id: uuidv4(),
+        company: process.company,
+        start: process.start,
+        end: process.end,
+        clients: {},
+        questionaires: {},
+        state: 'configure',
+      };
+    }
     return fetch('/api/v1/procs', {
       method: 'POST',
       headers: {
@@ -53,9 +72,17 @@ export function addProc(process) {
       .then(
         response => response.json(),
         error => console.log('An error occured while posting process', error),
-      ).then(
-        history.replace('/admin'),
-      );
+      ).then(() => {
+        if (!process.id) {
+          history.replace('/admin');
+        }
+      });
+  };
+}
+
+export function updateProc(procId) {
+  return (dispatch, getState) => {
+    dispatch(addProc(getProcess(getState(), procId)));
   };
 }
 
