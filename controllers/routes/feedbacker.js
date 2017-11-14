@@ -42,6 +42,12 @@ function getSingleFeedbacker(req, res) {
   });
 }
 
+function getFeedbackerByProcId(req, res) {
+  appState.getFeedbackerByProcId(req.params.procid).then((data) => {
+    res.json(data.feedbackers);
+  });
+}
+
 module.exports = {
   getFeedbackers,
   addFeedbacker,
@@ -49,4 +55,5 @@ module.exports = {
   deleteFeedbacker,
   deleteFeedbackers,
   getSingleFeedbacker,
+  getFeedbackerByProcId,
 };

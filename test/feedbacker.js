@@ -31,6 +31,11 @@ describe('Feedbackers', () => {
     },
   };
 
+  const feedbacker2 = {
+    id: '1',
+    proc: 2,
+  };
+
   const proc = {
     id: 1,
     clients: {
@@ -104,6 +109,27 @@ describe('Feedbackers', () => {
       });
     });
   });
+
+  /*
+  * Test /GET feedbackers by proc Id
+  */
+  describe('/GET feedbackers', () => {
+    it('it should GET all the feedbackers by process Id', (done) => {
+      appState.addFeedbacker(feedbacker1).then(() => {
+        appState.addFeedbacker(feedbacker2).then(() => {
+          chai.request(server)
+            .get('/api/v1/procs/2/feedbackers')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('array');
+              res.body.length.should.be.eql(1);
+              done();
+            });
+        });
+      });
+    });
+  });
+
   // TEST the /GET/:id for feedbacker
   describe('/GET/:id feedbacker', () => {
     it('it should GET a feedbacker by the given id', (done) => {

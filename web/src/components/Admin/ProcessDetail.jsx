@@ -5,18 +5,20 @@ import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Auth from './../../services/Auth/Auth';
 import { fetchProcs } from './../../state/actions/process';
+import { fetchFeedbackersByProcId } from './../../state/actions/feedbacker';
 import QuestionaireList from './../../containers/Admin/QuestionaireList';
-import Client from './../../containers/Admin/Client';
+import ClientList from './../../containers/Admin/ClientList';
+import FeedbackerList from './../../containers/Admin/FeedbackerList';
 
 const routes = [
   { path: '/admin/proc/:id/questionaires',
     main: id => <QuestionaireList procId={id} />,
   },
   { path: '/admin/proc/:id/feedbackers',
-    main: () => <h2>Feedbacker</h2>,
+    main: id => <FeedbackerList procId={id} />,
   },
   { path: '/admin/proc/:id/clients',
-    main: id => <Client procId={id} />,
+    main: id => <ClientList procId={id} />,
   },
   { path: '/admin/proc/:id/analysis',
     main: () => <h2>Analyis</h2>,
@@ -48,6 +50,7 @@ class ProcessDetail extends Component {
       this.setState({ profile: userProfile });
     }
     this.props.dispatch(fetchProcs());
+    this.props.dispatch(fetchFeedbackersByProcId(this.props.match.params.id));
   }
 
   render() {

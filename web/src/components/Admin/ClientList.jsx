@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 
-const Client = props => (
+const ClientList = props => (
   <div>
     <p align="right">
       <Link to="#">import</Link> |&nbsp;
@@ -36,8 +36,8 @@ const Client = props => (
   </div>
 );
 
-Client.propTypes = {
+ClientList.propTypes = {
   clients: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-export default Client;
+export default ClientList;

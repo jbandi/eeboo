@@ -1,5 +1,7 @@
 export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
 export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
+export const REQUEST_FEEDBACKERS = 'feebacker/REQUEST_FEEDBACKERS';
+export const RECEIVE_FEEDBACKERS = 'feedbacker/RECEIVE_FEEDBACKERS';
 export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
 export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 export const CLEAR_ANSWERS = 'feedbacker/CLEAR_ANSWERS';
@@ -42,6 +44,19 @@ function receiveFeedbacker(data) {
   };
 }
 
+function requestFeedbackers() {
+  return {
+    type: REQUEST_FEEDBACKERS,
+  };
+}
+
+function receiveFeedbackers(data) {
+  return {
+    type: RECEIVE_FEEDBACKERS,
+    feedbackers: data,
+  };
+}
+
 export function fetchFeedbacker(id) {
   return (dispatch) => {
     dispatch(requestFeedbacker());
@@ -52,6 +67,20 @@ export function fetchFeedbacker(id) {
       )
       .then(json =>
         dispatch(receiveFeedbacker(json)),
+      );
+  };
+}
+
+export function fetchFeedbackersByProcId(procId) {
+  return (dispatch) => {
+    dispatch(requestFeedbackers());
+    return fetch(`/api/v1/procs/${procId}/feedbackers`)
+      .then(
+        response => response.json(),
+        error => console.log('An error occured.', error),
+      )
+      .then(json =>
+        dispatch(receiveFeedbackers(json)),
       );
   };
 }

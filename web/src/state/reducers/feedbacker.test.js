@@ -4,11 +4,13 @@ import feedbacker from './feedbacker';
 import {
   REQUEST_FEEDBACKER,
   RECEIVE_FEEDBACKER,
+  REQUEST_FEEDBACKERS,
+  RECEIVE_FEEDBACKERS,
   UPDATE_ANSWER,
   UPDATE_ROLE,
 } from '../actions/feedbacker';
 
-describe('feedbacker reducer', () => {
+describe('feedbacker reducer for a single feedbacker', () => {
   const state = {
     feedbacker: {
       id: 1,
@@ -95,5 +97,33 @@ describe('feedbacker reducer', () => {
       roleId: 'role5',
     });
     expect(changedState.clients.client1.role).toBe('role5');
+  });
+});
+
+describe('feedbacker reducer for multiple feedbacker', () => {
+  const state = ({
+    feedbackers: [],
+  });
+  const actionContent = [{
+    id: 'feedbacker1',
+  }, {
+    id: 'feedbacker2',
+  }];
+  deepFreeze(state);
+
+  it('should request a list of feedbackers', () => {
+    const changedState = feedbacker(state, {
+      type: REQUEST_FEEDBACKERS,
+    });
+    expect(changedState.isFetchingFeedbackers).toBe(true);
+  });
+
+  it('should receive a list of feedbackers', () => {
+    const changedState = feedbacker(state, {
+      type: RECEIVE_FEEDBACKERS,
+      feedbackers: actionContent,
+    });
+    expect(changedState.isFetchingFeedbackers).toBe(false);
+    expect(changedState.feedbackers.length).toBe(2);
   });
 });

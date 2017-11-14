@@ -3,13 +3,14 @@ import idx from 'idx';
 import {
   RECEIVE_FEEDBACKER,
   REQUEST_FEEDBACKER,
+  REQUEST_FEEDBACKERS,
+  RECEIVE_FEEDBACKERS,
   UPDATE_ANSWER,
   UPDATE_ROLE,
   CLEAR_ANSWERS,
 } from '../actions/feedbacker';
 
 // import { defaultFeedbacker } from './defaultState';
-
 const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
     case CLEAR_ANSWERS:
@@ -63,6 +64,16 @@ const feedbacker = (state = { language: 'de' }, action) => {
         mail: idx(action, _ => _.feedbacker.mail) || '',
         proc: idx(action, _ => _.proc) || {},
         clients: idx(action, _ => _.feedbacker.clients) || {},
+      };
+    }
+    case REQUEST_FEEDBACKERS:
+      return Object.assign({}, state, {
+        isFetchingFeedbackers: true,
+      });
+    case RECEIVE_FEEDBACKERS: {
+      return {
+        isFetchingFeedbackers: false,
+        feedbackers: action.feedbackers,
       };
     }
     default:

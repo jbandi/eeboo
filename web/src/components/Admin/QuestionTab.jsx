@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import idx from 'idx';
 
 import { getContentByLanguage } from '../../state/selectors/context';
@@ -11,7 +11,7 @@ const toArray = list => (
 );
 
 export const QuestionTab = props => (
-  <Table bordered>
+  <Table responsive striped hover bordered>
     <thead>
       <tr>
         <th>Frage</th>
@@ -37,7 +37,7 @@ QuestionTab.propTypes = {
   questionaire: PropTypes.shape({
     id: PropTypes.number,
     questions: PropTypes.shape({}),
-    contexts: PropTypes.shape({}),
+    contexts: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
 };
 

@@ -76,6 +76,9 @@ app.route('/api/v1/feedbackers/:feedbackerid')
 app.route('/api/v1/singlefeedbacker/:feedbackerid')
   .get(feedbacker.getSingleFeedbacker);
 
+app.route('/api/v1/procs/:procid/feedbackers')
+  .get(feedbacker.getFeedbackerByProcId);
+
 app.route('/api/v1/procs/:procid/questionaires')
   .get(questionaire.getQuestionaires)
   .delete(questionaire.deleteQuestionaires)

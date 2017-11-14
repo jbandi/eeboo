@@ -9,7 +9,7 @@ const toArray = list => (
 );
 
 export const RoleTab = props => (
-  <Table bordered>
+  <Table responsive striped hover bordered>
     <thead>
       <tr>
         <th>Rolle</th>

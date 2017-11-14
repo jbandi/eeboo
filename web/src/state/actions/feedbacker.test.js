@@ -5,8 +5,11 @@ import expect from 'expect';
 
 import {
   fetchFeedbacker,
+  fetchFeedbackersByProcId,
   REQUEST_FEEDBACKER,
   RECEIVE_FEEDBACKER,
+  REQUEST_FEEDBACKERS,
+  RECEIVE_FEEDBACKERS,
 } from './feedbacker';
 
 
@@ -67,6 +70,50 @@ describe('test feedbacker actions', () => {
     const store = mockStore({ id: 1 });
 
     return store.dispatch(fetchFeedbacker(1)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  const feedbackers = [
+    {
+      clients: {},
+      id: 'feedbacker1',
+      mail: 'feedbacker1@example.com',
+      proc: '1',
+    }, {
+      clients: {},
+      id: 'feedbacker2',
+      mail: 'feedbacker2@example.com',
+      proc: '1',
+    },
+  ];
+
+  it('should receive a list of feedbackers and handle coorect action', () => {
+    fetchMock
+      .getOnce('/api/v1/procs/1/feedbackers', {
+        body: feedbackers,
+        headers: { 'content-type': 'application/json' },
+      });
+
+    const expectedActions = [
+      { type: REQUEST_FEEDBACKERS },
+      { type: RECEIVE_FEEDBACKERS,
+        feedbackers: [{
+          id: 'feedbacker1',
+          clients: {},
+          mail: 'feedbacker1@example.com',
+          proc: '1',
+        }, {
+          id: 'feedbacker2',
+          clients: {},
+          mail: 'feedbacker2@example.com',
+          proc: '1',
+        }],
+      },
+    ];
+    const store = mockStore({ id: 1 });
+
+    return store.dispatch(fetchFeedbackersByProcId('1')).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });

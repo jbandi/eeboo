@@ -54,3 +54,9 @@ export const getContexts = (state, questionaireId) => (
 export const getContextIds = (state, questionaireId) => (
   Object.keys(getContexts(state, questionaireId))
 );
+
+// get a list of feedbackers
+// return array
+export const getFeedbackers = state => (
+  idx(state, _ => _.feedbacker.feedbackers) || []
+);

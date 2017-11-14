@@ -56,6 +56,31 @@ class AppState {
     return `${this.fbProcRef}${procid}/${this.fbQuestionaireRef}`;
   }
 
+  getFeedbackerByProcId(procId) {
+    return new Promise(((resolve) => {
+      const dbReference = db.ref(this.fbFeedbackerRef);
+      dbReference.once('value').then((snapshot) => {
+        dbReference.off('value');
+        const dbSnapshot = snapshot.val();
+        if (dbSnapshot) {
+          const fbFeedbackers = dbSnapshot || [];
+          // map firebase json list to array
+          const feedbackers = Object.keys(fbFeedbackers)
+            .map(k => fbFeedbackers[k])
+            .filter(f => f.proc.toString() === procId);
+          resolve({
+            feedbackers,
+          });
+        } else {
+          // first initialization
+          resolve({
+            feedbackers: [],
+          });
+        }
+      });
+    }));
+  }
+
   getFeedbacker(id) {
     return new Promise(((resolve) => {
       const dbReference = db.ref(this.feedbackerPathById(id));
