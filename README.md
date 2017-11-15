@@ -1,7 +1,10 @@
-This project represents the API & backend Service for the eeboo project
+This project represents API and backend services for the eeboo application.
 
-Below you will find some information on how to perform common tasks
+The main application is implemented with node.js using the express framework. It serves the REACT SPA application under web/build/index.html and provides a RESTful API.
 
+Below you will find some information on how to install the software and perform common tasks
+
+## Table of Contents
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Run](#Run)
@@ -15,61 +18,50 @@ Below you will find some information on how to perform common tasks
 - [Files and Directories](#Files and Directories)
 
 ## Requirements
-
-To build this software you need at least
+To build this software you need at least following packages installed globally on your system:
 * node version >= 8.0.0
 * yarn version >= 0.24.5
 
 ## Installation
-
-Install required software packages and libraries
-
+Install all required software packages and libraries
 ```
  #> yarn install
 ```
-## Run
 
-Run the API service on port 3001
+## Run
+Run the API service on localhost listening on port 3001
 ```
  #> yarn start
 ```
-
 ## Available Scripts
 
 ### `yarn start`
-
 Runs a node.js express server listening on port 3001.
 The Server runs in DEV mode
 
 ### `yarn test`
-
 Runs all tests against a real firebase datastore. The Server runs in TEST mode and connects to a specific Test firebase instance.
 
 ### `yarn start-test`
-
 Runs a node.js express server listening on port 3001
 The Server runs in TEST mode and thus connects to a firebase TEST  database instance. This command is mainly used to debug test cases
 
 ### `yarn lint`
-
 Runs JavaScript linter against all .js files
 
 ### `yarn lint-fix`
-
 Inline fixes linter issues that can be autonomously fixed by the linter
 
 ### `yarn test-coverage`
-
 Runs test cases including coverage information. The code coverage is reported in static html files under directory coverage
 
 ## Files and Directories
-
-main application
+main application file
 ```
  #> server.js
 ```
 
-database models and controllers
+database models and HTTP routes
 ```
  #> controllers/models/
  #> controllers/routes/
@@ -80,11 +72,15 @@ config files
  # config/
 ```
 
-React web application project. This is a completely separate project, running with different configuration and yarn packages
+React web application project. This is a completely separate project. It is running with different configuration and yarn packages
 ```
  #> web/
 ```
-React production build and HTML start page
+README for the REACT project
+```
+ #> web/README.md
+```
+React production build and HTML start page that will be served by the main server.js application
 ```
  #> web/build/
  #> web/build/index.html
