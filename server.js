@@ -14,6 +14,8 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 const company = require('./controllers/routes/company');
 
+const parser = require('./controllers/models/v1/csvParser.js');
+
 // Setup firebase backend
 // const appState = require('./controllers/models/v1/app-state.js');
 
@@ -37,10 +39,11 @@ const checkJwt = jwt({
 });
 
 // parse application/json and look for raw text
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: 'application/json' }));
+app.use('/api/v1/procs/:procid/csvclients', bodyParser.text({ type: 'text/csv' }));
+app.use('/api', bodyParser.json());
+app.use('/api/', bodyParser.urlencoded({ extended: true }));
+app.use('/api', bodyParser.text());
+app.use('/api', bodyParser.json({ type: 'application/json' }));
 
 const logger = (req, res, next) => {
   const { method, url } = req;
@@ -97,6 +100,8 @@ app.route('/api/v1/procs/:procid/clients/:clientid')
   .get(client.getClient)
   .delete(client.deleteClient);
 
+app.route('/api/v1/procs/:procid/csvclients')
+  .post(client.uploadClients);
 
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
 app.get('/api/private', checkJwt, (req, res) => {

@@ -23,6 +23,8 @@ To build this software you need at least following packages installed globally o
 * node version >= 8.0.0
 * yarn version >= 0.24.5
 
+The Admin pages are secured using [AUTH0](https://auth0.com/) Authentication service. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
+
 ## Installation
 Install all required software packages and libraries
 ```

@@ -291,6 +291,19 @@ class AppState {
     }));
   }
 
+  addCSVClient(data, procId) {
+    return new Promise(((resolve, reject) => {
+      const dbReference = db.ref(this.clientPath(procId));
+      dbReference.set(data).then(() => {
+        resolve({
+          message: `Clients to process ${procId} added`,
+        });
+      }).catch(() => {
+        reject(new Error(`Could not add clients to process ${procId}`));
+      });
+    }));
+  }
+
   deleteClient(procId, clientId) {
     const dbReference = db.ref(this.clientPathById(procId, clientId));
     return dbReference.set(null);

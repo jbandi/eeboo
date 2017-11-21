@@ -1,4 +1,5 @@
 const appState = require('./../models/v1/app-state.js');
+const parser = require('./../models/v1/csvParser.js');
 
 function getClients(req, res) {
   appState.getClients(req.params.procid).then((data) => {
@@ -36,10 +37,25 @@ function getClient(req, res) {
   });
 }
 
+function uploadClients(req, res) {
+  parser.parseClient(req.body)
+    .then((clients) => {
+      appState.addCSVClient(clients, req.params.procid).then((data) => {
+        res.json(data);
+      }).catch(() => {
+        res.json({ message: 'Could not add clients to database' });
+      });
+    })
+    .catch((e) => {
+      res.json(({ message: 'Could not import clients', error: e.message }));
+    });
+}
+
 module.exports = {
   getClients,
   addClient,
   getClient,
   deleteClient,
   deleteClients,
+  uploadClients,
 };
