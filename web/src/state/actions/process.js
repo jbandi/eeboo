@@ -7,6 +7,23 @@ export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
 export const DELETE_QUESTION = 'process/DELETE_QUESTION';
 
+export const REQUEST_UPLOAD_CLIENTS = 'process/REQUEST_UPLOAD_CLIENTS';
+export const RECEIVE_UPLOAD_CLIENTS = 'process/RECEIVE_UPLOAD_CLIENTS';
+
+export function requestUploadClients() {
+  return {
+    type: REQUEST_UPLOAD_CLIENTS,
+  };
+}
+
+export function receiveUploadClients(data, procId) {
+  return {
+    type: RECEIVE_UPLOAD_CLIENTS,
+    clients: data.data,
+    procId,
+  };
+}
+
 function requestProcs() {
   return {
     type: REQUEST_PROCS,
@@ -98,4 +115,25 @@ export function deleteProc(id) {
         history.replace('/admin'),
       )
   );
+}
+
+export function uploadClients(procId, csv) {
+  return (dispatch) => {
+    dispatch(requestUploadClients());
+    return fetch(`/api/v1/procs/${procId}/csvclients`, {
+      method: 'POST',
+      headers: {
+        Accept: 'text/csv',
+        'Content-Type': 'text/csv',
+      },
+      body: csv,
+    })
+      .then(
+        response => response.json(),
+        error => console.log('An error occured.', error),
+      )
+      .then(data => (
+        dispatch(receiveUploadClients(data, procId))),
+      );
+  };
 }

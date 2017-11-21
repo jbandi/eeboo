@@ -297,6 +297,7 @@ class AppState {
       dbReference.set(data).then(() => {
         resolve({
           message: `Clients to process ${procId} added`,
+          data,
         });
       }).catch(() => {
         reject(new Error(`Could not add clients to process ${procId}`));

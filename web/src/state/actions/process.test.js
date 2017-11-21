@@ -10,6 +10,9 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
+  REQUEST_UPLOAD_CLIENTS,
+  RECEIVE_UPLOAD_CLIENTS,
+  uploadClients,
 } from './process';
 
 
@@ -22,9 +25,9 @@ describe('test process actions', () => {
     fetchMock.restore();
   });
 
-  const body = ['1', '2'];
 
   it('should receive list of process Ids', () => {
+    const body = ['1', '2'];
     fetchMock
       .getOnce('/api/v1/procs', {
         body,
@@ -69,6 +72,39 @@ describe('test process actions', () => {
       end: '5',
     })).then(() => {
       expect(fetchMock.called('/api/v1/procs')).toBe(true);
+    });
+  });
+
+  it('should upload CSV Client list', () => {
+    const body = {
+      1: {
+        id: 1,
+        name: 'mathu',
+      },
+      2: {
+        id: 2,
+        name: 'susi',
+      },
+    };
+    fetchMock
+      .postOnce('/api/v1/procs/1/csvclients', {
+        body,
+        headers: {
+          accept: 'text/csv',
+          'content-type': 'text/csv' },
+      });
+
+    const expectedActions = [
+      { type: REQUEST_UPLOAD_CLIENTS },
+      { type: RECEIVE_UPLOAD_CLIENTS,
+        clients: body,
+        procId: 1,
+      },
+    ];
+    const store = mockStore({});
+
+    return store.dispatch(uploadClients(1, 'mathu,m\nsusi,w')).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

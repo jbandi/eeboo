@@ -2,6 +2,8 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
+  REQUEST_UPLOAD_CLIENTS,
+  RECEIVE_UPLOAD_CLIENTS,
 } from '../actions/process';
 
 import { removeItem } from '../../utils';
@@ -22,6 +24,23 @@ const process = (state = {}, action) => {
           return map;
         }, {}),
       });
+    case REQUEST_UPLOAD_CLIENTS:
+      return Object.assign({}, state, {
+        isUploadingClients: true,
+      });
+    case RECEIVE_UPLOAD_CLIENTS: {
+      const procId = action.procId;
+      return Object.assign({}, state, {
+        isUploadingClients: false,
+        byHash: {
+          ...state.byHash,
+          [procId]: {
+            ...state.byHash[procId],
+            clients: action.clients,
+          },
+        },
+      });
+    }
     case DELETE_QUESTION: {
       const { procId, questionaireId, questionId } = action;
       return Object.assign({}, state, {
