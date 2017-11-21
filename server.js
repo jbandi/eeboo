@@ -14,8 +14,6 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 const company = require('./controllers/routes/company');
 
-const parser = require('./controllers/models/v1/csvParser.js');
-
 // Setup firebase backend
 // const appState = require('./controllers/models/v1/app-state.js');
 

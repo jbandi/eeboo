@@ -4,12 +4,17 @@ import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 
 class ClientList extends React.Component {
+  static propTypes = {
+    clients: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    handleFileUpload: PropTypes.func.isRequired,
+    procId: PropTypes.string.isRequired,
+  };
+
   focusTextInput = (e) => {
     e.preventDefault();
     // Explicitly focus the text input using the raw DOM API
     this.input.click();
   }
-
 
   render() {
     return (
@@ -23,7 +28,7 @@ class ClientList extends React.Component {
             ref={(ref) => { this.input = ref; }}
             onChange={d => this.props.handleFileUpload(d, this.props.procId)}
           />
-          <a href="#" id="upload_link" onClick={this.focusTextInput}>import</a>
+          <Link to="#" onClick={this.focusTextInput}>import</Link>
         </div>
         <Table responsive striped hover bordered>
           <thead>
@@ -54,11 +59,5 @@ class ClientList extends React.Component {
     );
   }
 }
-
-ClientList.propTypes = {
-  clients: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  handleFileUpload: PropTypes.func.isRequired,
-  procId: PropTypes.string.isRequired,
-};
 
 export default ClientList;
