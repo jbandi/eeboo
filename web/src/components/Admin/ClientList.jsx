@@ -30,6 +30,7 @@ class ClientList extends React.Component {
             <tr>
               <th>Id</th>
               <th>Name</th>
+              <th>Firstname</th>
               <th>Mail</th>
               <th>&nbsp;</th>
             </tr>
@@ -39,6 +40,7 @@ class ClientList extends React.Component {
               <tr key={client.id}>
                 <td>{client.id}</td>
                 <td>{client.name}</td>
+                <td>{client.firstname}</td>
                 <td>{client.mail}</td>
                 <td className="detail-link">
                   <Link to="#">Edit</Link> |&nbsp;
