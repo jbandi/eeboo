@@ -121,4 +121,33 @@ describe('Clients', () => {
       });
     });
   });
+
+  describe('/POST CSV Client List', () => {
+    it('it should POST CSV List of Clients', (done) => {
+      const csv = 'Name,Vorname,Geschlecht,Mail,ID,\nPaul,Muster,m,p.muster@example.com,,m\nHeinz,Müller,m,h.mueller@example.com,,w\nSusi,Bigler,m,s.bigler@example.com,,';
+      chai.request(server)
+        .post('/api/v1/procs/1/csvclients')
+        .set('content-type', 'text/csv')
+        .send(csv)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Clients to process 1 added');
+          done();
+        });
+    });
+    it('it should not POST CSV List of Clients if CSV as an error', (done) => {
+      const corrupt = 'Name,Vorname,Geschlecht,Mail,ID,\nPaul,Muster,p.muster@example.com,,m\nHeinz,Müller,m,h.mueller@example.com,,w\nSusi,Bigler,m,s.bigler@example.com,,';
+      chai.request(server)
+        .post('/api/v1/procs/1/csvclients')
+        .set('content-type', 'text/csv')
+        .send(corrupt)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Could not import clients');
+          done();
+        });
+    });
+  });
 });
