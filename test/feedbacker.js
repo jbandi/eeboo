@@ -97,7 +97,15 @@ describe('Feedbackers', () => {
   */
   describe('/GET feedbackers', () => {
     it('it should GET all the feedbackers', (done) => {
-      appState.addFeedbacker(feedbacker1).then(() => {
+      appState.addFeedbacker({
+        id: '2',
+        mail: 'mathu at example.com',
+        role: 1,
+        proc: 1,
+        answers: {
+          xy: { score: 3 },
+        },
+      }).then(() => {
         chai.request(server)
           .get('/api/v1/feedbackers')
           .end((err, res) => {
@@ -115,7 +123,15 @@ describe('Feedbackers', () => {
   */
   describe('/GET feedbackers', () => {
     it('it should GET all the feedbackers by process Id', (done) => {
-      appState.addFeedbacker(feedbacker1).then(() => {
+      appState.addFeedbacker({
+        id: '3',
+        mail: 'mathu at example.com',
+        role: 1,
+        proc: 1,
+        answers: {
+          xy: { score: 3 },
+        },
+      }).then(() => {
         appState.addFeedbacker(feedbacker2).then(() => {
           chai.request(server)
             .get('/api/v1/procs/2/feedbackers')

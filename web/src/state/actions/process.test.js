@@ -7,13 +7,19 @@ import {
   fetchProcs,
   addProc,
   deleteQuestion,
+  deleteClient,
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
   REQUEST_UPLOAD_CLIENTS,
   RECEIVE_UPLOAD_CLIENTS,
+  DELETE_CLIENT,
   uploadClients,
 } from './process';
+
+import {
+  ADD_FEEDBACKERS,
+} from './feedbacker';
 
 
 const middlewares = [thunk];
@@ -25,6 +31,14 @@ describe('test process actions', () => {
     fetchMock.restore();
   });
 
+  it('should delete a client', () => {
+    const expectedActions = {
+      type: DELETE_CLIENT,
+      clientId: '1',
+      procId: '1',
+    };
+    expect(deleteClient('1', '1')).toEqual(expectedActions);
+  });
 
   it('should receive list of process Ids', () => {
     const body = ['1', '2'];
@@ -77,14 +91,17 @@ describe('test process actions', () => {
 
   it('should upload CSV Client list', () => {
     const body = {
-      1: {
-        id: 1,
-        name: 'mathu',
+      data: {
+        1: {
+          id: 1,
+          name: 'mathu',
+        },
+        2: {
+          id: 2,
+          name: 'susi',
+        },
       },
-      2: {
-        id: 2,
-        name: 'susi',
-      },
+      feedbackers: [{}],
     };
     fetchMock
       .postOnce('/api/v1/procs/1/csvclients', {
@@ -97,8 +114,11 @@ describe('test process actions', () => {
     const expectedActions = [
       { type: REQUEST_UPLOAD_CLIENTS },
       { type: RECEIVE_UPLOAD_CLIENTS,
-        clients: body,
+        clients: body.data,
         procId: 1,
+      },
+      { type: ADD_FEEDBACKERS,
+        feedbackers: [{}],
       },
     ];
     const store = mockStore({});

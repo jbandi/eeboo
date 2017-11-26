@@ -2,6 +2,7 @@ import uuidv4 from 'uuid/v4';
 import history from '../../services/history';
 
 import { getProcess } from '../selectors/process';
+import { addFeedbackers } from './feedbacker';
 
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
@@ -10,16 +11,18 @@ export const DELETE_QUESTION = 'process/DELETE_QUESTION';
 export const REQUEST_UPLOAD_CLIENTS = 'process/REQUEST_UPLOAD_CLIENTS';
 export const RECEIVE_UPLOAD_CLIENTS = 'process/RECEIVE_UPLOAD_CLIENTS';
 
+export const DELETE_CLIENT = 'process/DELETE_CLIENT';
+
 export function requestUploadClients() {
   return {
     type: REQUEST_UPLOAD_CLIENTS,
   };
 }
 
-export function receiveUploadClients(data, procId) {
+export function receiveUploadClients(clients, procId) {
   return {
     type: RECEIVE_UPLOAD_CLIENTS,
-    clients: data.data,
+    clients,
     procId,
   };
 }
@@ -37,6 +40,14 @@ function receiveProcs(procs) {
   };
 }
 
+export function deleteClient(procId, clientId) {
+  return {
+    type: DELETE_CLIENT,
+    procId,
+    clientId,
+  };
+}
+
 export function deleteQuestion(procId, questionaireId, questionId) {
   return {
     type: DELETE_QUESTION,
@@ -44,6 +55,24 @@ export function deleteQuestion(procId, questionaireId, questionId) {
     questionaireId,
     questionId,
   };
+}
+
+export function deleteClientFromBackend(procId, clientId) {
+  return dispatch => (
+    fetch(`/api/v1/procs/${procId}/clients/${clientId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(
+        response => response.json(),
+        error => console.log('An error occured while deleting client', error),
+      ).then(() => {
+        dispatch(deleteClient(procId, clientId));
+      })
+  );
 }
 
 export function fetchProcs() {
@@ -132,8 +161,9 @@ export function uploadClients(procId, csv) {
         response => response.json(),
         error => console.log('An error occured.', error),
       )
-      .then(data => (
-        dispatch(receiveUploadClients(data, procId))),
-      );
+      .then((json) => {
+        dispatch(receiveUploadClients(json.data, procId));
+        dispatch(addFeedbackers(json.feedbackers));
+      });
   };
 }

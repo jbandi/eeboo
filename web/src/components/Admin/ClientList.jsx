@@ -8,11 +8,11 @@ class ClientList extends React.Component {
     clients: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     handleFileUpload: PropTypes.func.isRequired,
     procId: PropTypes.string.isRequired,
+    deleteClient: PropTypes.func.isRequired,
   };
 
   focusTextInput = (e) => {
     e.preventDefault();
-    // Explicitly focus the text input using the raw DOM API
     this.input.click();
   }
 
@@ -49,7 +49,7 @@ class ClientList extends React.Component {
                 <td>{client.mail}</td>
                 <td className="detail-link">
                   <Link to="#">Edit</Link> |&nbsp;
-                  <Link to="#">Delete</Link>
+                  <Link to="#" onClick={() => this.props.deleteClient(this.props.procId, client.id)}>Delete</Link>
                 </td>
               </tr>
             ))}

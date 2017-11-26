@@ -18,7 +18,7 @@ function deleteFeedbacker(req, res) {
   appState.deleteFeedbacker(req.params.feedbackerid).then(() => {
     res.json({ message: `Feedbacker ${req.params.feedbackerid} successfully deleted!` });
   }).catch(() => {
-    res.json({ message: `Could not delete Feedbacker with id ${req.params.feedbackerid}!` });
+    res.json({ error: `Could not delete Feedbacker with id ${req.params.feedbackerid}!` });
   });
 }
 

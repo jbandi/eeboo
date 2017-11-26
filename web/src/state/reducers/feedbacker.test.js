@@ -2,6 +2,7 @@ import deepFreeze from 'deep-freeze';
 import feedbacker from './feedbacker';
 
 import {
+  DELETE_FEEDBACKER,
   REQUEST_FEEDBACKER,
   RECEIVE_FEEDBACKER,
   REQUEST_FEEDBACKERS,
@@ -110,6 +111,16 @@ describe('feedbacker reducer for multiple feedbacker', () => {
     id: 'feedbacker2',
   }];
   deepFreeze(state);
+
+  it('shoud delete a feedbacker', () => {
+    const changedState = feedbacker({
+      feedbackers: [{ id: '1' }, { id: '2' }],
+    }, {
+      type: DELETE_FEEDBACKER,
+      feedbackerId: '1',
+    });
+    expect(changedState.feedbackers.length).toEqual(1);
+  });
 
   it('should request a list of feedbackers', () => {
     const changedState = feedbacker(state, {

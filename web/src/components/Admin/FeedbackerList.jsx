@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 class FeedbackerList extends Component {
   static propTypes = {
     feedbackers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    deleteFeedbacker: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
@@ -35,7 +36,7 @@ class FeedbackerList extends Component {
                 <td>{f.mail}</td>
                 <td className="detail-link">
                   <Link to="#">Edit</Link> |&nbsp;
-                  <Link to="#">Delete</Link>
+                  <Link to="#" onClick={() => this.props.deleteFeedbacker(f.id)}>Delete</Link>
                 </td>
               </tr>
             ))}

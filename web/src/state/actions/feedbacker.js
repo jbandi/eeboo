@@ -2,6 +2,8 @@ export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
 export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
 export const REQUEST_FEEDBACKERS = 'feebacker/REQUEST_FEEDBACKERS';
 export const RECEIVE_FEEDBACKERS = 'feedbacker/RECEIVE_FEEDBACKERS';
+export const ADD_FEEDBACKERS = 'feedbacker/ADD_FEEDBACKERS';
+export const DELETE_FEEDBACKER = 'feedbacker/DELETE_FEEDBACKER';
 export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
 export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 export const CLEAR_ANSWERS = 'feedbacker/CLEAR_ANSWERS';
@@ -12,6 +14,20 @@ export function updateAnswer(answer) {
     questionId: answer.questionId,
     clientId: answer.clientId,
     score: answer.score,
+  };
+}
+
+export function addFeedbackers(feedbackers) {
+  return {
+    type: ADD_FEEDBACKERS,
+    feedbackers,
+  };
+}
+
+export function deleteFeedbacker(feedbackerId) {
+  return {
+    type: DELETE_FEEDBACKER,
+    feedbackerId,
   };
 }
 
@@ -30,13 +46,13 @@ export function updateRole(data) {
   };
 }
 
-function requestFeedbacker() {
+export function requestFeedbacker() {
   return {
     type: REQUEST_FEEDBACKER,
   };
 }
 
-function receiveFeedbacker(data) {
+export function receiveFeedbacker(data) {
   return {
     type: RECEIVE_FEEDBACKER,
     feedbacker: data.feedbacker,
@@ -44,13 +60,13 @@ function receiveFeedbacker(data) {
   };
 }
 
-function requestFeedbackers() {
+export function requestFeedbackers() {
   return {
     type: REQUEST_FEEDBACKERS,
   };
 }
 
-function receiveFeedbackers(data) {
+export function receiveFeedbackers(data) {
   return {
     type: RECEIVE_FEEDBACKERS,
     feedbackers: data,
@@ -83,6 +99,24 @@ export function fetchFeedbackersByProcId(procId) {
         dispatch(receiveFeedbackers(json)),
       );
   };
+}
+
+export function deleteFeedbackerFromBackend(feedbackerId) {
+  return dispatch => (
+    fetch(`/api/v1/feedbackers/${feedbackerId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(
+        response => response.json(),
+        error => console.log('An error occured while deleting feedbacker', error),
+      ).then(() => {
+        dispatch(deleteFeedbacker(feedbackerId));
+      })
+  );
 }
 
 export function postFeedbacker() {

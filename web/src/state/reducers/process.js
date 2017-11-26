@@ -4,12 +4,27 @@ import {
   DELETE_QUESTION,
   REQUEST_UPLOAD_CLIENTS,
   RECEIVE_UPLOAD_CLIENTS,
+  DELETE_CLIENT,
 } from '../actions/process';
 
 import { removeItem } from '../../utils';
 
 const process = (state = {}, action) => {
   switch (action.type) {
+    case DELETE_CLIENT: {
+      const procId = action.procId;
+      const clientId = action.clientId;
+      return Object.assign({}, state, {
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [procId]: {
+            ...state.byHash[procId],
+            clients: removeItem(state.byHash[procId].clients, clientId),
+          },
+        },
+      });
+    }
     case REQUEST_PROCS:
       return Object.assign({}, state, {
         isFetchingProcs: true,

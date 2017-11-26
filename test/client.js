@@ -15,7 +15,9 @@ chai.use(chaiHttp);
 describe('Clients', () => {
   beforeEach((done) => { // Before each test we empty the database
     appState.deleteClients().then(() => {
-      done();
+      appState.deleteFeedbackers().then(() => {
+        done();
+      });
     });
   });
 
@@ -132,7 +134,9 @@ describe('Clients', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Clients to process 1 added');
+          res.body.should.have.property('message').eql('Clients and Feedbackers to process 1 added');
+          res.body.should.have.property('data');
+          res.body.should.have.property('feedbackers');
           done();
         });
     });

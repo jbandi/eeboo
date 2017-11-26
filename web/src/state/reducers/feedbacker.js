@@ -5,6 +5,8 @@ import {
   REQUEST_FEEDBACKER,
   REQUEST_FEEDBACKERS,
   RECEIVE_FEEDBACKERS,
+  ADD_FEEDBACKERS,
+  DELETE_FEEDBACKER,
   UPDATE_ANSWER,
   UPDATE_ROLE,
   CLEAR_ANSWERS,
@@ -13,6 +15,17 @@ import {
 // import { defaultFeedbacker } from './defaultState';
 const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
+    case DELETE_FEEDBACKER: {
+      return Object.assign({}, state, {
+        ...state,
+        feedbackers: state.feedbackers.filter(f => f.id !== action.feedbackerId),
+      });
+    }
+    case ADD_FEEDBACKERS:
+      return Object.assign({}, state, {
+        ...state,
+        feedbackers: action.feedbackers,
+      });
     case CLEAR_ANSWERS:
       return Object.assign({}, state, {
         ...state,
