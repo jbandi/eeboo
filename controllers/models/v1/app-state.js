@@ -187,6 +187,14 @@ class AppState {
     return dbReference.set(null);
   }
 
+  deleteFeedbackersByProc(procId) {
+    return new Promise(((resolve) => {
+      const list = this.getFeedbackerByProcId(procId);
+      Object.keys(list).forEach(f => this.deleteFeedbacker(f));
+      resolve(console.log('feedbackers deleted', list));
+    }));
+  }
+
   getFeedbackers() {
     return new Promise(((resolve) => {
       const dbReference = db.ref(this.fbFeedbackerRef);
@@ -305,13 +313,23 @@ class AppState {
   addClient(data, procId) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        const dbReference = db.ref(this.clientPathById(procId, data.id));
-        dbReference.set(data).then(() => {
-          resolve({
-            message: `Client with id ${data.id} added`,
-          });
-        }).catch(() => {
-          reject(new Error(`Could not add Client with id ${data.id}`));
+        const dbReference = db.ref(`procs/${procId}`);
+        dbReference.child('clients').orderByChild('mail').equalTo(data.mail).once('value', (snapshot) => {
+          const userData = snapshot.val();
+          if (!userData) {
+            const ref = db.ref(this.clientPathById(procId, data.id));
+            ref.set(data).then(() => {
+              resolve({
+                message: `Client with id ${data.id} added`,
+              });
+            }).catch(() => {
+              reject(new Error(`Could not add Client with id ${data.id}`));
+            });
+          } else {
+            resolve({
+              message: `Client with id ${data.id} not added because it exists`,
+            });
+          }
         });
       } else {
         reject(new Error('Could not add Client with missing id'));
@@ -325,11 +343,13 @@ class AppState {
     return new Promise(((resolve, reject) => {
       const dbReference = db.ref(this.clientPath(procId));
       dbReference.set(data).then(() => {
-        addFeedbackers(data, procId, this).then((feedbackers) => {
-          resolve({
-            message: `Clients and Feedbackers to process ${procId} added`,
-            data,
-            feedbackers,
+        this.deleteFeedbackersByProc(procId).then(() => {
+          addFeedbackers(data, procId, this).then((feedbackers) => {
+            resolve({
+              message: `Clients and Feedbackers to process ${procId} added`,
+              data,
+              feedbackers,
+            });
           });
         });
       }).catch(() => {

@@ -31,11 +31,6 @@ describe('Feedbackers', () => {
     },
   };
 
-  const feedbacker2 = {
-    id: '1',
-    proc: 2,
-  };
-
   const proc = {
     id: 1,
     clients: {
@@ -97,15 +92,7 @@ describe('Feedbackers', () => {
   */
   describe('/GET feedbackers', () => {
     it('it should GET all the feedbackers', (done) => {
-      appState.addFeedbacker({
-        id: '2',
-        mail: 'mathu at example.com',
-        role: 1,
-        proc: 1,
-        answers: {
-          xy: { score: 3 },
-        },
-      }).then(() => {
+      appState.addFeedbacker({ id: '2', mail: 'mathu at example.com', proc: 1 }).then(() => {
         chai.request(server)
           .get('/api/v1/feedbackers')
           .end((err, res) => {
@@ -123,16 +110,8 @@ describe('Feedbackers', () => {
   */
   describe('/GET feedbackers', () => {
     it('it should GET all the feedbackers by process Id', (done) => {
-      appState.addFeedbacker({
-        id: '3',
-        mail: 'mathu at example.com',
-        role: 1,
-        proc: 1,
-        answers: {
-          xy: { score: 3 },
-        },
-      }).then(() => {
-        appState.addFeedbacker(feedbacker2).then(() => {
+      appState.addFeedbacker({ id: '3', mail: 'test', proc: 1 }).then(() => {
+        appState.addFeedbacker({ id: '4', mail: 'test2', proc: 2 }).then(() => {
           chai.request(server)
             .get('/api/v1/procs/2/feedbackers')
             .end((err, res) => {
