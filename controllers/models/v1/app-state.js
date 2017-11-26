@@ -187,11 +187,23 @@ class AppState {
     return dbReference.set(null);
   }
 
+  // delete a list of feedbackers belonging to a Process
+  async deleteFeedbackerfromList(list) {
+    for (let client of list) { // eslint-disable-line
+      console.log('deleteing', client.id);
+      await this.deleteFeedbacker(client.id); // eslint-disable-line no-await-in-loop
+    }
+  }
+
+  // delete all feedbackers for a gievn process
   deleteFeedbackersByProc(procId) {
     return new Promise(((resolve) => {
-      const list = this.getFeedbackerByProcId(procId);
-      Object.keys(list).forEach(f => this.deleteFeedbacker(f));
-      resolve(console.log('feedbackers deleted', list));
+      this.getFeedbackerByProcId(procId).then((list) => {
+        const arr = list.feedbackers;
+        this.deleteFeedbackerfromList(arr).then(() => {
+          resolve();
+        });
+      });
     }));
   }
 
