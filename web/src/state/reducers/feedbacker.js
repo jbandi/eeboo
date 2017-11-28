@@ -8,6 +8,7 @@ import {
   RECEIVE_FEEDBACKERS,
   ADD_FEEDBACKERS,
   ADD_FEEDBACKER,
+  ADD_CLIENTID,
   DELETE_FEEDBACKER,
   UPDATE_ANSWER,
   UPDATE_ROLE,
@@ -34,6 +35,20 @@ const feedbacker = (state = { language: 'de' }, action) => {
           {
             ...state.feedbackers[index],
             clients: removeItem(state.feedbackers[index].clients, clientId),
+          },
+          ...state.feedbackers.slice(index + 1),
+        ],
+      });
+    }
+    case ADD_CLIENTID: {
+      const index = getIndex(state.feedbackers, action.feedbackerId);
+      return Object.assign({}, state, {
+        ...state,
+        feedbackers: [
+          ...state.feedbackers.slice(0, index),
+          {
+            ...state.feedbackers[index],
+            clients: [...state.feedbackers[index].clients, action.clientId],
           },
           ...state.feedbackers.slice(index + 1),
         ],

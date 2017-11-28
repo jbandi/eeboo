@@ -103,3 +103,9 @@ export const feedbackerExists = (state, feedbacker) => {
   const feedbackers = idx(state, _ => _.feedbacker.feedbackers) || [];
   return feedbackers.find(f => f.mail === feedbacker.mail) !== undefined;
 };
+
+// check if a feedbacker exists. Test will be done by Mail address
+export const getFeedbackerByMail = (state, mail) => {
+  const feedbackers = idx(state, _ => _.feedbacker.feedbackers) || [];
+  return feedbackers.find(f => f.mail === mail);
+};

@@ -168,6 +168,24 @@ export function addProc(process) {
                   { content: 'Ich', lan: 'de' },
                 ],
               },
+              vorgesetzter: {
+                id: 'vorgesetzter',
+                contents: [
+                  { content: 'Vorgesetzter', lan: 'de' },
+                ],
+              },
+              kollege: {
+                id: 'kollege',
+                contents: [
+                  { content: 'Kollege', lan: 'de' },
+                ],
+              },
+              kunde: {
+                id: 'kunde',
+                contents: [
+                  { content: 'Kunde', lan: 'de' },
+                ],
+              },
             },
           },
         },

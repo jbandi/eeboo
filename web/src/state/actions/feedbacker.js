@@ -1,5 +1,7 @@
-import { feedbackerExists, getFeedbackerWithoutClients } from '../selectors/feedbacker';
+import { getFeedbackerByMail, feedbackerExists, getFeedbackerWithoutClients } from '../selectors/feedbacker';
 import { createFeedbacker } from '../../utils';
+
+import Parser from '../../utils/parser';
 
 export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
 export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
@@ -12,6 +14,7 @@ export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
 export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 export const CLEAR_ANSWERS = 'feedbacker/CLEAR_ANSWERS';
 export const REMOVE_CLIENTID = 'feedbackers/REMOVE_CLIENTID';
+export const ADD_CLIENTID = 'feedbacker/ADD_CLIENT';
 
 export function updateAnswer(answer) {
   return {
@@ -33,6 +36,14 @@ export function addFeedbacker(feedbacker) {
   return {
     type: ADD_FEEDBACKER,
     feedbacker,
+  };
+}
+
+export function addClientId(feedbackerId, clientId) {
+  return {
+    type: ADD_CLIENTID,
+    feedbackerId,
+    clientId,
   };
 }
 
@@ -93,6 +104,35 @@ export function receiveFeedbackers(data) {
   };
 }
 
+// add a Feedbacker if it does not already exist
+export function importFeedbackers(data, procId, clientId) {
+  return (dispatch, getState) => {
+    const file = data.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (() => (
+      (e) => {
+        Parser.parseFeedbackers(e.target.result).then((csv) => {
+          csv.forEach((f) => {
+            const feedbacker = getFeedbackerByMail(getState(), f.mail);
+            if (feedbacker !== undefined) {
+              dispatch(addClientId(feedbacker.id, clientId));
+            } else {
+              dispatch(addFeedbacker(createFeedbacker(
+                clientId,
+                f.mail,
+                procId,
+                f.gender,
+                f.role,
+              )));
+            }
+          });
+        });
+      }
+    ))(file);
+    reader.readAsText(file);
+  };
+}
+
 // add a new feedbacker no feedbacker with the same mailaddress exists
 export function addFeedbackerIfNotExists(feedbacker) {
   return (dispatch, getState) => {
@@ -112,7 +152,9 @@ export function removeFeedbackersWithoutClient() {
 // create a new freedbacker from a client
 export function createFeedbackerIfNotExists(client, procId) {
   return dispatch => (
-    dispatch(addFeedbackerIfNotExists(createFeedbacker(client, procId)))
+    dispatch(addFeedbackerIfNotExists(createFeedbacker(
+      client.id, client.mail, procId,
+    )))
   );
 }
 

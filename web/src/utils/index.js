@@ -13,14 +13,15 @@ export const removeItem = (list, property) => (
 );
 
 // create an empty Feedbacker with role 'self'
-export const createFeedbacker = (client, procId) => ({
+export const createFeedbacker = (clientId, mail, procId, gender = 'm', role = 'self') => ({
   id: uuidv4(),
-  mail: client.mail,
+  mail,
   proc: procId,
+  gender,
   clients: {
-    [client.id]: {
-      id: client.id,
-      role: 'self',
+    [clientId]: {
+      id: clientId,
+      role,
     },
   },
 });

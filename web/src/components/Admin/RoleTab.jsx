@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import idx from 'idx';
 
@@ -13,14 +12,12 @@ export const RoleTab = props => (
     <thead>
       <tr>
         <th>Rolle</th>
-        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       {toArray(props.questionaire.roles).map(r => (
         <tr key={r.id}>
           <td>{idx(r, _ => _.contents[0].content) || 'no content'}</td>
-          <td className="detail-link"><Link to="#">Edit</Link> | <Link to="#">Delete</Link></td>
         </tr>
       ))}
     </tbody>

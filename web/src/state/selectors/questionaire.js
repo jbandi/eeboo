@@ -11,11 +11,13 @@ export const getQuestionById = (questions, questionId) => (
 export const getRoleById = (questionaire, roleId, language) => {
   const roles = idx(questionaire, _ => _.roles[roleId].contents) || [];
   const r = roles.find(role => role.lan === language);
-  return ({
-    content: r.content,
-    lan: r.lan,
-    id: roleId,
-  });
+  return (r)
+    ? ({
+      content: r.content,
+      lan: r.lan,
+      id: roleId,
+    })
+    : {};
 };
 
 // get all questions by contextId
