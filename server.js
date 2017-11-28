@@ -98,9 +98,6 @@ app.route('/api/v1/procs/:procid/clients/:clientid')
   .get(client.getClient)
   .delete(client.deleteClient);
 
-app.route('/api/v1/procs/:procid/csvclients')
-  .post(client.uploadClients);
-
 // const checkScopes = jwtAuthz([ 'read:messages' ]);
 app.get('/api/private', checkJwt, (req, res) => {
   res.json({

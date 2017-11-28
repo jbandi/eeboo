@@ -1,9 +1,9 @@
+import csv from 'csv';
+import uuidv4 from 'uuid/v4';
 
-const parse = require('csv-parse');
-const uuidv4 = require('uuid/v4');
 
-function csv2json(clientArray) {
-  const clients = {};
+function clientCSV2json(clientArray) {
+  const clients = [];
   clientArray.forEach((line) => {
     const id = uuidv4();
     const client = {
@@ -14,23 +14,24 @@ function csv2json(clientArray) {
       gender: line[2],
       feedbackers: [],
     };
-    clients[id] = client;
+    clients.push(client);
   });
   return clients;
 }
 
 class Parser {
-  static parseClient(input) {
+  // return an array of client objects
+  static parseClients(input) {
     return new Promise(((resolve, reject) => {
-      parse(input, (err, output) => {
+      csv.parse(input, (err, output) => {
         if (err) {
           return reject(new Error('CSV File invalid'));
         }
-        const clients = csv2json(output.slice(1, output.length));
+        const clients = clientCSV2json(output.slice(1, output.length));
         return resolve(clients);
       });
     }));
   }
 }
 
-module.exports = Parser;
+export default Parser;

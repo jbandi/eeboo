@@ -8,12 +8,14 @@ import {
   addProc,
   deleteQuestion,
   deleteClient,
+  addClient,
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
   REQUEST_UPLOAD_CLIENTS,
   RECEIVE_UPLOAD_CLIENTS,
   DELETE_CLIENT,
+  ADD_CLIENT,
   uploadClients,
 } from './process';
 
@@ -38,6 +40,15 @@ describe('test process actions', () => {
       procId: '1',
     };
     expect(deleteClient('1', '1')).toEqual(expectedActions);
+  });
+
+  it('should add a client', () => {
+    const expectedActions = {
+      type: ADD_CLIENT,
+      client: { id: '1' },
+      procId: '1',
+    };
+    expect(addClient('1', { id: '1' })).toEqual(expectedActions);
   });
 
   it('should receive list of process Ids', () => {

@@ -1,12 +1,17 @@
+import { feedbackerExists, getFeedbackerWithoutClients } from '../selectors/feedbacker';
+import { createFeedbacker } from '../../utils';
+
 export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
 export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
 export const REQUEST_FEEDBACKERS = 'feebacker/REQUEST_FEEDBACKERS';
 export const RECEIVE_FEEDBACKERS = 'feedbacker/RECEIVE_FEEDBACKERS';
 export const ADD_FEEDBACKERS = 'feedbacker/ADD_FEEDBACKERS';
+export const ADD_FEEDBACKER = 'feedbacker/ADD_FEEDBACKER';
 export const DELETE_FEEDBACKER = 'feedbacker/DELETE_FEEDBACKER';
 export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
 export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 export const CLEAR_ANSWERS = 'feedbacker/CLEAR_ANSWERS';
+export const REMOVE_CLIENTID = 'feedbackers/REMOVE_CLIENTID';
 
 export function updateAnswer(answer) {
   return {
@@ -21,6 +26,13 @@ export function addFeedbackers(feedbackers) {
   return {
     type: ADD_FEEDBACKERS,
     feedbackers,
+  };
+}
+
+export function addFeedbacker(feedbacker) {
+  return {
+    type: ADD_FEEDBACKER,
+    feedbacker,
   };
 }
 
@@ -43,6 +55,14 @@ export function updateRole(data) {
     type: UPDATE_ROLE,
     clientId: data.clientId,
     roleId: data.roleId,
+  };
+}
+
+export function removeClientId(feedbackerId, clientId) {
+  return {
+    type: REMOVE_CLIENTID,
+    clientId,
+    feedbackerId,
   };
 }
 
@@ -71,6 +91,29 @@ export function receiveFeedbackers(data) {
     type: RECEIVE_FEEDBACKERS,
     feedbackers: data,
   };
+}
+
+// add a new feedbacker no feedbacker with the same mailaddress exists
+export function addFeedbackerIfNotExists(feedbacker) {
+  return (dispatch, getState) => {
+    if (!feedbackerExists(getState(), feedbacker)) {
+      dispatch(addFeedbacker(feedbacker));
+    }
+  };
+}
+
+export function removeFeedbackersWithoutClient() {
+  return (dispatch, getState) => {
+    const feedbackerIds = getFeedbackerWithoutClients(getState());
+    feedbackerIds.forEach(f => dispatch(deleteFeedbacker(f)));
+  };
+}
+
+// create a new freedbacker from a client
+export function createFeedbackerIfNotExists(client) {
+  return dispatch => (
+    dispatch(addFeedbackerIfNotExists(createFeedbacker(client)))
+  );
 }
 
 export function fetchFeedbacker(id) {

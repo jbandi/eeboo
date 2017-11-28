@@ -1,8 +1,11 @@
 import uuidv4 from 'uuid/v4';
 import history from '../../services/history';
 
-import { getProcess } from '../selectors/process';
-import { addFeedbackers } from './feedbacker';
+import Parser from '../../utils/parser';
+
+import { getProcess, clientExists } from '../selectors/process';
+import { addFeedbackers, createFeedbackerIfNotExists, removeClientId, removeFeedbackersWithoutClient } from './feedbacker';
+import { getFeedbackersByClientId } from '../selectors/feedbacker';
 
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
@@ -12,6 +15,7 @@ export const REQUEST_UPLOAD_CLIENTS = 'process/REQUEST_UPLOAD_CLIENTS';
 export const RECEIVE_UPLOAD_CLIENTS = 'process/RECEIVE_UPLOAD_CLIENTS';
 
 export const DELETE_CLIENT = 'process/DELETE_CLIENT';
+export const ADD_CLIENT = 'process/ADD_CLIENT';
 
 export function requestUploadClients() {
   return {
@@ -48,6 +52,14 @@ export function deleteClient(procId, clientId) {
   };
 }
 
+export function addClient(procId, client) {
+  return {
+    type: ADD_CLIENT,
+    procId,
+    client,
+  };
+}
+
 export function deleteQuestion(procId, questionaireId, questionId) {
   return {
     type: DELETE_QUESTION,
@@ -57,8 +69,29 @@ export function deleteQuestion(procId, questionaireId, questionId) {
   };
 }
 
+// add a Client if it does not already exist
+export function importClients(data, procId) {
+  return (dispatch, getState) => {
+    const file = data.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (() => (
+      (e) => {
+        Parser.parseClients(e.target.result).then((clients) => {
+          clients.forEach((client) => {
+            if (!clientExists(getState(), procId, client)) {
+              dispatch(addClient(procId, client));
+              dispatch(createFeedbackerIfNotExists(client));
+            }
+          });
+        });
+      }
+    ))(file);
+    reader.readAsText(file);
+  };
+}
+
 export function deleteClientFromBackend(procId, clientId) {
-  return dispatch => (
+  return (dispatch, getState) => (
     fetch(`/api/v1/procs/${procId}/clients/${clientId}`, {
       method: 'DELETE',
       headers: {
@@ -71,6 +104,11 @@ export function deleteClientFromBackend(procId, clientId) {
         error => console.log('An error occured while deleting client', error),
       ).then(() => {
         dispatch(deleteClient(procId, clientId));
+        const feedbackers = getFeedbackersByClientId(getState(), clientId);
+        feedbackers.forEach((f) => {
+          dispatch(removeClientId(f, clientId));
+          dispatch(removeFeedbackersWithoutClient());
+        });
       })
   );
 }

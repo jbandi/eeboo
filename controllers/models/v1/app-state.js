@@ -1,33 +1,10 @@
 const admin = require('firebase-admin');
 const config = require('config');
 const idx = require('idx');
-const uuidv4 = require('uuid');
 
 const serviceAccount = require(`./${config.firebaseToken}`); // eslint-disable-line import/no-dynamic-require
 
 let db;
-
-// add new feedbackers asynchronously
-async function addFeedbackers(clients, procId, appState) {
-  const clientIds = Object.keys(clients);
-  const feedbackers = [];
-  for (let id of clientIds) { // eslint-disable-line
-    const feedbacker = {
-      id: uuidv4(),
-      mail: clients[id].mail,
-      clients: {
-        id: {
-          id,
-          role: 'self',
-        },
-      },
-      proc: procId,
-    };
-    await appState.addFeedbacker(feedbacker); // eslint-disable-line no-await-in-loop
-    feedbackers.push(feedbacker);
-  }
-  return feedbackers;
-}
 
 class AppState {
   constructor() {
@@ -151,25 +128,14 @@ class AppState {
   addFeedbacker(data) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        // check if a feedbacker with a specific mail already exists
-        const dbReference = db.ref('/');
-        dbReference.child('feedbackers').orderByChild('mail').equalTo(data.mail).once('value', (snapshot) => {
-          const userData = snapshot.val();
-          if (!userData) {
-            // if no feedbacker with the given mail exists -> add it
-            const ref = db.ref(this.feedbackerPathById(data.id));
-            ref.set(data).then(() => {
-              resolve({
-                message: `Feedbacker with id ${data.id} added`,
-              });
-            }).catch(() => {
-              reject(new Error(`Could not add Feedbacker with id ${data.id}`));
-            });
-          } else {
-            resolve({
-              message: `Feedbacker with id ${data.id} not added because it exists`,
-            });
-          }
+        // if no feedbacker with the given mail exists -> add it
+        const ref = db.ref(this.feedbackerPathById(data.id));
+        ref.set(data).then(() => {
+          resolve({
+            message: `Feedbacker with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Feedbacker with id ${data.id}`));
         });
       } else {
         reject(new Error('Could not add Feedbacker with missing id'));
@@ -325,48 +291,17 @@ class AppState {
   addClient(data, procId) {
     return new Promise(((resolve, reject) => {
       if (data.id) {
-        const dbReference = db.ref(`procs/${procId}`);
-        dbReference.child('clients').orderByChild('mail').equalTo(data.mail).once('value', (snapshot) => {
-          const userData = snapshot.val();
-          if (!userData) {
-            const ref = db.ref(this.clientPathById(procId, data.id));
-            ref.set(data).then(() => {
-              resolve({
-                message: `Client with id ${data.id} added`,
-              });
-            }).catch(() => {
-              reject(new Error(`Could not add Client with id ${data.id}`));
-            });
-          } else {
-            resolve({
-              message: `Client with id ${data.id} not added because it exists`,
-            });
-          }
+        const ref = db.ref(this.clientPathById(procId, data.id));
+        ref.set(data).then(() => {
+          resolve({
+            message: `Client with id ${data.id} added`,
+          });
+        }).catch(() => {
+          reject(new Error(`Could not add Client with id ${data.id}`));
         });
       } else {
         reject(new Error('Could not add Client with missing id'));
       }
-    }));
-  }
-
-  // replace all Clients
-  // create a new feedbacker for every client with role="self"
-  addCSVClient(data, procId) {
-    return new Promise(((resolve, reject) => {
-      const dbReference = db.ref(this.clientPath(procId));
-      dbReference.set(data).then(() => {
-        this.deleteFeedbackersByProc(procId).then(() => {
-          addFeedbackers(data, procId, this).then((feedbackers) => {
-            resolve({
-              message: `Clients and Feedbackers to process ${procId} added`,
-              data,
-              feedbackers,
-            });
-          });
-        });
-      }).catch(() => {
-        reject(new Error(`Could not add clients to process ${procId}`));
-      });
     }));
   }
 

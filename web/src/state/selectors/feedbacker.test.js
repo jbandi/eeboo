@@ -1,18 +1,23 @@
-import { feedbacker } from './feedbacker-data';
+import { feedbacker, feedbackers } from './feedbacker-data';
 
 import {
   getFeedbacker,
   getFeedbackerClientIds,
   getContexts,
   getContextIds,
+  feedbackerExists,
   getFeedbackerAnswer,
   getFeedbackerAnswers,
   getRoleIdByClientId,
+  clientsContainId,
+  getFeedbackersByClientId,
+  getFeedbackerWithoutClients,
 } from './feedbacker';
 
 describe('test selectors for feedbacker', () => {
   const state = {
     feedbacker,
+    feedbackers,
   };
 
   it('it should return a specific feedbacker from state', () => {
@@ -57,5 +62,48 @@ describe('test selectors for feedbacker', () => {
 
   it('should return a role for a client', () => {
     expect(getRoleIdByClientId(state, 'client1')).toEqual('role1');
+  });
+
+  it('should test if a feedbacker exists', () => {
+    expect(feedbackerExists({
+      feedbacker: {
+        feedbackers,
+      },
+    }, { id: '1', mail: 'feedbacker1@example.com' })).toEqual(true);
+  });
+
+  it('should test if a feedbacker does not exist', () => {
+    expect(feedbackerExists({
+      feedbacker: {
+        feedbackers,
+      },
+    }, { id: '1', mail: 'undefined' })).toEqual(false);
+  });
+
+  it('should check if a list of clients contains a specific client id', () => {
+    expect(clientsContainId({ client1: '', client2: '' }, 'client1')).toEqual(true);
+  });
+
+  it('should check if a list of clients does not contain a specific client id', () => {
+    expect(clientsContainId({ client1: '', client2: '' }, 'undef')).toEqual(false);
+  });
+
+  it('should get a list of feedbackers that contain a specific client id', () => {
+    expect(getFeedbackersByClientId({
+      feedbacker: {
+        feedbackers,
+      },
+    }, 'client3')).toEqual(['feedbacker2']);
+  });
+
+  it('should get a list of feedbackers withoud clientID', () => {
+    expect(getFeedbackerWithoutClients({
+      feedbacker: {
+        feedbackers: [
+          { id: 'f1', clients: { 1: '1' } },
+          { id: 'f2', clients: {} },
+        ],
+      },
+    })).toEqual(['f2']);
   });
 });

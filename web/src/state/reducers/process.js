@@ -5,12 +5,30 @@ import {
   REQUEST_UPLOAD_CLIENTS,
   RECEIVE_UPLOAD_CLIENTS,
   DELETE_CLIENT,
+  ADD_CLIENT,
 } from '../actions/process';
 
 import { removeItem } from '../../utils';
 
 const process = (state = {}, action) => {
   switch (action.type) {
+    case ADD_CLIENT: {
+      const procId = action.procId;
+      const clientId = action.client.id;
+      return Object.assign({}, state, {
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [procId]: {
+            ...state.byHash[procId],
+            clients: {
+              ...state.byHash[procId].clients,
+              [clientId]: action.client,
+            },
+          },
+        },
+      });
+    }
     case DELETE_CLIENT: {
       const procId = action.procId;
       const clientId = action.clientId;

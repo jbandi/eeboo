@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "auth0-js": "^8.10.1",
+    "csv": "^2.0.0",
     "history": "^4.7.2",
     "idx": "^2.1.0",
     "jsonwebtoken": "^8.1.0",

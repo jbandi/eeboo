@@ -16,11 +16,6 @@ class FeedbackerList extends Component {
   render() {
     return (
       <div>
-        <p align="right">
-          <Link to="#">import</Link> |&nbsp;
-          <Link to="#">export</Link> |&nbsp;
-          <Link to="#">add</Link>
-        </p>
         <Table striped bordered hover responsive>
           <thead>
             <tr>

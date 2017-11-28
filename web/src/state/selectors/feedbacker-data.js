@@ -224,6 +224,10 @@ export const feedbackers = [
         id: 'client2',
         role: 'role1',
       },
+      client3: {
+        id: 'client3',
+        role: 'role1',
+      },
     },
     id: 'feedbacker2',
     mail: 'feedbacker2@example.com',

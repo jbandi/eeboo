@@ -2,6 +2,7 @@ import {
   getProcs,
   getProcess,
   getClients,
+  clientExists,
   getQuestionaires,
   getQuestionaire,
 } from './process';
@@ -13,8 +14,8 @@ describe('test selectors for processes', () => {
       byHash: {
         1: {
           clients: {
-            client1: { id: 'client1' },
-            client2: { id: 'client2' },
+            client1: { id: 'client1', mail: 'c1@example.com' },
+            client2: { id: 'client2', mail: 'c2@examle.com' },
           },
           id: '1',
           questionaires: {
@@ -25,7 +26,7 @@ describe('test selectors for processes', () => {
         },
         2: {
           clients: {
-            client1: { id: 'client1' },
+            client1: { id: 'client1', mail: 'c1@example.com' },
           },
           id: '2',
           questionaires: {
@@ -68,5 +69,13 @@ describe('test selectors for processes', () => {
 
   it('it should return specific questionaire', () => {
     expect(getQuestionaire(state, 2, 1).id).toEqual(1);
+  });
+
+  it('it should test if a client exists', () => {
+    expect(clientExists(state, 1, { id: '1', mail: 'c1@example.com' })).toEqual(true);
+  });
+
+  it('it should test if a client does not exists', () => {
+    expect(clientExists(state, 1, { id: '1', mail: 'undefined' })).toEqual(false);
   });
 });

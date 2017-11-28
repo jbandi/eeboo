@@ -23,7 +23,6 @@
     "body-parser": "~1.17.1",
     "config": "^1.27.0",
     "cookie-parser": "~1.4.3",
-    "csv-parse": "^2.0.0",
     "dateformat": "^3.0.2",
     "debug": "~2.6.3",
     "eslint-config-airbnb": "^16.1.0",

@@ -10,6 +10,7 @@ import {
   deleteFeedbacker,
   updateAnswer,
   updateRole,
+  removeClientId,
   receiveFeedbacker,
   requestFeedbacker,
   receiveFeedbackers,
@@ -22,6 +23,7 @@ import {
   DELETE_FEEDBACKER,
   UPDATE_ANSWER,
   UPDATE_ROLE,
+  REMOVE_CLIENTID,
 } from './feedbacker';
 
 
@@ -85,6 +87,15 @@ describe('test feedbacker actions', () => {
       roleId: '2',
     };
     expect(updateRole({ clientId: '1', roleId: '2' })).toEqual(expectedActions);
+  });
+
+  it('should remove a clientId', () => {
+    const expectedActions = {
+      type: REMOVE_CLIENTID,
+      clientId: '1',
+      feedbackerId: '2',
+    };
+    expect(removeClientId('2', '1')).toEqual(expectedActions);
   });
 
   it('should add a feedbafker', () => {

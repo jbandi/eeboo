@@ -31,3 +31,10 @@ export const getQuestionaires = (state, procId) => {
 export const getQuestionaire = (state, procId, questionaireId) => (
   idx(state, _ => _.process.byHash[procId].questionaires[questionaireId]) || {}
 );
+
+// check if a client exist. The test will be made by Mail address
+export const clientExists = (state, procId, client) => {
+  const clientList = idx(state, _ => _.process.byHash[procId].clients) || {};
+  const clientArr = Object.keys(clientList).map(id => clientList[id]);
+  return clientArr.find(c => c.mail === client.mail) !== undefined;
+};
