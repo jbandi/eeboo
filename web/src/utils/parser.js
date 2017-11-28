@@ -1,4 +1,4 @@
-import csv from 'csv';
+import csv from 'csvtojson';
 import uuidv4 from 'uuid/v4';
 
 function clientCSV2json(clientArray) {
@@ -37,25 +37,36 @@ class Parser {
   // return an array of client objects
   static parseClients(input) {
     return new Promise(((resolve, reject) => {
-      csv.parse(input, (err, output) => {
-        if (err) {
-          return reject(new Error('CSV File invalid'));
-        }
-        const clients = clientCSV2json(output.slice(1, output.length));
-        return resolve(clients);
-      });
+      const clients = [];
+      csv({ noheader: false })
+        .fromString(input)
+        .on('csv', (csvRow) => {
+          clients.push(csvRow);
+        })
+        .on('done', (error) => {
+          if (error) {
+            return reject(new Error('CSV File invalid'));
+          }
+          return resolve(clientCSV2json(clients));
+        });
     }));
   }
 
+  // return an array of feedbacker objects
   static parseFeedbackers(input) {
     return new Promise(((resolve, reject) => {
-      csv.parse(input, (err, output) => {
-        if (err) {
-          return reject(new Error('CSV File invalid'));
-        }
-        const feedbackers = feedbackerCSV2json(output.slice(1, output.length));
-        return resolve(feedbackers);
-      });
+      const feedbackers = [];
+      csv({ noheader: false })
+        .fromString(input)
+        .on('csv', (csvRow) => {
+          feedbackers.push(csvRow);
+        })
+        .on('done', (error) => {
+          if (error) {
+            return reject(new Error('CSV File invalid'));
+          }
+          return resolve(feedbackerCSV2json(feedbackers));
+        });
     }));
   }
 }
