@@ -14,7 +14,8 @@ const mapStateToProps = (state, ownProps) => ({
     state.feedbacker.proc.questionaires[1234].questions,
     getFeedbackerAnswers(state, ownProps.clientId),
     ownProps.contextId, ownProps.roleId,
-    state.feedbacker.language),
+    state.feedbacker.language,
+  ),
 });
 
 export default connect(mapStateToProps)(Badge);

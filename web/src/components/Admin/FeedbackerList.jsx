@@ -30,7 +30,6 @@ class FeedbackerList extends Component {
                 <td>{f.id}</td>
                 <td>{f.mail}</td>
                 <td className="detail-link">
-                  <Link to="#">Edit</Link> |&nbsp;
                   <Link to="#" onClick={() => this.props.deleteFeedbacker(f.id)}>Delete</Link>
                 </td>
               </tr>

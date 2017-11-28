@@ -53,7 +53,8 @@ describe('test process actions', () => {
 
     const expectedActions = [
       { type: REQUEST_PROCS },
-      { type: RECEIVE_PROCS,
+      {
+        type: RECEIVE_PROCS,
         procs: ['1', '2'],
       },
     ];

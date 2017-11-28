@@ -64,7 +64,8 @@ export class Client extends React.Component {
                   <MenuItem
                     key={role.id}
                     onSelect={() => this.handleRoleSelect(role.id)}
-                  >{role.contents.content}</MenuItem>
+                  >{role.contents.content}
+                  </MenuItem>
                 ))}
               </DropdownButton>
             </td>
@@ -80,7 +81,8 @@ export class Client extends React.Component {
       clientId={this.props.clientId}
       roleId={this.props.role.id}
       language={this.props.language}
-    /></div>
+    />
+    </div>
   );
 
   render() {

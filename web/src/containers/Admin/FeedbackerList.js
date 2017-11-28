@@ -8,9 +8,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => (
-  { deleteFeedbacker: (id) => {
-    dispatch(deleteFeedbackerFromBackend(id));
-  } }
+  {
+    deleteFeedbacker: (id) => {
+      dispatch(deleteFeedbackerFromBackend(id));
+    },
+  }
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedbackerList);

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import FeedbackerRow from '../../containers/Admin/FeedbackerRow';
 
@@ -16,6 +16,7 @@ class ClientDetail extends React.Component {
     feedbackerList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     procId: PropTypes.string.isRequired,
     handleFileUpload: PropTypes.func.isRequired,
+    saveFeedbackers: PropTypes.func.isRequired,
   };
 
   focusTextInput = (e) => {
@@ -75,6 +76,9 @@ class ClientDetail extends React.Component {
             ))}
           </tbody>
         </Table>
+        <div style={{ textAlign: 'right' }}>
+          <Button bsStyle="default" onClick={() => this.props.saveFeedbackers(this.props.feedbackerList)}>Save</Button>
+        </div>
       </div>
     );
   }

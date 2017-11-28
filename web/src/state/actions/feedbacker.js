@@ -152,9 +152,7 @@ export function removeFeedbackersWithoutClient() {
 // create a new freedbacker from a client
 export function createFeedbackerIfNotExists(client, procId) {
   return dispatch => (
-    dispatch(addFeedbackerIfNotExists(createFeedbacker(
-      client.id, client.mail, procId,
-    )))
+    dispatch(addFeedbackerIfNotExists(createFeedbacker(client.id, client.mail, procId)))
   );
 }
 
@@ -167,8 +165,7 @@ export function fetchFeedbacker(id) {
         error => console.log('An error occured.', error),
       )
       .then(json =>
-        dispatch(receiveFeedbacker(json)),
-      );
+        dispatch(receiveFeedbacker(json)));
   };
 }
 
@@ -181,8 +178,7 @@ export function fetchFeedbackersByProcId(procId) {
         error => console.log('An error occured.', error),
       )
       .then(json =>
-        dispatch(receiveFeedbackers(json)),
-      );
+        dispatch(receiveFeedbackers(json)));
   };
 }
 
@@ -211,6 +207,7 @@ export function postFeedbacker(data) {
       id: feedbacker.id,
       mail: feedbacker.mail,
       clients: feedbacker.clients,
+      gender: feedbacker.gender,
       proc: feedbacker.proc,
     };
     dispatch(requestFeedbacker());

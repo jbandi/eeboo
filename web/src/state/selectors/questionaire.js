@@ -36,7 +36,11 @@ export const getQuestionsByContextId = (questions, contextId, roleId, language) 
 export const countAnswersByContextId = (questions, answers, contextId, roleId, language) => {
   const answerIds = Object.keys(answers);
   const questionIds = getQuestionsByContextId(
-    questions, contextId, roleId, language).map(q => q.id);
+    questions,
+    contextId,
+    roleId,
+    language,
+  ).map(q => q.id);
   return answerIds.filter(function def(e) {
     return this.indexOf(e) >= 0;
   }, questionIds).length;

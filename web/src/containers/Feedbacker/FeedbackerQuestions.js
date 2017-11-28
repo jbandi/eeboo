@@ -7,7 +7,8 @@ const mapStateToProps = (state, ownProps) => ({
     state.feedbacker.proc.questionaires[1234].questions,
     ownProps.contextId,
     ownProps.roleId,
-    state.feedbacker.language),
+    state.feedbacker.language,
+  ),
 });
 
 export default connect(mapStateToProps)(FeedbackerQuestions);

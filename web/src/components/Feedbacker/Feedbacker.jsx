@@ -20,19 +20,8 @@ class Feedbacker extends Component {
     feedbackerId: PropTypes.string.isRequired,
   };
 
-  constructor() {
-    super();
-    this.state = {
-      activeKey: 1,
-    };
-  }
-
   componentWillMount() {
     this.props.dispatch(fetchFeedbacker(this.props.feedbackerId));
-  }
-
-  handleSelect = (activeKey) => {
-    this.setState({ activeKey });
   }
 
   header = contextId => (
@@ -76,17 +65,16 @@ class Feedbacker extends Component {
                   <div key={id}>
                     <Client clientId={id} language="de" />
                     <hr />
-                  </div>),
-                )}
+                  </div>))}
               </Col>
               <Col md={2} />
             </Row>
           </Grid>
-        </div>
+        </div> // eslint-disable-line
         : <div>
           <div>... loading data</div> <br />
           <div>data should load within seconds. if not, please talk to the administrator</div>
-        </div>
+        </div> // eslint-disable-line
     );
   }
 }

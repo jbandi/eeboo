@@ -25,8 +25,8 @@ const getIndex = (feedbackers, feedbackerId) => (
 const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
     case REMOVE_CLIENTID: {
-      const feedbackerId = action.feedbackerId;
-      const clientId = action.clientId;
+      const { feedbackerId } = action;
+      const { clientId } = action;
       const index = getIndex(state.feedbackers, feedbackerId);
       return Object.assign({}, state, {
         ...state,
@@ -93,8 +93,8 @@ const feedbacker = (state = { language: 'de' }, action) => {
         },
       });
     case UPDATE_ANSWER: {
-      const clientId = action.clientId;
-      const questionId = action.questionId;
+      const { clientId } = action;
+      const { questionId } = action;
       return Object.assign({}, state, {
         ...state,
         clients: {

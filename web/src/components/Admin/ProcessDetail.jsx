@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Auth from './../../services/Auth/Auth';
 import { fetchProcs } from './../../state/actions/process';
 import { fetchFeedbackersByProcId } from './../../state/actions/feedbacker';
 import QuestionaireList from './../../containers/Admin/QuestionaireList';
@@ -12,26 +11,30 @@ import ClientDetail from './../../containers/Admin/ClientDetail';
 import FeedbackerList from './../../containers/Admin/FeedbackerList';
 
 const routes = [
-  { path: '/admin/proc/:id/questionaires',
+  {
+    path: '/admin/proc/:id/questionaires',
     main: id => <QuestionaireList procId={id} />,
   },
-  { path: '/admin/proc/:id/feedbackers',
+  {
+    path: '/admin/proc/:id/feedbackers',
     main: id => <FeedbackerList procId={id} />,
   },
-  { path: '/admin/proc/:id/clients',
+  {
+    path: '/admin/proc/:id/clients',
     main: id => <ClientList procId={id} />,
   },
-  { path: '/admin/proc/:id/analysis',
+  {
+    path: '/admin/proc/:id/analysis',
     main: () => <h2>Analyis</h2>,
   },
-  { path: '/admin/proc/:id/data',
+  {
+    path: '/admin/proc/:id/data',
     main: () => <h2>Data</h2>,
   },
 ];
 
 class ProcessDetail extends Component {
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -41,21 +44,12 @@ class ProcessDetail extends Component {
   }
 
   componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
     this.props.dispatch(fetchProcs());
     this.props.dispatch(fetchFeedbackersByProcId(this.props.match.params.id));
   }
 
   render() {
-    const id = this.props.match.params.id;
+    const { id } = this.props.match.params;
     return (
       <Grid className="process-detail">
         <Row>

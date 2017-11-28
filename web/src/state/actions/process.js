@@ -137,8 +137,7 @@ export function fetchProcs() {
         error => console.log('An error occured while receiving process list', error),
       )
       .then(json =>
-        dispatch(receiveProcs(json)),
-      );
+        dispatch(receiveProcs(json)));
   };
 }
 
@@ -225,8 +224,6 @@ export function deleteProc(id) {
       .then(
         response => response.json(),
         error => console.log(`An error occured while deleting process with id ${id}`, error),
-      ).then(
-        history.replace('/admin'),
-      )
+      ).then(history.replace('/admin'))
   );
 }

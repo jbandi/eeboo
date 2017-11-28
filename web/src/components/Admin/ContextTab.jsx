@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import idx from 'idx';
 
@@ -20,7 +19,6 @@ export const ContextTab = props => (
       {toArray(props.questionaire.contexts).map(c => (
         <tr key={c.id}>
           <td>{idx(c, _ => _.contents[0].content) || 'no content'}</td>
-          <td className="detail-link"><Link to="#">Edit</Link> | <Link to="#">Delete</Link></td>
         </tr>
       ))}
     </tbody>

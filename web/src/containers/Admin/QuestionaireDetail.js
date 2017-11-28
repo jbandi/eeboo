@@ -13,7 +13,8 @@ const mapDispatchToProps = dispatch => ({
   },
   save: (procId) => {
     dispatch(updateProc(procId));
-  } }
+  },
+}
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionaireDetail);

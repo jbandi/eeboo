@@ -8,12 +8,13 @@ const FeedbackerAnswer = (props) => {
     rows.push(<Button
       key={`${props.questionId}-${i}`}
       onClick={() => props.updateAnswer({
-        clientId: props.clientId,
-        questionId: props.questionId,
-        score: i,
-      })}
+                        clientId: props.clientId,
+                        questionId: props.questionId,
+                        score: i,
+                      })}
       active={i === props.score}
-    >{i}</Button>);
+    >{i}
+    </Button>); // eslint-disable-line
   }
   return (
     <ButtonToolbar>

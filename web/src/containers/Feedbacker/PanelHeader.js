@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => ({
   contextContent: getContentByLanguage(
     state.feedbacker.proc.questionaires[1234].contexts,
     ownProps.contextId,
-    state.feedbacker.language),
+    state.feedbacker.language,
+  ),
 });
 
 export default connect(mapStateToProps)(PanelHeader);

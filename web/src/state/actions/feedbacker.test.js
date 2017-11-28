@@ -46,7 +46,8 @@ describe('test feedbacker actions', () => {
     expect(updateAnswer({
       questionId: '1',
       clientId: '2',
-      score: 3 })).toEqual(expectedActions);
+      score: 3,
+    })).toEqual(expectedActions);
   });
 
   it('should request a feedbacker', () => {
@@ -141,7 +142,8 @@ describe('test feedbacker actions', () => {
 
     const expectedActions = [
       { type: REQUEST_FEEDBACKER },
-      { type: RECEIVE_FEEDBACKER,
+      {
+        type: RECEIVE_FEEDBACKER,
         feedbacker: {
           feedbacker: {
             id: 1,
@@ -189,7 +191,8 @@ describe('test feedbacker actions', () => {
 
     const expectedActions = [
       { type: REQUEST_FEEDBACKERS },
-      { type: RECEIVE_FEEDBACKERS,
+      {
+        type: RECEIVE_FEEDBACKERS,
         feedbackers: [{
           id: 'feedbacker1',
           clients: {},

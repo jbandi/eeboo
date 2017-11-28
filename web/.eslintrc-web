@@ -11,5 +11,6 @@
     "strict": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-undef": "off",
+    "jsx-a11y/anchor-is-valid": "off",
   },
 }

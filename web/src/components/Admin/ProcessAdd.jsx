@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import { Grid, Row, Col, FormGroup, FormControl, Table, Button, ControlLabel } from 'react-bootstrap';
-import Auth from './../../services/Auth/Auth';
 
 import './datepicker.css';
 
 class ProcessAdd extends Component {
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired,
     addProc: PropTypes.func.isRequired,
   }
 
@@ -20,18 +18,6 @@ class ProcessAdd extends Component {
       start: moment().valueOf(),
       end: moment().valueOf(),
     };
-  }
-
-  componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
   }
 
   getStartValidation = () => {

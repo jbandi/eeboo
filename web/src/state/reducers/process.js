@@ -13,7 +13,7 @@ import { removeItem } from '../../utils';
 const process = (state = {}, action) => {
   switch (action.type) {
     case ADD_CLIENT: {
-      const procId = action.procId;
+      const { procId } = action;
       const clientId = action.client.id;
       return Object.assign({}, state, {
         ...state,
@@ -30,8 +30,8 @@ const process = (state = {}, action) => {
       });
     }
     case DELETE_CLIENT: {
-      const procId = action.procId;
-      const clientId = action.clientId;
+      const { procId } = action;
+      const { clientId } = action;
       return Object.assign({}, state, {
         ...state,
         byHash: {
@@ -62,7 +62,7 @@ const process = (state = {}, action) => {
         isUploadingClients: true,
       });
     case RECEIVE_UPLOAD_CLIENTS: {
-      const procId = action.procId;
+      const { procId } = action;
       return Object.assign({}, state, {
         isUploadingClients: false,
         byHash: {
@@ -87,8 +87,10 @@ const process = (state = {}, action) => {
               [questionaireId]: {
                 ...state.byHash[procId].questionaires[questionaireId],
                 questions:
-                  removeItem(state.byHash[procId].questionaires[questionaireId].questions,
-                    questionId),
+                  removeItem(
+                    state.byHash[procId].questionaires[questionaireId].questions,
+                    questionId,
+                  ),
               },
             },
           },

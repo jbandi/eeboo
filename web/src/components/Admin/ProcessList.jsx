@@ -2,27 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Table, Grid, Row, Col } from 'react-bootstrap';
-import Auth from './../../services/Auth/Auth';
 import { fetchProcs } from '../../state/actions/process';
 import ProcessListRow from './../../containers/Admin/ProcessListRow';
 
 class ProcessList extends Component {
   static propTypes = {
-    auth: PropTypes.instanceOf(Auth).isRequired,
     dispatch: PropTypes.func.isRequired,
     procs: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
 
   componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
     if (this.props.procs.length <= 0) {
       this.props.dispatch(fetchProcs());
     }
@@ -52,9 +41,9 @@ class ProcessList extends Component {
                 <tbody>
                   {this.props.procs.map(p => (
                     <ProcessListRow key={p} id={p} />
-                  ))}
+                    ))}
                 </tbody>
-              </Table>
+                </Table> // eslint-disable-line
               : <div>fetching process list</div>
             }
           </Col>

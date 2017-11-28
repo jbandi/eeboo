@@ -6,12 +6,15 @@ import { updateRole, postFeedbacker, clearAnswers } from '../../state/actions/fe
 
 const mapStateToProps = (state, ownProps) => ({
   contextList: getContexts(state, 1234),
-  roles: getRolesByLanguage(state.feedbacker.proc.questionaires[1234],
-    state.feedbacker.language),
+  roles: getRolesByLanguage(
+    state.feedbacker.proc.questionaires[1234],
+    state.feedbacker.language,
+  ),
   role: getRoleById(
     state.feedbacker.proc.questionaires[1234],
     getRoleIdByClientId(state.feedbacker, ownProps.clientId),
-    'de'),
+    'de',
+  ),
 });
 
 const mapDispatchToProps = dispatch => ({

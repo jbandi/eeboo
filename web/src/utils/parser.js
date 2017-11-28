@@ -1,7 +1,6 @@
 import csv from 'csv';
 import uuidv4 from 'uuid/v4';
 
-
 function clientCSV2json(clientArray) {
   const clients = [];
   clientArray.forEach((line) => {

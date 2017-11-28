@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => ({
   feedbacker: ownProps.feedbacker,
   role: getRoleById(
     getQuestionaire(state, ownProps.feedbacker.proc, 1234),
-    getRoleIdByClientId(ownProps.feedbacker, ownProps.clientId), 'de'),
+    getRoleIdByClientId(ownProps.feedbacker, ownProps.clientId), 'de',
+  ),
 });
 
 export default connect(mapStateToProps)(FeedbackerRow);

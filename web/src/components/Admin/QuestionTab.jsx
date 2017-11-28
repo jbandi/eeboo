@@ -35,7 +35,8 @@ export const QuestionTab = props => (
                 questionaireId: props.questionaire.id,
                 questionId: q.id,
               })}
-            >Delete</Link>
+            >Delete
+            </Link>
           </td>
         </tr>
       ))}
