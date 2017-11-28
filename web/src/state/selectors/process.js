@@ -14,10 +14,17 @@ export const getProcess = (state, id) => (
 
 // get a list of clients for a specific process
 // return array
+export const getClient = (state, procId, clientId) => (
+  idx(state, _ => _.process.byHash[procId].clients[clientId]) || {}
+);
+
+// get a clients for a specific process
+// return object
 export const getClients = (state, procId) => {
   const clients = idx(state, _ => _.process.byHash[procId].clients) || [];
   return Object.keys(clients).map(k => clients[k]);
 };
+
 
 // get a list of questionaires for a specific process
 // return array

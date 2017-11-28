@@ -8,6 +8,7 @@ import { fetchProcs } from './../../state/actions/process';
 import { fetchFeedbackersByProcId } from './../../state/actions/feedbacker';
 import QuestionaireList from './../../containers/Admin/QuestionaireList';
 import ClientList from './../../containers/Admin/ClientList';
+import ClientDetail from './../../containers/Admin/ClientDetail';
 import FeedbackerList from './../../containers/Admin/FeedbackerList';
 
 const routes = [
@@ -97,6 +98,11 @@ class ProcessDetail extends Component {
                   component={() => route.main(id)}
                 />
               ))}
+              <Route
+                key="/admin/proc/gaga/:id/gaga/:clientId"
+                path="/admin/proc/:id/gaga/:clientId"
+                component={params => <ClientDetail params={params} />}
+              />
             </div>
           </Col>
           <Col md={2} />

@@ -11,7 +11,7 @@ import {
   postFeedbacker,
 } from './feedbacker';
 
-import { getFeedbackersByClientId, getFeedbackers } from '../selectors/feedbacker';
+import { getFeedbackerIdsByClientId, getFeedbackers } from '../selectors/feedbacker';
 
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
@@ -99,7 +99,7 @@ export function importClients(data, procId) {
 export function deleteClientAndFeedbackers(procId, clientId) {
   return (dispatch, getState) => {
     dispatch(deleteClient(procId, clientId));
-    const feedbackers = getFeedbackersByClientId(getState(), clientId);
+    const feedbackers = getFeedbackerIdsByClientId(getState(), clientId);
     feedbackers.forEach((f) => {
       dispatch(removeClientId(f, clientId));
       dispatch(removeFeedbackersWithoutClient());
@@ -156,7 +156,21 @@ export function addProc(process) {
         start: process.start,
         end: process.end,
         clients: {},
-        questionaires: {},
+        questionaires: {
+          1234: {
+            id: 1234,
+            questions: {},
+            contexts: {},
+            roles: {
+              self: {
+                id: 'self',
+                contents: [
+                  { content: 'Ich', lan: 'de' },
+                ],
+              },
+            },
+          },
+        },
         state: 'configure',
       };
     }

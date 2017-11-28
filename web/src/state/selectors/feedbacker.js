@@ -8,8 +8,8 @@ export const getFeedbacker = state => (
 
 // get a role by a client id
 // return object
-export const getRoleIdByClientId = (state, clientId) => (
-  idx(state, _ => _.feedbacker.clients[clientId].role) || -1
+export const getRoleIdByClientId = (feedbacker, clientId) => (
+  idx(feedbacker, _ => _.clients[clientId].role) || -1
 );
 
 // check if a list of clients contain a specific id
@@ -20,12 +20,25 @@ export const clientsContainId = (clients, id) => (
 
 // get a list of feedbackerIds that contain a specific clientId
 // return an array
-export const getFeedbackersByClientId = (state, clientId) => {
+export const getFeedbackerIdsByClientId = (state, clientId) => {
   const feedbackers = idx(state, _ => _.feedbacker.feedbackers) || [];
   const res = [];
   feedbackers.forEach((f) => {
     if (clientsContainId(f.clients, clientId)) {
       res.push(f.id);
+    }
+  });
+  return res;
+};
+
+// get a list of feedbackers that contain a specific clientId
+// return an array
+export const getFeedbackersByClientId = (state, clientId) => {
+  const feedbackers = idx(state, _ => _.feedbacker.feedbackers) || [];
+  const res = [];
+  feedbackers.forEach((f) => {
+    if (clientsContainId(f.clients, clientId)) {
+      res.push(f);
     }
   });
   return res;

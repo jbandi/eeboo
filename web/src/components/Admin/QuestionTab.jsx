@@ -7,7 +7,7 @@ import idx from 'idx';
 import { getContentByLanguage } from '../../state/selectors/context';
 
 const toArray = list => (
-  Object.keys(list).map(q => list[q])
+  (list) ? Object.keys(list).map(q => list[q]) : []
 );
 
 export const QuestionTab = props => (

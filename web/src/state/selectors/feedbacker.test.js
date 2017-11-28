@@ -10,7 +10,7 @@ import {
   getFeedbackerAnswers,
   getRoleIdByClientId,
   clientsContainId,
-  getFeedbackersByClientId,
+  getFeedbackerIdsByClientId,
   getFeedbackerWithoutClients,
 } from './feedbacker';
 
@@ -61,7 +61,7 @@ describe('test selectors for feedbacker', () => {
   });
 
   it('should return a role for a client', () => {
-    expect(getRoleIdByClientId(state, 'client1')).toEqual('role1');
+    expect(getRoleIdByClientId(state.feedbacker, 'client1')).toEqual('role1');
   });
 
   it('should test if a feedbacker exists', () => {
@@ -89,7 +89,7 @@ describe('test selectors for feedbacker', () => {
   });
 
   it('should get a list of feedbackers that contain a specific client id', () => {
-    expect(getFeedbackersByClientId({
+    expect(getFeedbackerIdsByClientId({
       feedbacker: {
         feedbackers,
       },

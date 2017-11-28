@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap';
 import idx from 'idx';
 
 const toArray = list => (
-  Object.keys(list).map(q => list[q])
+  (list) ? Object.keys(list).map(q => list[q]) : []
 );
 
 export const ContextTab = props => (

@@ -49,7 +49,7 @@ class ClientList extends React.Component {
                 <td>{client.firstname}</td>
                 <td>{client.mail}</td>
                 <td className="detail-link">
-                  <Link to="#">Edit</Link> |&nbsp;
+                  <Link to={`/admin/proc/${this.props.procId}/gaga/${client.id}`}>Edit</Link> |
                   <Link to="#" onClick={() => this.props.deleteClient(this.props.procId, client.id)}>Delete</Link>
                 </td>
               </tr>

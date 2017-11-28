@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
     state.feedbacker.language),
   role: getRoleById(
     state.feedbacker.proc.questionaires[1234],
-    getRoleIdByClientId(state, ownProps.clientId),
+    getRoleIdByClientId(state.feedbacker, ownProps.clientId),
     'de'),
 });
 
