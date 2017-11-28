@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 class ClientList extends React.Component {
   static propTypes = {
@@ -9,6 +9,7 @@ class ClientList extends React.Component {
     handleFileUpload: PropTypes.func.isRequired,
     procId: PropTypes.string.isRequired,
     deleteClient: PropTypes.func.isRequired,
+    saveProcess: PropTypes.func.isRequired,
   };
 
   focusTextInput = (e) => {
@@ -55,6 +56,9 @@ class ClientList extends React.Component {
             ))}
           </tbody>
         </Table>
+        <div style={{ textAlign: 'right' }}>
+          <Button bsStyle="default" onClick={() => this.props.saveProcess(this.props.procId)}>Save</Button>
+        </div>
       </div>
     );
   }

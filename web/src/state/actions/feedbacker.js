@@ -110,9 +110,9 @@ export function removeFeedbackersWithoutClient() {
 }
 
 // create a new freedbacker from a client
-export function createFeedbackerIfNotExists(client) {
+export function createFeedbackerIfNotExists(client, procId) {
   return dispatch => (
-    dispatch(addFeedbackerIfNotExists(createFeedbacker(client)))
+    dispatch(addFeedbackerIfNotExists(createFeedbacker(client, procId)))
   );
 }
 
@@ -162,14 +162,14 @@ export function deleteFeedbackerFromBackend(feedbackerId) {
   );
 }
 
-export function postFeedbacker() {
+export function postFeedbacker(data) {
   return (dispatch, getState) => {
-    const feedbacker = getState().feedbacker;
+    const feedbacker = !(data) ? getState().feedbacker : data;
     const body = {
       id: feedbacker.id,
       mail: feedbacker.mail,
       clients: feedbacker.clients,
-      proc: feedbacker.proc.id,
+      proc: feedbacker.proc,
     };
     dispatch(requestFeedbacker());
     return fetch('/api/v1/feedbackers', {

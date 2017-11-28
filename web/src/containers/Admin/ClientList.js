@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ClientList from '../../components/Admin/ClientList';
 import { getClients } from '../../state/selectors/process';
-import { deleteClientFromBackend, importClients } from '../../state/actions/process';
+import { deleteClientAndFeedbackers, importClients, putProc } from '../../state/actions/process';
 
 const mapStateToProps = (state, ownProps) => ({
   clients: getClients(state, ownProps.procId),
@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   handleFileUpload: (data, procId) => { dispatch(importClients(data, procId)); },
-  deleteClient: (procId, clientId) => { dispatch(deleteClientFromBackend(procId, clientId)); },
+  deleteClient: (procId, clientId) => { dispatch(deleteClientAndFeedbackers(procId, clientId)); },
+  saveProcess: (procId) => { dispatch(putProc(procId)); },
 });
 
 

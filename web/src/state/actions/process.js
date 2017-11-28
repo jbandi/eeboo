@@ -4,8 +4,14 @@ import history from '../../services/history';
 import Parser from '../../utils/parser';
 
 import { getProcess, clientExists } from '../selectors/process';
-import { addFeedbackers, createFeedbackerIfNotExists, removeClientId, removeFeedbackersWithoutClient } from './feedbacker';
-import { getFeedbackersByClientId } from '../selectors/feedbacker';
+import {
+  createFeedbackerIfNotExists,
+  removeClientId,
+  removeFeedbackersWithoutClient,
+  postFeedbacker,
+} from './feedbacker';
+
+import { getFeedbackersByClientId, getFeedbackers } from '../selectors/feedbacker';
 
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
@@ -80,7 +86,7 @@ export function importClients(data, procId) {
           clients.forEach((client) => {
             if (!clientExists(getState(), procId, client)) {
               dispatch(addClient(procId, client));
-              dispatch(createFeedbackerIfNotExists(client));
+              dispatch(createFeedbackerIfNotExists(client, procId));
             }
           });
         });
@@ -90,27 +96,36 @@ export function importClients(data, procId) {
   };
 }
 
-export function deleteClientFromBackend(procId, clientId) {
-  return (dispatch, getState) => (
-    fetch(`/api/v1/procs/${procId}/clients/${clientId}`, {
-      method: 'DELETE',
+export function deleteClientAndFeedbackers(procId, clientId) {
+  return (dispatch, getState) => {
+    dispatch(deleteClient(procId, clientId));
+    const feedbackers = getFeedbackersByClientId(getState(), clientId);
+    feedbackers.forEach((f) => {
+      dispatch(removeClientId(f, clientId));
+      dispatch(removeFeedbackersWithoutClient());
+    });
+  };
+}
+
+export function putProc(procId) {
+  return (dispatch, getState) => {
+    const body = getProcess(getState(), procId);
+    return fetch('/api/v1/procs/', {
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(body),
     })
       .then(
         response => response.json(),
-        error => console.log('An error occured while deleting client', error),
+        error => console.log('An error occured while updating process', error),
       ).then(() => {
-        dispatch(deleteClient(procId, clientId));
-        const feedbackers = getFeedbackersByClientId(getState(), clientId);
-        feedbackers.forEach((f) => {
-          dispatch(removeClientId(f, clientId));
-          dispatch(removeFeedbackersWithoutClient());
-        });
-      })
-  );
+        const feedbackers = getFeedbackers(getState());
+        feedbackers.forEach(f => dispatch(postFeedbacker(f)));
+      });
+  };
 }
 
 export function fetchProcs() {
@@ -182,26 +197,4 @@ export function deleteProc(id) {
         history.replace('/admin'),
       )
   );
-}
-
-export function uploadClients(procId, csv) {
-  return (dispatch) => {
-    dispatch(requestUploadClients());
-    return fetch(`/api/v1/procs/${procId}/csvclients`, {
-      method: 'POST',
-      headers: {
-        Accept: 'text/csv',
-        'Content-Type': 'text/csv',
-      },
-      body: csv,
-    })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured.', error),
-      )
-      .then((json) => {
-        dispatch(receiveUploadClients(json.data, procId));
-        dispatch(addFeedbackers(json.feedbackers));
-      });
-  };
 }

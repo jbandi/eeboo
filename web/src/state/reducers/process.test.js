@@ -5,8 +5,6 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
-  REQUEST_UPLOAD_CLIENTS,
-  RECEIVE_UPLOAD_CLIENTS,
 } from '../actions/process';
 
 describe('feedbacker reducer', () => {
@@ -31,33 +29,6 @@ describe('feedbacker reducer', () => {
       }],
     });
     expect(changedState.byId[0]).toBe('1');
-  });
-
-  it('should request client upload', () => {
-    const changedState = process(state, {
-      type: REQUEST_UPLOAD_CLIENTS,
-    });
-    expect(changedState.isUploadingClients).toBe(true);
-  });
-  it('should receive a new list of clients (clients upload)', () => {
-    const changedState = process({
-      byHash: {
-        1: {},
-      },
-    }, {
-      type: RECEIVE_UPLOAD_CLIENTS,
-      procId: 1,
-      clients: {
-        1: {
-          id: 1,
-        },
-        2: {
-          id: 2,
-        },
-      },
-    });
-    expect(changedState.isUploadingClients).toBe(false);
-    expect(changedState.byHash[1].clients[1].id).toBe(1);
   });
 
   it('should delete a apecific question', () => {
