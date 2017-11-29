@@ -39,11 +39,12 @@ export function addFeedbacker(feedbacker) {
   };
 }
 
-export function addClientId(feedbackerId, clientId) {
+export function addClientId(feedbackerId, clientId, roleId) {
   return {
     type: ADD_CLIENTID,
     feedbackerId,
     clientId,
+    roleId,
   };
 }
 
@@ -115,7 +116,7 @@ export function importFeedbackers(data, procId, clientId) {
           csv.forEach((f) => {
             const feedbacker = getFeedbackerByMail(getState(), f.mail);
             if (feedbacker !== undefined) {
-              dispatch(addClientId(feedbacker.id, clientId));
+              dispatch(addClientId(feedbacker.id, clientId, f.role));
             } else {
               dispatch(addFeedbacker(createFeedbacker(
                 clientId,

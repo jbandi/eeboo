@@ -48,7 +48,13 @@ const feedbacker = (state = { language: 'de' }, action) => {
           ...state.feedbackers.slice(0, index),
           {
             ...state.feedbackers[index],
-            clients: [...state.feedbackers[index].clients, action.clientId],
+            clients: {
+              ...state.feedbackers[index].clients,
+              [action.clientId]: {
+                id: action.clientId,
+                role: action.roleId,
+              },
+            },
           },
           ...state.feedbackers.slice(index + 1),
         ],

@@ -9,6 +9,7 @@ import {
   RECEIVE_FEEDBACKERS,
   UPDATE_ANSWER,
   UPDATE_ROLE,
+  ADD_CLIENTID,
 } from '../actions/feedbacker';
 
 describe('feedbacker reducer for a single feedbacker', () => {
@@ -91,7 +92,7 @@ describe('feedbacker reducer for a single feedbacker', () => {
     expect(changedState.clients.client1.answers.question1).toBe(5);
   });
 
-  it('should update rold', () => {
+  it('should update rolId', () => {
     const changedState = feedbacker(state.feedbacker, {
       type: UPDATE_ROLE,
       clientId: 'client1',
@@ -136,5 +137,24 @@ describe('feedbacker reducer for multiple feedbacker', () => {
     });
     expect(changedState.isFetchingFeedbackers).toBe(false);
     expect(changedState.feedbackers.length).toBe(2);
+  });
+
+  it('should add a client to a feedbacker', () => {
+    const s = {
+      feedbackers: [{
+        id: '1',
+        clients: {
+          c1: { id: 'c1', role: 'r1' },
+          c2: { id: 'c2', role: 'r2' },
+        },
+      }],
+    };
+    const changedState = feedbacker(s, {
+      type: ADD_CLIENTID,
+      feedbackerId: '1',
+      clientId: 'c3',
+      roleId: 'r3',
+    });
+    expect(changedState.feedbackers[0].clients.c3.id).toBe('c3');
   });
 });

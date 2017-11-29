@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Panel, PanelGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, Panel, PanelGroup } from 'react-bootstrap';
 import Context from './Context';
 import PanelHeader from '../../containers/Feedbacker/PanelHeader';
 
@@ -8,10 +8,6 @@ export class Client extends React.Component {
   static propTypes = {
     clientId: PropTypes.string.isRequired,
     contextList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    roles: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      contents: PropTypes.PropTypes.shape({}),
-    })).isRequired,
     role: PropTypes.shape({
       content: PropTypes.string,
       id: PropTypes.string,
@@ -59,15 +55,7 @@ export class Client extends React.Component {
           <tr>
             <td align="align-left" style={{ paddingRight: '15px' }}>Ihre Rolle:</td>
             <td>
-              <DropdownButton title={this.props.role.content} id="bg-nested-dropdown" bsSize="small" pullRight>
-                {this.props.roles.map(role => (
-                  <MenuItem
-                    key={role.id}
-                    onSelect={() => this.handleRoleSelect(role.id)}
-                  >{role.contents.content}
-                  </MenuItem>
-                ))}
-              </DropdownButton>
+              {this.props.role.content}
             </td>
           </tr>
         </tbody>
@@ -100,6 +88,7 @@ export class Client extends React.Component {
               >
                 <Context
                   context={context}
+                  client={this.props.client}
                   clientId={this.props.clientId}
                   roleId={this.props.role.id}
                   language={this.props.language}

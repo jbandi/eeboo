@@ -1,6 +1,9 @@
 import csv from 'csvtojson';
 import uuidv4 from 'uuid/v4';
 
+
+// parse a CSV file of clients to JSON
+// return an array
 function clientCSV2json(clientArray) {
   const clients = [];
   clientArray.forEach((line) => {
@@ -18,6 +21,8 @@ function clientCSV2json(clientArray) {
   return clients;
 }
 
+// parse a CSV file of feedbackers to JSON
+// return an array
 function feedbackerCSV2json(feedbackerArray) {
   const feedbackers = [];
   feedbackerArray.forEach((line) => {

@@ -81,9 +81,9 @@ export const getQuestionaireByClientId = (state, clientId) => {
 };
 
 // get context list
-// return list of objects
+// return an array
 export const getContexts = (state, questionaireId) => (
-  idx(state, _ => _.feedbacker.proc.questionaires[questionaireId].contexts) || {}
+  idx(state, _ => _.feedbacker.proc.questionaires[questionaireId].contexts) || []
 );
 
 // get context Ids

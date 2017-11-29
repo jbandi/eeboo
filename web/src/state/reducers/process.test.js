@@ -5,6 +5,7 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
+  ADD_CLIENT,
 } from '../actions/process';
 
 describe('feedbacker reducer', () => {

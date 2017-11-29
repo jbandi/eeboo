@@ -103,8 +103,8 @@ class AppState {
         const dbSnapshot = snapshot.val();
         if (dbSnapshot) {
           const feedbacker = dbSnapshot || [];
-          const procId = idx(feedbacker, _ => _.proc) || -1;
-          if (procId > -1) {
+          const procId = idx(feedbacker, _ => _.proc) || undefined;
+          if (procId) {
             this.getProc(procId).then((proc) => {
               resolve({
                 feedbacker,
