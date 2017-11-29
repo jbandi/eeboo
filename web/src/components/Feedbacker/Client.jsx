@@ -88,7 +88,6 @@ export class Client extends React.Component {
               >
                 <Context
                   context={context}
-                  client={this.props.client}
                   clientId={this.props.clientId}
                   roleId={this.props.role.id}
                   language={this.props.language}
