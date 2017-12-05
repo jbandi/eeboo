@@ -1,7 +1,6 @@
 import csv from 'csvtojson';
 import uuidv4 from 'uuid/v4';
 
-
 // parse a CSV string of clients to JSON
 // return an array
 function clientCSV2json(clientArray) {
@@ -46,7 +45,7 @@ function questionCSV2json(questionArray) {
   questionArray.forEach((line, index) => {
     if (line[2] !== '') {
       const question = {
-        id: index,
+        id: `id-${index}`,
         scores: 5,
         context: line[2],
         contents: [{
@@ -55,18 +54,18 @@ function questionCSV2json(questionArray) {
           lan: 'de',
           role: 'foreign',
         }, {
-          content: line[11],
-          female: line[11],
+          content: line[9],
+          female: line[9],
           lan: 'de',
           role: 'self',
         }, {
-          content: line[18],
-          female: line[20],
+          content: line[16],
+          female: line[18],
           lan: 'en',
           role: 'foreign',
         }, {
-          content: line[22],
-          female: line[22],
+          content: line[20],
+          female: line[20],
           lan: 'de',
           role: 'self',
         }],

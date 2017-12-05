@@ -16,6 +16,7 @@ import { getFeedbackerIdsByClientId, getFeedbackerArray } from '../selectors/fee
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
 export const DELETE_QUESTION = 'process/DELETE_QUESTION';
+export const ADD_QUESTIONS = 'process/ADD_QUESTIONS';
 
 export const REQUEST_UPLOAD_CLIENTS = 'process/REQUEST_UPLOAD_CLIENTS';
 export const RECEIVE_UPLOAD_CLIENTS = 'process/RECEIVE_UPLOAD_CLIENTS';
@@ -82,6 +83,15 @@ export function deleteQuestion(procId, questionaireId, questionId) {
   };
 }
 
+export function addQuestions(procId, questionaireId, questions) {
+  return {
+    type: ADD_QUESTIONS,
+    procId,
+    questionaireId,
+    questions,
+  };
+}
+
 // add a Client if it does not already exist
 export function importClients(data, procId) {
   return (dispatch, getState) => {
@@ -105,13 +115,15 @@ export function importClients(data, procId) {
 
 // add a Client if it does not already exist
 export function importQuestions(data, procId) {
-  return () => {
+  return (dispatch) => {
     const file = data.target.files[0];
     const reader = new FileReader();
     reader.onload = (() => (
       (e) => {
         Parser.parseQuestions(e.target.result).then((questions) => {
-          console.log(procId, questions);
+          const list = {};
+          questions.forEach((q) => { list[q.id] = q; });
+          dispatch(addQuestions(procId, 1234, list));
         });
       }
     ))(file);
@@ -182,7 +194,32 @@ export function addProc(process) {
           1234: {
             id: 1234,
             questions: {},
-            contexts: {},
+            contexts: {
+              A: {
+                id: 'A',
+                contents: [
+                  { content: 'Kommunikation', lan: 'de' },
+                  { content: 'Communication', lan: 'en' }],
+              },
+              B: {
+                id: 'B',
+                contents: [
+                  { content: 'Teambildung', lan: 'de' },
+                  { content: 'Team building', lan: 'en' }],
+              },
+              C: {
+                id: 'C',
+                contents: [
+                  { content: 'Führen in schwierigen Situationen', lan: 'de' },
+                  { content: 'Leading in difficult situations', lan: 'en' }],
+              },
+              D: {
+                id: 'D',
+                contents: [
+                  { content: 'Motivation von Mitarbeitern', lan: 'de' },
+                  { content: 'motivation', lan: 'en' }],
+              },
+            },
             roles: {
               self: {
                 id: 'self',

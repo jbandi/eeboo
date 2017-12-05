@@ -2,6 +2,7 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
+  ADD_QUESTIONS,
   REQUEST_UPLOAD_CLIENTS,
   RECEIVE_UPLOAD_CLIENTS,
   DELETE_CLIENT,
@@ -91,6 +92,25 @@ const process = (state = {}, action) => {
                     state.byHash[procId].questionaires[questionaireId].questions,
                     questionId,
                   ),
+              },
+            },
+          },
+        },
+      });
+    }
+    case ADD_QUESTIONS: {
+      const { procId, questionaireId, questions } = action;
+      return Object.assign({}, state, {
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [procId]: {
+            ...state.byHash[procId],
+            questionaires: {
+              ...state.byHash[procId].questionaires,
+              [questionaireId]: {
+                ...state.byHash[procId].questionaires[questionaireId],
+                questions,
               },
             },
           },

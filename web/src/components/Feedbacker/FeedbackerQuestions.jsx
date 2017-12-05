@@ -17,7 +17,7 @@ const FeedbackerQuestions = props => (
         {props.questions.map(question =>
           (
             <tr key={question.id}>
-              <td align="center">{idx(question, _ => _.contents[0].content) || 'undef'}</td>
+              <td align="center">{idx(question, _ => _.contents[0].content) || question.id}</td>
               <td align="align-right">
                 <FeedbackerAnswer
                   questionId={question.id}
