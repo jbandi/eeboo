@@ -13,7 +13,7 @@ const Context = props => (
 
 Context.propTypes = {
   context: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
   clientId: PropTypes.string.isRequired,
   roleId: PropTypes.string.isRequired,

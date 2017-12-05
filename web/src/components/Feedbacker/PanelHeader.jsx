@@ -19,7 +19,7 @@ PanelHeader.propTypes = {
     lan: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  contextId: PropTypes.number.isRequired,
+  contextId: PropTypes.string.isRequired,
   clientId: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   roleId: PropTypes.string.isRequired,

@@ -103,6 +103,22 @@ export function importClients(data, procId) {
   };
 }
 
+// add a Client if it does not already exist
+export function importQuestions(data, procId) {
+  return () => {
+    const file = data.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (() => (
+      (e) => {
+        Parser.parseQuestions(e.target.result).then((questions) => {
+          console.log(procId, questions);
+        });
+      }
+    ))(file);
+    reader.readAsText(file);
+  };
+}
+
 export function deleteClientAndFeedbackers(procId, clientId) {
   return (dispatch, getState) => {
     dispatch(deleteClient(procId, clientId));

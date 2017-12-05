@@ -8,11 +8,20 @@ export const roles = {
     contents: [{ content: 'Chef', lan: 'de' }, { content: 'chief', lan: 'en' }],
   },
 };
-export const contexts = [
-  { contents: [{ content: 'Kritikfähigkeit', lan: 'de' }] },
-  { contents: [{ content: 'Konfliktfähigkeit', lan: 'de' }] },
-  { contents: [{ content: 'Teamfähigkeit', lan: 'de' }] },
-];
+export const contexts = {
+  A: {
+    id: 'A',
+    contents: [{ content: 'Kritikfähigkeit', lan: 'de' }],
+  },
+  B: {
+    id: 'B',
+    contents: [{ content: 'Konfliktfähigkeit', lan: 'de' }],
+  },
+  C: {
+    id: 'C',
+    contents: [{ content: 'Teamfähigkeit', lan: 'de' }],
+  },
+};
 export const questions = {
   question1: {
     id: 'question1',

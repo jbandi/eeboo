@@ -47,10 +47,17 @@ export const clientExists = (state, procId, client) => {
 };
 
 // get a list of contexts
-// return: array
+// return: list of Objects
 export const getContexts = (state, procId, questionaireId) => (
-  idx(state, _ => _.process.byHash[procId].questionaires[questionaireId].contexts) || []
+  idx(state, _ => _.process.byHash[procId].questionaires[questionaireId].contexts) || {}
 );
+
+// get a list of contexts
+// return: array
+export const getContextsArray = (state, procId, questionaireId) => {
+  const contexts = getContexts(state, procId, questionaireId);
+  return Object.keys(contexts).map(id => contexts[id]);
+};
 
 // get context Ids
 // return array

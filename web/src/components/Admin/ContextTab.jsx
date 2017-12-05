@@ -28,7 +28,7 @@ export const ContextTab = props => (
 ContextTab.propTypes = {
   questionaire: PropTypes.shape({
     id: PropTypes.number,
-    contexts: PropTypes.arrayOf(PropTypes.shape({})),
+    contexts: PropTypes.shape({}),
   }).isRequired,
 };
 

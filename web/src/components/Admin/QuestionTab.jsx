@@ -48,7 +48,7 @@ QuestionTab.propTypes = {
   questionaire: PropTypes.shape({
     id: PropTypes.number,
     questions: PropTypes.shape({}),
-    contexts: PropTypes.arrayOf(PropTypes.shape({})),
+    contexts: PropTypes.shape({}),
   }).isRequired,
 };
 

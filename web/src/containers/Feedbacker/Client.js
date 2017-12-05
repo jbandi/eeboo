@@ -4,13 +4,13 @@ import {
   getFirstFeedbackerId,
   getRoleIdByClientId,
 } from '../../state/selectors/feedbacker';
-import { getQuestionaire, getContexts, getClient } from '../../state/selectors/process';
+import { getQuestionaire, getContextsArray, getClient } from '../../state/selectors/process';
 import { getRolesByLanguage, getRoleById } from '../../state/selectors/questionaire';
 import { Client } from '../../components/Feedbacker/Client';
 import { postFeedbacker, clearAnswers } from '../../state/actions/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
-  contextList: getContexts(state, getFirstFeedbackerProc(state), 1234),
+  contextList: getContextsArray(state, getFirstFeedbackerProc(state), 1234),
   feedbackerId: getFirstFeedbackerId(state),
   client: getClient(state, getFirstFeedbackerProc(state), ownProps.clientId),
   roles: getRolesByLanguage(
