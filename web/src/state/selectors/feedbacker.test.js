@@ -1,10 +1,8 @@
-import { feedbacker, feedbackers } from './feedbacker-data';
+import { feedbacker } from './feedbacker-data';
 
 import {
-  getFeedbacker,
+  getFirstFeedbacker,
   getFeedbackerClientIds,
-  getContexts,
-  getContextIds,
   feedbackerExists,
   getFeedbackerAnswer,
   getFeedbackerAnswers,
@@ -17,15 +15,14 @@ import {
 describe('test selectors for feedbacker', () => {
   const state = {
     feedbacker,
-    feedbackers,
   };
 
   it('it should return a specific feedbacker from state', () => {
-    expect(getFeedbacker(state).id).toEqual('feedbacker1');
+    expect(getFirstFeedbacker(state).id).toEqual('feedbacker1');
   });
 
   it('should return an empty object if state is empty', () => {
-    expect(getFeedbacker({})).toEqual({});
+    expect(getFirstFeedbacker({})).toEqual({});
   });
 
   it('should return an empty list if feedbacker does not include clients', () => {
@@ -33,19 +30,11 @@ describe('test selectors for feedbacker', () => {
   });
 
   it('should return a list of all clients', () => {
-    expect(getFeedbackerClientIds(state).length).toEqual(2);
-  });
-
-  it('should return a list of context objects', () => {
-    expect(getContexts(state, 1234)[1].contents[0].content).toEqual('Teamfähigkeit');
-  });
-
-  it('should return contextIds as array', () => {
-    expect(getContextIds(state, 1234).length).toEqual(2);
+    expect(getFeedbackerClientIds(state, 'feedbacker1').length).toEqual(2);
   });
 
   it('should return a specific answer', () => {
-    expect(getFeedbackerAnswer(state, 'client1', 'question1')).toEqual(3);
+    expect(getFeedbackerAnswer(state, 'feedbacker1', 'client2', 'question1')).toEqual(3);
   });
 
   it('should return -1 if question not found', () => {
@@ -57,26 +46,22 @@ describe('test selectors for feedbacker', () => {
   });
 
   it('should return an array of answers for a client', () => {
-    expect(getFeedbackerAnswers(state, 'client1').question1).toEqual(3);
+    expect(getFeedbackerAnswers(state, 'feedbacker1', 'client2').question1).toEqual(3);
   });
 
   it('should return a role for a client', () => {
-    expect(getRoleIdByClientId(state.feedbacker, 'client1')).toEqual('role1');
+    expect(getRoleIdByClientId(state, 'feedbacker1', 'client1')).toEqual('role2');
   });
 
   it('should test if a feedbacker exists', () => {
     expect(feedbackerExists({
-      feedbacker: {
-        feedbackers,
-      },
+      feedbacker,
     }, { id: '1', mail: 'feedbacker1@example.com' })).toEqual(true);
   });
 
   it('should test if a feedbacker does not exist', () => {
     expect(feedbackerExists({
-      feedbacker: {
-        feedbackers,
-      },
+      feedbacker,
     }, { id: '1', mail: 'undefined' })).toEqual(false);
   });
 
@@ -90,9 +75,7 @@ describe('test selectors for feedbacker', () => {
 
   it('should get a list of feedbackers that contain a specific client id', () => {
     expect(getFeedbackerIdsByClientId({
-      feedbacker: {
-        feedbackers,
-      },
+      feedbacker,
     }, 'client3')).toEqual(['feedbacker2']);
   });
 

@@ -1,17 +1,20 @@
-import { getFeedbackerByMail, feedbackerExists, getFeedbackerWithoutClients } from '../selectors/feedbacker';
+import {
+  getFirstFeedbacker,
+  getFeedbackerByMail,
+  feedbackerExists,
+  getFeedbackerWithoutClients,
+} from '../selectors/feedbacker';
 import { createFeedbacker } from '../../utils';
 
 import Parser from '../../utils/parser';
 
+import { receiveProc } from './process';
+
 export const REQUEST_FEEDBACKER = 'feebacker/REQUEST_FEEDBACKER';
 export const RECEIVE_FEEDBACKER = 'feedbacker/RECEIVE_FEEDBACKER';
-export const REQUEST_FEEDBACKERS = 'feebacker/REQUEST_FEEDBACKERS';
-export const RECEIVE_FEEDBACKERS = 'feedbacker/RECEIVE_FEEDBACKERS';
-export const ADD_FEEDBACKERS = 'feedbacker/ADD_FEEDBACKERS';
 export const ADD_FEEDBACKER = 'feedbacker/ADD_FEEDBACKER';
 export const DELETE_FEEDBACKER = 'feedbacker/DELETE_FEEDBACKER';
 export const UPDATE_ANSWER = 'feedbacker/UPDATE_ANSWER';
-export const UPDATE_ROLE = 'feedbacker/UPDATE_ROLE';
 export const CLEAR_ANSWERS = 'feedbacker/CLEAR_ANSWERS';
 export const REMOVE_CLIENTID = 'feedbackers/REMOVE_CLIENTID';
 export const ADD_CLIENTID = 'feedbacker/ADD_CLIENT';
@@ -22,12 +25,13 @@ export function updateAnswer(answer) {
     questionId: answer.questionId,
     clientId: answer.clientId,
     score: answer.score,
+    feedbackerId: answer.feedbackerId,
   };
 }
 
 export function addFeedbackers(feedbackers) {
   return {
-    type: ADD_FEEDBACKERS,
+    type: ADD_FEEDBACKER,
     feedbackers,
   };
 }
@@ -35,7 +39,7 @@ export function addFeedbackers(feedbackers) {
 export function addFeedbacker(feedbacker) {
   return {
     type: ADD_FEEDBACKER,
-    feedbacker,
+    feedbackers: [feedbacker],
   };
 }
 
@@ -55,18 +59,11 @@ export function deleteFeedbacker(feedbackerId) {
   };
 }
 
-export function clearAnswers(clientId) {
+export function clearAnswers(feedbackerId, clientId) {
   return {
     type: CLEAR_ANSWERS,
+    feedbackerId,
     clientId,
-  };
-}
-
-export function updateRole(data) {
-  return {
-    type: UPDATE_ROLE,
-    clientId: data.clientId,
-    roleId: data.roleId,
   };
 }
 
@@ -84,24 +81,17 @@ export function requestFeedbacker() {
   };
 }
 
-export function receiveFeedbacker(data) {
+export function receiveFeedbacker(feedbacker) {
   return {
     type: RECEIVE_FEEDBACKER,
-    feedbacker: data.feedbacker,
-    proc: data.proc,
+    feedbackers: [feedbacker],
   };
 }
 
-export function requestFeedbackers() {
+export function receiveFeedbackers(feedbackers) {
   return {
-    type: REQUEST_FEEDBACKERS,
-  };
-}
-
-export function receiveFeedbackers(data) {
-  return {
-    type: RECEIVE_FEEDBACKERS,
-    feedbackers: data,
+    type: RECEIVE_FEEDBACKER,
+    feedbackers,
   };
 }
 
@@ -165,14 +155,16 @@ export function fetchFeedbacker(id) {
         response => response.json(),
         error => console.log('An error occured.', error),
       )
-      .then(json =>
-        dispatch(receiveFeedbacker(json)));
+      .then((json) => {
+        dispatch(receiveProc(json.proc));
+        dispatch(receiveFeedbacker(json.feedbacker));
+      });
   };
 }
 
 export function fetchFeedbackersByProcId(procId) {
   return (dispatch) => {
-    dispatch(requestFeedbackers());
+    dispatch(requestFeedbacker());
     return fetch(`/api/v1/procs/${procId}/feedbackers`)
       .then(
         response => response.json(),
@@ -203,7 +195,7 @@ export function deleteFeedbackerFromBackend(feedbackerId) {
 
 export function postFeedbacker(data) {
   return (dispatch, getState) => {
-    const feedbacker = !(data) ? getState().feedbacker : data;
+    const feedbacker = !(data) ? getFirstFeedbacker(getState()) : data;
     const body = {
       id: feedbacker.id,
       mail: feedbacker.mail,

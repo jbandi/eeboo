@@ -1,115 +1,106 @@
-import idx from 'idx';
-import { removeItem } from '../../utils';
+import { removeItem, addItem } from '../../utils';
 
 import {
   RECEIVE_FEEDBACKER,
   REQUEST_FEEDBACKER,
-  REQUEST_FEEDBACKERS,
-  RECEIVE_FEEDBACKERS,
-  ADD_FEEDBACKERS,
   ADD_FEEDBACKER,
   ADD_CLIENTID,
   DELETE_FEEDBACKER,
   UPDATE_ANSWER,
-  UPDATE_ROLE,
   CLEAR_ANSWERS,
   REMOVE_CLIENTID,
 } from '../actions/feedbacker';
-
-// get the array index for a specific feedbacker
-const getIndex = (feedbackers, feedbackerId) => (
-  feedbackers.findIndex(f => f.id === feedbackerId)
-);
 
 // import { defaultFeedbacker } from './defaultState';
 const feedbacker = (state = { language: 'de' }, action) => {
   switch (action.type) {
     case REMOVE_CLIENTID: {
-      const { feedbackerId } = action;
-      const { clientId } = action;
-      const index = getIndex(state.feedbackers, feedbackerId);
+      const { feedbackerId, clientId } = action;
       return Object.assign({}, state, {
         ...state,
-        feedbackers: [
-          ...state.feedbackers.slice(0, index),
-          {
-            ...state.feedbackers[index],
-            clients: removeItem(state.feedbackers[index].clients, clientId),
+        byHash: {
+          ...state.byHash,
+          [feedbackerId]: {
+            ...state.byHash[feedbackerId],
+            clients: removeItem(state.byHash[feedbackerId].clients, clientId),
           },
-          ...state.feedbackers.slice(index + 1),
-        ],
+        },
       });
     }
     case ADD_CLIENTID: {
-      const index = getIndex(state.feedbackers, action.feedbackerId);
+      const { feedbackerId, clientId, roleId } = action;
       return Object.assign({}, state, {
         ...state,
-        feedbackers: [
-          ...state.feedbackers.slice(0, index),
-          {
-            ...state.feedbackers[index],
+        byHash: {
+          ...state.byHash,
+          [feedbackerId]: {
+            ...state.byHash[feedbackerId],
             clients: {
-              ...state.feedbackers[index].clients,
+              ...state.byHash[feedbackerId].clients,
               [action.clientId]: {
-                id: action.clientId,
-                role: action.roleId,
+                id: clientId,
+                role: roleId,
               },
             },
           },
-          ...state.feedbackers.slice(index + 1),
-        ],
+        },
       });
     }
     case DELETE_FEEDBACKER: {
+      const { feedbackerId } = action;
       return Object.assign({}, state, {
         ...state,
-        feedbackers: state.feedbackers.filter(f => f.id !== action.feedbackerId),
+        byId: state.byId.filter(id => id !== feedbackerId),
+        byHash: removeItem(state.byHash, feedbackerId),
       });
     }
     case ADD_FEEDBACKER:
       return Object.assign({}, state, {
         ...state,
-        feedbackers: [...state.feedbackers, action.feedbacker],
+        byId: [...state.byId, ...(action.feedbackers.map(f => f.id))],
+        byHash: addItem(state.byHash, action.feedbackers),
       });
-    case ADD_FEEDBACKERS:
+    case CLEAR_ANSWERS: {
+      const { clientId, feedbackerId } = action;
       return Object.assign({}, state, {
         ...state,
-        feedbackers: action.feedbackers,
-      });
-    case CLEAR_ANSWERS:
-      return Object.assign({}, state, {
-        ...state,
-        clients: {
-          ...state.clients,
-          [action.clientId]: {
-            ...state.clients[action.clientId],
-            answers: {},
+        byHash: {
+          ...state.byHash,
+          [feedbackerId]: {
+            ...state.byHash[feedbackerId],
+            clients: {
+              ...state.byHash[feedbackerId].clients,
+              [clientId]: {
+                ...state.byHash[feedbackerId].clients[clientId],
+                answers: {},
+              },
+            },
           },
         },
       });
-    case UPDATE_ROLE:
-      return Object.assign({}, state, {
-        ...state,
-        clients: {
-          ...state.clients,
-          [action.clientId]: {
-            ...state.clients[action.clientId],
-            role: action.roleId,
-          },
-        },
-      });
+    }
     case UPDATE_ANSWER: {
-      const { clientId } = action;
-      const { questionId } = action;
+      const {
+        clientId,
+        feedbackerId,
+        score,
+        questionId,
+      } = action;
       return Object.assign({}, state, {
         ...state,
-        clients: {
-          ...state.clients,
-          [clientId]: {
-            ...state.clients[clientId],
-            answers: {
-              ...state.clients[clientId].answers,
-              [questionId]: action.score,
+        byHash: {
+          ...state.byHash,
+          [feedbackerId]: {
+            ...state.byHash[feedbackerId],
+            clients: {
+              ...state.byHash[feedbackerId].clients,
+              [clientId]: {
+                ...state.byHash[feedbackerId].clients[clientId],
+                answers: {
+                  ...state.byHash[feedbackerId].clients[clientId].answers,
+                  [questionId]: score,
+                },
+              },
             },
           },
         },
@@ -121,22 +112,14 @@ const feedbacker = (state = { language: 'de' }, action) => {
       });
     case RECEIVE_FEEDBACKER: {
       return {
-        language: 'de',
         isFetchingFeedbacker: false,
-        id: idx(action, _ => _.feedbacker.id) || '',
-        mail: idx(action, _ => _.feedbacker.mail) || '',
-        proc: idx(action, _ => _.proc) || {},
-        clients: idx(action, _ => _.feedbacker.clients) || {},
-      };
-    }
-    case REQUEST_FEEDBACKERS:
-      return Object.assign({}, state, {
-        isFetchingFeedbackers: true,
-      });
-    case RECEIVE_FEEDBACKERS: {
-      return {
-        isFetchingFeedbackers: false,
-        feedbackers: action.feedbackers,
+        language: 'de',
+        byId: action.feedbackers.map(f => f.id),
+        byHash: action.feedbackers.reduce((map, obj) => {
+          const t = map;
+          t[obj.id] = obj;
+          return map;
+        }, {}),
       };
     }
     default:

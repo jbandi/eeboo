@@ -12,8 +12,8 @@ export const getProcess = (state, id) => (
   idx(state, _ => _.process.byHash[id]) || {}
 );
 
-// get a list of clients for a specific process
-// return array
+// get a client for a specific process
+// return object
 export const getClient = (state, procId, clientId) => (
   idx(state, _ => _.process.byHash[procId].clients[clientId]) || {}
 );
@@ -45,3 +45,15 @@ export const clientExists = (state, procId, client) => {
   const clientArr = Object.keys(clientList).map(id => clientList[id]);
   return clientArr.find(c => c.mail === client.mail) !== undefined;
 };
+
+// get a list of contexts
+// return: array
+export const getContexts = (state, procId, questionaireId) => (
+  idx(state, _ => _.process.byHash[procId].questionaires[questionaireId].contexts) || []
+);
+
+// get context Ids
+// return array
+export const getContextIds = (state, procId, questionaireId) => (
+  Object.keys(getContexts(state, procId, questionaireId))
+);

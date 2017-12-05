@@ -1,25 +1,31 @@
 import { connect } from 'react-redux';
-import { getContexts, getRoleIdByClientId } from '../../state/selectors/feedbacker';
+import {
+  getFirstFeedbackerProc,
+  getFirstFeedbackerId,
+  getRoleIdByClientId,
+} from '../../state/selectors/feedbacker';
+import { getQuestionaire, getContexts, getClient } from '../../state/selectors/process';
 import { getRolesByLanguage, getRoleById } from '../../state/selectors/questionaire';
 import { Client } from '../../components/Feedbacker/Client';
-import { updateRole, postFeedbacker, clearAnswers } from '../../state/actions/feedbacker';
+import { postFeedbacker, clearAnswers } from '../../state/actions/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
-  contextList: getContexts(state, 1234),
+  contextList: getContexts(state, getFirstFeedbackerProc(state), 1234),
+  feedbackerId: getFirstFeedbackerId(state),
+  client: getClient(state, getFirstFeedbackerProc(state), ownProps.clientId),
   roles: getRolesByLanguage(
-    state.feedbacker.proc.questionaires[1234],
+    getQuestionaire(state, getFirstFeedbackerProc(state), 1234),
     state.feedbacker.language,
   ),
   role: getRoleById(
-    state.feedbacker.proc.questionaires[1234],
-    getRoleIdByClientId(state.feedbacker, ownProps.clientId),
+    getQuestionaire(state, getFirstFeedbackerProc(state), 1234),
+    getRoleIdByClientId(state, getFirstFeedbackerId(state), ownProps.clientId),
     'de',
   ),
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateRole: (data) => { dispatch(updateRole(data)); },
-  clearAnswers: (clientId) => { dispatch(clearAnswers(clientId)); },
+  clearAnswers: (feedbackerId, clientId) => { dispatch(clearAnswers(feedbackerId, clientId)); },
   saveAnswers: () => { dispatch(postFeedbacker()); },
 });
 

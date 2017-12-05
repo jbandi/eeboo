@@ -12,16 +12,16 @@ import FeedbackerList from './../../containers/Admin/FeedbackerList';
 
 const routes = [
   {
+    path: '/admin/proc/:id/clients',
+    main: id => <ClientList procId={id} />,
+  },
+  {
     path: '/admin/proc/:id/questionaires',
     main: id => <QuestionaireList procId={id} />,
   },
   {
     path: '/admin/proc/:id/feedbackers',
     main: id => <FeedbackerList procId={id} />,
-  },
-  {
-    path: '/admin/proc/:id/clients',
-    main: id => <ClientList procId={id} />,
   },
   {
     path: '/admin/proc/:id/analysis',
@@ -63,14 +63,14 @@ class ProcessDetail extends Component {
             <Row>
               <Col>
                 <ListGroup>
+                  <LinkContainer to={`/admin/proc/${id}/clients`}>
+                    <ListGroupItem eventkey={1}>Feedbacknehmer</ListGroupItem>
+                  </LinkContainer>
                   <LinkContainer to={`/admin/proc/${id}/questionaires`}>
-                    <ListGroupItem eventkey={1}>Fragebogen</ListGroupItem>
+                    <ListGroupItem eventkey={2}>Fragebogen</ListGroupItem>
                   </LinkContainer>
                   <LinkContainer to={`/admin/proc/${id}/feedbackers`}>
-                    <ListGroupItem eventkey={2}>Feedbackgeber</ListGroupItem>
-                  </LinkContainer>
-                  <LinkContainer to={`/admin/proc/${id}/clients`}>
-                    <ListGroupItem eventkey={3}>Feedbacknehmer</ListGroupItem>
+                    <ListGroupItem eventkey={3}>Feedbackgeber</ListGroupItem>
                   </LinkContainer>
                   <LinkContainer to={`/admin/proc/${id}/analysis`}>
                     <ListGroupItem eventkey={4}>Analyse</ListGroupItem>

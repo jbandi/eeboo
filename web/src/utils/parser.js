@@ -15,6 +15,7 @@ function clientCSV2json(clientArray) {
       firstname: line[1],
       gender: line[2],
       feedbackers: [],
+      role: line[4],
     };
     clients.push(client);
   });

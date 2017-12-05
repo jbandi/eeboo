@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import PanelHeader from '../../components/Feedbacker/PanelHeader';
 import { getContentByLanguage } from '../../state/selectors/context';
+import { getContexts } from '../../state/selectors/process';
+import { getFirstFeedbackerProc } from '../../state/selectors/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
   contextContent: getContentByLanguage(
-    state.feedbacker.proc.questionaires[1234].contexts,
+    getContexts(state, getFirstFeedbackerProc(state), 1234),
     ownProps.contextId,
-    state.feedbacker.language,
+    'de',
   ),
 });
 

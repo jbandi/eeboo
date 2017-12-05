@@ -11,6 +11,7 @@ const FeedbackerAnswer = (props) => {
                         clientId: props.clientId,
                         questionId: props.questionId,
                         score: i,
+                        feedbackerId: props.feedbackerId,
                       })}
       active={i === props.score}
     >{i}
@@ -31,6 +32,7 @@ FeedbackerAnswer.propTypes = {
   score: PropTypes.number,
   updateAnswer: PropTypes.func.isRequired,
   clientId: PropTypes.string.isRequired,
+  feedbackerId: PropTypes.string.isRequired,
 };
 
 FeedbackerAnswer.defaultProps = {

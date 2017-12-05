@@ -1,20 +1,21 @@
 import { connect } from 'react-redux';
 import Badge from '../../components/Feedbacker/Badge';
 import { getQuestionsByContextId, countAnswersByContextId } from '../../state/selectors/questionaire';
-import { getFeedbackerAnswers } from '../../state/selectors/feedbacker';
+import { getFeedbackerAnswers, getFirstFeedbackerProc, getFirstFeedbackerId } from '../../state/selectors/feedbacker';
+import { getQuestionaire } from '../../state/selectors/process';
 
 const mapStateToProps = (state, ownProps) => ({
   total: getQuestionsByContextId(
-    state.feedbacker.proc.questionaires[1234].questions,
+    getQuestionaire(state, getFirstFeedbackerProc(state), 1234).questions,
     ownProps.contextId,
     ownProps.roleId,
-    state.feedbacker.language,
+    'de',
   ).length,
   done: countAnswersByContextId(
-    state.feedbacker.proc.questionaires[1234].questions,
-    getFeedbackerAnswers(state, ownProps.clientId),
+    getQuestionaire(state, getFirstFeedbackerProc(state), 1234).questions,
+    getFeedbackerAnswers(state, getFirstFeedbackerId(state), ownProps.clientId),
     ownProps.contextId, ownProps.roleId,
-    state.feedbacker.language,
+    'de',
   ),
 });
 

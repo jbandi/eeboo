@@ -1,10 +1,16 @@
 import { connect } from 'react-redux';
 import FeedbackerAnswer from '../../components/Feedbacker/FeedbackerAnswer';
 import { updateAnswer } from '../../state/actions/feedbacker';
-import { getFeedbackerAnswer } from '../../state/selectors/feedbacker';
+import { getFirstFeedbackerId, getFeedbackerAnswer } from '../../state/selectors/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
-  score: getFeedbackerAnswer(state, ownProps.clientId, ownProps.questionId),
+  score: getFeedbackerAnswer(
+    state,
+    getFirstFeedbackerId(state),
+    ownProps.clientId,
+    ownProps.questionId,
+  ),
+  feedbackerId: getFirstFeedbackerId(state),
 }
 );
 

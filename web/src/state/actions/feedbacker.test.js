@@ -9,20 +9,14 @@ import {
   addFeedbackers,
   deleteFeedbacker,
   updateAnswer,
-  updateRole,
   removeClientId,
   receiveFeedbacker,
   requestFeedbacker,
-  receiveFeedbackers,
-  requestFeedbackers,
   REQUEST_FEEDBACKER,
   RECEIVE_FEEDBACKER,
-  REQUEST_FEEDBACKERS,
-  RECEIVE_FEEDBACKERS,
-  ADD_FEEDBACKERS,
+  ADD_FEEDBACKER,
   DELETE_FEEDBACKER,
   UPDATE_ANSWER,
-  UPDATE_ROLE,
   REMOVE_CLIENTID,
 } from './feedbacker';
 
@@ -60,34 +54,9 @@ describe('test feedbacker actions', () => {
   it('should receive a feedbacker', () => {
     const expectedActions = {
       type: RECEIVE_FEEDBACKER,
-      feedbacker: 'f1',
-      proc: 'p1',
+      feedbackers: [{ feedbacker: 'f1', proc: 'p1' }],
     };
     expect(receiveFeedbacker({ feedbacker: 'f1', proc: 'p1' })).toEqual(expectedActions);
-  });
-
-  it('should request a feedbackers', () => {
-    const expectedActions = {
-      type: REQUEST_FEEDBACKERS,
-    };
-    expect(requestFeedbackers()).toEqual(expectedActions);
-  });
-
-  it('should receive a RECEIVE_FEEDBACKERS', () => {
-    const expectedActions = {
-      type: RECEIVE_FEEDBACKERS,
-      feedbackers: 'data',
-    };
-    expect(receiveFeedbackers('data')).toEqual(expectedActions);
-  });
-
-  it('should update a role', () => {
-    const expectedActions = {
-      type: UPDATE_ROLE,
-      clientId: '1',
-      roleId: '2',
-    };
-    expect(updateRole({ clientId: '1', roleId: '2' })).toEqual(expectedActions);
   });
 
   it('should remove a clientId', () => {
@@ -101,7 +70,7 @@ describe('test feedbacker actions', () => {
 
   it('should add a feedbafker', () => {
     const expectedActions = {
-      type: ADD_FEEDBACKERS,
+      type: ADD_FEEDBACKER,
       feedbackers: [{ id: '1' }],
     };
     expect(addFeedbackers([{ id: '1' }])).toEqual(expectedActions);
@@ -117,18 +86,16 @@ describe('test feedbacker actions', () => {
 
   const body = {
     feedbacker: {
-      feedbacker: {
-        id: 1,
-        clients: {
-          client1: {},
-          client2: {},
-        },
+      id: 1,
+      clients: {
+        client1: {},
+        client2: {},
       },
-      proc: {
-        clients: {},
-        questionaires: {
-          1234: {},
-        },
+    },
+    proc: {
+      clients: {},
+      questionaires: {
+        1234: {},
       },
     },
   };
@@ -143,22 +110,18 @@ describe('test feedbacker actions', () => {
     const expectedActions = [
       { type: REQUEST_FEEDBACKER },
       {
+        type: 'process/RECEIVE_PROCS',
+        procs: [{ clients: {}, questionaires: { 1234: {} } }],
+      },
+      {
         type: RECEIVE_FEEDBACKER,
-        feedbacker: {
-          feedbacker: {
-            id: 1,
-            clients: {
-              client1: {},
-              client2: {},
-            },
+        feedbackers: [{
+          id: 1,
+          clients: {
+            client1: {},
+            client2: {},
           },
-          proc: {
-            clients: {},
-            questionaires: {
-              1234: {},
-            },
-          },
-        },
+        }],
       },
     ];
     const store = mockStore({ id: 1 });
@@ -190,9 +153,9 @@ describe('test feedbacker actions', () => {
       });
 
     const expectedActions = [
-      { type: REQUEST_FEEDBACKERS },
+      { type: REQUEST_FEEDBACKER },
       {
-        type: RECEIVE_FEEDBACKERS,
+        type: RECEIVE_FEEDBACKER,
         feedbackers: [{
           id: 'feedbacker1',
           clients: {},

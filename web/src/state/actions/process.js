@@ -11,7 +11,7 @@ import {
   postFeedbacker,
 } from './feedbacker';
 
-import { getFeedbackerIdsByClientId, getFeedbackers } from '../selectors/feedbacker';
+import { getFeedbackerIdsByClientId, getFeedbackerArray } from '../selectors/feedbacker';
 
 export const REQUEST_PROCS = 'process/REQUEST_PROCS';
 export const RECEIVE_PROCS = 'process/RECEIVE_PROCS';
@@ -37,13 +37,20 @@ export function receiveUploadClients(clients, procId) {
   };
 }
 
-function requestProcs() {
+export function requestProcs() {
   return {
     type: REQUEST_PROCS,
   };
 }
 
-function receiveProcs(procs) {
+export function receiveProc(proc) {
+  return {
+    type: RECEIVE_PROCS,
+    procs: [proc],
+  };
+}
+
+export function receiveProcs(procs) {
   return {
     type: RECEIVE_PROCS,
     procs,
@@ -122,7 +129,7 @@ export function putProc(procId) {
         response => response.json(),
         error => console.log('An error occured while updating process', error),
       ).then(() => {
-        const feedbackers = getFeedbackers(getState());
+        const feedbackers = getFeedbackerArray(getState());
         feedbackers.forEach(f => dispatch(postFeedbacker(f)));
       });
   };

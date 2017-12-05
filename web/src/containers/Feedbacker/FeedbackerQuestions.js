@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import FeedbackerQuestions from '../../components/Feedbacker/FeedbackerQuestions';
 import { getQuestionsByContextId } from '../../state/selectors/questionaire';
+import { getQuestionaire } from '../../state/selectors/process';
+import { getFirstFeedbacker } from '../../state/selectors/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
   questions: getQuestionsByContextId(
-    state.feedbacker.proc.questionaires[1234].questions,
+    getQuestionaire(state, getFirstFeedbacker(state).proc, 1234).questions,
     ownProps.contextId,
     ownProps.roleId,
-    state.feedbacker.language,
+    'de',
   ),
 });
 

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import FeedbackerList from '../../components/Admin/FeedbackerList';
-import { getFeedbackers } from '../../state/selectors/feedbacker';
+import { getFeedbackerArray } from '../../state/selectors/feedbacker';
 import { deleteFeedbackerFromBackend } from '../../state/actions/feedbacker';
 
 const mapStateToProps = state => ({
-  feedbackers: getFeedbackers(state),
+  feedbackers: getFeedbackerArray(state),
 });
 
 const mapDispatchToProps = dispatch => (

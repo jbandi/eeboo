@@ -11,10 +11,8 @@ class Feedbacker extends Component {
     feedbacker: PropTypes.shape({
       id: PropTypes.string,
       mail: PropTypes.string,
-      proc: PropTypes.shape({
-        id: PropTypes.string,
-      }),
       clients: PropTypes.shape({}),
+      proc: PropTypes.string,
     }).isRequired,
     clientIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     feedbackerId: PropTypes.string.isRequired,
@@ -30,7 +28,7 @@ class Feedbacker extends Component {
 
   render() {
     return (
-      (this.props.feedbacker.proc && this.props.feedbacker.id !== '')
+      (this.props.feedbacker.id !== '')
         ? <div>
           <Grid className="home-content">
             <Row>
@@ -49,7 +47,7 @@ class Feedbacker extends Component {
                       </tr>
                       <tr>
                         <td><div align="left">Prozess</div></td>
-                        <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.proc.id}</div></td>
+                        <td style={{ paddingLeft: '10px' }}><div align="left">{this.props.feedbacker.proc}</div></td>
                       </tr>
                     </tbody>
                   </table>

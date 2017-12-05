@@ -9,7 +9,7 @@ import { RoleTab } from './RoleTab';
 
 const QuestionaireDetail = props => (
   <div>
-    <Panel header={`Fragebogen: ${props.questionaire.id}`}>
+    <Panel header="Fragebogen">
       <Tabs defaultActiveKey={1} id="questionaire-tabs">
         <Tab eventKey={1} title="Fragen">
           <QuestionTab
