@@ -12,7 +12,6 @@ export const ContextTab = props => (
     <thead>
       <tr>
         <th>Thema</th>
-        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
