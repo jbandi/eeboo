@@ -14,9 +14,6 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 const company = require('./controllers/routes/company');
 
-// Setup firebase backend
-// const appState = require('./controllers/models/v1/app-state.js');
-
 // authentication middleware
 const checkJwt = jwt({
   // Dynamically provide a signing key

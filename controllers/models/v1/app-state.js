@@ -2,14 +2,36 @@ const admin = require('firebase-admin');
 const config = require('config');
 const idx = require('idx');
 
-const serviceAccount = require(`./${config.firebaseToken}`); // eslint-disable-line import/no-dynamic-require
-
 let db;
+
+// get Firbase access data from a JSON token
+// either load a base64 encoded token from the evironment variable FB_TOKEN
+// or get it in JSON form a from a configuration file
+const getFBAccount = () => {
+  let fbToken = '';
+  try {
+    fbToken = require(`./${config.firebaseToken}`); // eslint-disable-line
+  } catch (e) {
+    console.info('firebase token not found in config dir');
+  }
+
+  if (process.env.FB_TOKEN) {
+    // if a firebase token can be found in an environment variable, use it
+    return JSON.parse(Buffer.from(process.env.FB_TOKEN, 'base64').toString());
+  }
+  if (fbToken && fbToken !== '') {
+    // if a firbase token can be found in a config file, use it
+    return fbToken;
+  }
+  console.error('firebase token not found, check your environment variables');
+  process.exit(1);
+};
 
 class AppState {
   constructor() {
+    const fbToken = getFBAccount();
     // set firebase reference variables
-    this.fbRootRef = config.FirebaseDb;
+    this.fbRootRef = fbToken.project_id;
     this.fbProcRef = 'procs/';
     this.fbFeedbackerRef = 'feedbackers/';
     this.fbQuestionaireRef = 'questionaires/';
@@ -17,12 +39,14 @@ class AppState {
 
     // Setup firebase for persistent storage
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
+      credential: admin.credential.cert(fbToken),
       databaseURL: config.firebaseUrl,
     });
 
     db = admin.database();
     console.log('Connected to database. Now reading data');
+
+    // const encoded = Buffer.from(JSON.stringify(getFBAccount())).toString('base64');
   }
 
   feedbackerPathById(id) {
