@@ -21,7 +21,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # firebase
-# eeboo-skillsgarden*.json
+eeboo-skillsgarden*.json
+
+# configs
+config/dev.json
+config/test.json
 
 # nyc
 .nyc_output
