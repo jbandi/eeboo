@@ -10,8 +10,9 @@ Below you will find some information on how to install the software and perform 
 - [Run](#Run)
 - [Available Scripts](#Available Scripts)
   - [yarn start](#yarn start)
-  - [yarn test](#yarn test)
+  - [yarn start-dev](#yarn start-dev)
   - [yarn start-test](#yarn start-test)
+  - [yarn test](#yarn test)
   - [yarn lint](#yarn lint)
   - [yarn lint-fix](#yarn lint-fix)
   - [yarn test-coverage](#yarn test-coverage)
@@ -19,8 +20,8 @@ Below you will find some information on how to install the software and perform 
 
 ## Requirements
 To build this software you need at least following packages installed globally on your system:
-* node version >= 8.0.0
-* yarn version >= 0.24.5
+* node version >= v9.2.1
+* yarn version >= 1.3.2
 
 The Admin API calls are secured using [AUTH0](https://auth0.com/) Json Web Token. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
 
@@ -33,20 +34,23 @@ Install all required software packages and libraries
 ## Run
 Run the API service on localhost listening on port 3001
 ```
- #> yarn start
+ #> yarn start-dev
 ```
 ## Available Scripts
 
 ### `yarn start`
+Start the server in production mode
+
+### `yarn start-dev`
 Runs a node.js express server listening on port 3001.
 The Server runs in DEV mode
-
-### `yarn test`
-Runs all tests against a real firebase datastore. The Server runs in TEST mode and connects to a specific Test firebase instance.
 
 ### `yarn start-test`
 Runs a node.js express server listening on port 3001
 The Server runs in TEST mode and thus connects to a firebase TEST  database instance. This command is mainly used to debug test cases
+
+### `yarn test`
+Runs all tests against a real firebase datastore. The Server runs in TEST mode and connects to a specific Test firebase instance.
 
 ### `yarn lint`
 Runs JavaScript linter against all .js files
