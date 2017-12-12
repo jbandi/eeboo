@@ -21,6 +21,7 @@ const getFBAccount = () => {
   }
   if (fbToken && fbToken !== '') {
     // if a firbase token can be found in a config file, use it
+    console.log(fbToken);
     return fbToken;
   }
   console.error('firebase token not found, check your environment variables');
