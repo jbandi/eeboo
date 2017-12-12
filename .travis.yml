@@ -6,7 +6,7 @@ jobs:
     - stage: lint
       script: yarn lint
     - # stage name not required, will continue to use `test`
-      script: cd web && yarn lint
+      script: cd web && yarn install && yarn lint
     - stage: test
       script: echo "test"
     - stage: deploy
