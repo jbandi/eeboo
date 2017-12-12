@@ -25,7 +25,6 @@ eeboo-skillsgarden*.json
 
 # configs
 config/dev.json
-config/test.json
 
 # nyc
 .nyc_output
