@@ -9,19 +9,17 @@ let db;
 // or get it in JSON form a from a configuration file
 const getFBAccount = () => {
   let fbToken = '';
+  if (process.env.FB_TOKEN) {
+    // if a firebase token can be found in an environment variable, use it
+    return JSON.parse(Buffer.from(process.env.FB_TOKEN, 'base64').toString());
+  }
   try {
     fbToken = require(`./${config.firebaseToken}`); // eslint-disable-line
   } catch (e) {
     console.info('firebase token not found in config dir');
   }
-
-  if (process.env.FB_TOKEN) {
-    // if a firebase token can be found in an environment variable, use it
-    return JSON.parse(Buffer.from(process.env.FB_TOKEN, 'base64').toString());
-  }
   if (fbToken && fbToken !== '') {
     // if a firbase token can be found in a config file, use it
-    console.log(fbToken);
     return fbToken;
   }
   console.error('firebase token not found, check your environment variables');
