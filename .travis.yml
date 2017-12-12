@@ -1,5 +1,13 @@
 language: node_js
 node_js:
   - "8"
-script:
-  - yarn lint
+jobs:
+  include:
+    - stage: lint
+      script: yarn lint
+    - # stage name not required, will continue to use `test`
+      script: cd web && yarn lint
+    - stage: test
+      script: echo "test"
+    - stage: deploy
+      script: echo "deploy"
