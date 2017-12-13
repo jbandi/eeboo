@@ -55,9 +55,11 @@ Place your firbase JSON token in the following directory the controllers/models 
  controllers/models/v1/myproject-firebase-token.json
 ```
 
-Both parameters, firebaseUrl and firebaseToken can also be configured as environment variables. This is especially useful for production deployments where you don't want to expose your connection secrets within a configuration file
+Both parameters, firebaseUrl and firebaseToken can also be configured as environment variables. This is especially useful for production deployments where you don't want to expose your connection secrets within a configuration file.
 - FB_TOKEN
 - FB_URL
+
+**ATTENTION**: if you specify the firebase token as environment variable, it hast to be in a **baase64 encoded format**!
 
 ## Run
 Run the API service on localhost listening on port 3001
