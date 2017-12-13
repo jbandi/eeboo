@@ -1,4 +1,4 @@
-This project represents API and backend services for the eeboo application.
+This project represents API and backend services for the eeboo feedback application.
 
 The main application is implemented with node.js using the express framework. It serves the REACT SPA application under web/build/index.html and provides a RESTful API. 
 
