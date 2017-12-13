@@ -15,15 +15,15 @@ Below you will find some information on how to install the software and perform 
   - [yarn build](#yarn-build)
   - [yarn lint](#yarn-lint)
   - [yarn lint-fix](#yarn-lint-fix)
-  - [yarn test -- --coverage](#yarn test -- --coverage)
-- [Files and Directories](#Files and Directories)
+  - [yarn test -- --coverage](#yarn-test------coverage)
+- [Files and Directories](#files-and-directories)
 
 ## Requirements
 To build this software you need at least following packages installed globally on your system:
 * node version >= v9.2.1
 * yarn version >= 1.3.2
 
-The Admin pages are secured using [AUTH0](https://auth0.com/) Authentication service. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
+The admin pages are protected using [AUTH0](https://auth0.com/) Authentication service. To get full access to the eeboo admin interface, ask imathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
 
 ## Installation
 Install all required software packages and libraries
@@ -32,10 +32,11 @@ Install all required software packages and libraries
 ```
 
 ## Run
-Run the API service on localhost listening on port 3001
+Run the API service on localhost listening on port 3001. This is mainly used for development purpose
 ```
  #> yarn start
 ```
+
 ## Available Scripts
 
 ### `yarn start`
