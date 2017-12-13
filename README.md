@@ -1,6 +1,8 @@
 This project represents API and backend services for the eeboo application.
 
-The main application is implemented with node.js using the express framework. It serves the REACT SPA application under web/build/index.html and provides a RESTful API.
+The main application is implemented with node.js using the express framework. It serves the REACT SPA application under web/build/index.html and provides a RESTful API. 
+
+This service connects to a pre-configured [Google firebase](https://firebase.google.com/) backend to persist data
 
 Below you will find some information on how to install the software and perform common tasks
 
