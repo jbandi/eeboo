@@ -6,22 +6,22 @@ The front end application is based on the React v16.0 JavaScript library and rel
 Below you will find some information on how to install the software and perform common tasks
 
 ## Table of Contents
-- [Requirements](#Requirements)
-- [Installation](#Installation)
-- [Run](#Run)
-- [Available Scripts](#Available Scripts)
-  - [yarn start](#yarn start)
-  - [yarn test](#yarn test)
-  - [yarn build](#yarn build)
-  - [yarn lint](#yarn lint)
-  - [yarn lint-fix](#yarn lint-fix)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Run](#run)
+- [Available Scripts](#available-scripts)
+  - [yarn start](#yarn-start)
+  - [yarn test](#yarn-test)
+  - [yarn build](#yarn-build)
+  - [yarn lint](#yarn-lint)
+  - [yarn lint-fix](#yarn-lint-fix)
   - [yarn test -- --coverage](#yarn test -- --coverage)
 - [Files and Directories](#Files and Directories)
 
 ## Requirements
 To build this software you need at least following packages installed globally on your system:
-* node version >= 8.0.0
-* yarn version >= 0.24.5
+* node version >= v9.2.1
+* yarn version >= 1.3.2
 
 The Admin pages are secured using [AUTH0](https://auth0.com/) Authentication service. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
 
