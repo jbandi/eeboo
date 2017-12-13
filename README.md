@@ -9,14 +9,14 @@ Below you will find some information on how to install the software and perform 
 - [Installation](#Installation)
 - [Run](#Run)
 - [Available Scripts](#available-scripts)
-  - [yarn start](#yarn start)
-  - [yarn start-dev](#yarn start-dev)
-  - [yarn start-test](#yarn start-test)
-  - [yarn test](#yarn test)
-  - [yarn lint](#yarn lint)
-  - [yarn lint-fix](#yarn lint-fix)
-  - [yarn test-coverage](#yarn test-coverage)
-- [Files and Directories](#Files and Directories)
+  - [yarn start](#yarn-start)
+  - [yarn start-dev](#yarn-start-dev)
+  - [yarn start-test](#yarn-start-test)
+  - [yarn test](#yarn-test)
+  - [yarn lint](#yarn-lint)
+  - [yarn lint-fix](#yarn-lint-fix)
+  - [yarn test-coverage](#yarn-test-coverage)
+- [Files and Directories](#files-and-directories)
 
 ## Requirements
 To build this software you need at least following packages installed globally on your system:
