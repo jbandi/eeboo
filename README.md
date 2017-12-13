@@ -8,7 +8,7 @@ Below you will find some information on how to install the software and perform 
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Run](#Run)
-- [Available Scripts](#Available-Scripts)
+- [Available Scripts](#available-scripts)
   - [yarn start](#yarn start)
   - [yarn start-dev](#yarn start-dev)
   - [yarn start-test](#yarn start-test)
