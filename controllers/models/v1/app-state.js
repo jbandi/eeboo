@@ -26,6 +26,10 @@ const getFBAccount = () => {
   process.exit(1);
 };
 
+const getFBUrl = () => (
+  (!process.env.FB_URL) ? config.firebaseUrl : process.env.FB_URL
+);
+
 class AppState {
   constructor() {
     const fbToken = getFBAccount();
@@ -39,7 +43,7 @@ class AppState {
     // Setup firebase for persistent storage
     admin.initializeApp({
       credential: admin.credential.cert(fbToken),
-      databaseURL: config.firebaseUrl,
+      databaseURL: getFBUrl(),
     });
 
     db = admin.database();
