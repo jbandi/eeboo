@@ -7,6 +7,7 @@ Below you will find some information on how to install the software and perform 
 ## Table of Contents
 - [Requirements](#Requirements)
 - [Installation](#Installation)
+- [Configuration](#Configuration)
 - [Run](#Run)
 - [Available Scripts](#available-scripts)
   - [yarn start](#yarn-start)
@@ -25,6 +26,8 @@ To build this software you need at least following packages installed globally o
 
 The Admin API calls are secured using [AUTH0](https://auth0.com/) Json Web Token. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
 
+You need a connection URL and a JSON security token to a running Google firebase backend database
+
 ## Installation
 Install all required software packages and libraries
 ```
@@ -37,21 +40,20 @@ To connect the node.js API service to a firbase backend, you have to provide a v
 following is an example configuration file for the development environment. Use this configuration if you start the service witch `yarn start-dev`
 
 ```bash
- #> cat config/dev.json
+#> cat config/dev.json
 {
   "firebaseUrl": "https://myproject.firebaseio.com",
   "firebaseToken": "myproject-firebase-token.json"
 }
 ```
-Place your firbase JSON token in the following directory  controllers/models/v1/
-
-Both parameters, firebaseUrl and firebaseToken can also be configured as environment variables
-- FB_TOKEN
-- FB_URL
-
+Place your firbase JSON token in the following directory the controllers/models directory:
 ```bash
  controllers/models/v1/myproject-firebase-token.json
 ```
+
+Both parameters, firebaseUrl and firebaseToken can also be configured as environment variables. This is especially useful for production deployments where you don't want to expose your connection secrets within a configuration file
+- FB_TOKEN
+- FB_URL
 
 ## Run
 Run the API service on localhost listening on port 3001
