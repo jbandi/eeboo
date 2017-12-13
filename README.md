@@ -28,7 +28,7 @@ To build this software you need at least following packages installed globally o
 * node version >= v9.2.1
 * yarn version >= 1.3.2
 
-The Admin API calls are secured using [AUTH0](https://auth0.com/) Json Web Token. To get full access to the eeboo admin interface, ask mathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
+The Admin API calls are protected using JSON Web Token from [AUTH0](https://auth0.com/). To get full access to the eeboo admin interface, ask imathu for permission or disable the authentication feature in the code (disabling will be configurable in Release 2.0)
 
 You need a connection URL and a JSON security token to a running Google firebase backend database
 
@@ -39,9 +39,9 @@ Install all required software packages and libraries
 ```
 
 ## Configuration
-To connect the node.js API service to a firbase backend, you have to provide a valid firbase connection URL and a firebase security token in JSON format. you can configure both parameters in a default.json configuration file or you can use specific config files for each environment (dev/test/prod)
+To connect the node.js API service to a firbase backend, you have to provide a valid firbase connection URL and a firebase security token in JSON format. you can configure both parameters in a default.json configuration file or you can use specific config files for each environment (dev|test|prod)
 
-following is an example configuration file for the development environment. Use this configuration if you start the service witch `yarn start-dev`
+following is an example configuration file for the development environment. Use this configuration if you start the service with `yarn start-dev`
 
 ```bash
 #> cat config/dev.json
@@ -68,26 +68,29 @@ Run the API service on localhost listening on port 3001
 
 ### `yarn start`
 Start the server in production mode
+To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file, see [Configuration](#configuration)
 
 ### `yarn start-dev`
 Runs a node.js express server listening on port 3001.
-The Server runs in DEV mode. To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file
+The Server runs in DEV mode. To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file, see [Configuration](#configuration)
 
 ### `yarn start-test`
 Runs a node.js express server listening on port 3001
-The Server runs in TEST mode and thus connects to a firebase TEST  database instance. This command is mainly used to debug test cases
+The Server runs in TEST mode and thus connects to a firebase TEST database instance. This command is mainly used to debug test cases
+To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file, see [Configuration](#configuration)
 
 ### `yarn test`
 Runs all tests against a real firebase datastore. The Server runs in TEST mode and connects to a specific Test firebase instance.
+To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file, see [Configuration](#configuration)
 
 ### `yarn lint`
-Runs JavaScript linter against all .js files
+Runs JavaScript linter ([eslint](https://eslint.org/) with [airbnb](https://www.npmjs.com/package/eslint-config-airbnb) configuration) against all .js files
 
 ### `yarn lint-fix`
 Inline fixes linter issues that can be autonomously fixed by the linter
 
 ### `yarn test-coverage`
-Runs test cases including coverage information. The code coverage is reported in static html files under directory coverage
+Runs test cases including coverage information. The code coverage is reported in static html files under the directory coverage
 
 ## Files and Directories
 main application file
@@ -106,7 +109,7 @@ config files
  # config/
 ```
 
-React web application project. This is a completely separate project. It is running with different configuration and yarn packages
+REACT web application project. This is a completely separate code base. It runs with different configuration requirements and uses different yarn packages
 ```
  #> web/
 ```
