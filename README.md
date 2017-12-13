@@ -31,6 +31,28 @@ Install all required software packages and libraries
  #> yarn install
 ```
 
+## Configuration
+To connect the node.js API service to a firbase backend, you have to provide a valid firbase connection URL and a firebase security token in JSON format. you can configure both parameters in a default.json configuration file or you can use specific config files for each environment (dev/test/prod)
+
+following is an example configuration file for the development environment. Use this configuration if you start the service witch `yarn start-dev`
+
+```bash
+ #> cat config/dev.json
+{
+  "firebaseUrl": "https://myproject.firebaseio.com",
+  "firebaseToken": "myproject-firebase-token.json"
+}
+```
+Place your firbase JSON token in the following directory  controllers/models/v1/
+
+Both parameters, firebaseUrl and firebaseToken can also be configured as environment variables
+- FB_TOKEN
+- FB_URL
+
+```bash
+ controllers/models/v1/myproject-firebase-token.json
+```
+
 ## Run
 Run the API service on localhost listening on port 3001
 ```
@@ -43,7 +65,7 @@ Start the server in production mode
 
 ### `yarn start-dev`
 Runs a node.js express server listening on port 3001.
-The Server runs in DEV mode
+The Server runs in DEV mode. To connect to a firbase backend, a valid firebase token has to be referenced in the dev config file
 
 ### `yarn start-test`
 Runs a node.js express server listening on port 3001
