@@ -1,8 +1,8 @@
 This project represents API and backend services for the eeboo feedback application.
 
-The main application is implemented with node.js using the express framework. It proviedes a RESTful API and serves the REACT SPA application that is placed in web/build/index.html.
+The main application is implemented with node.js using the express framework. It proviedes a RESTful API and serves a REACT Web application that is placed in web/build/index.html.
 
-This service connects to a pre-configured [Google firebase](https://firebase.google.com/) backend to persist data
+The service connects to a pre-configured [Google firebase](https://firebase.google.com/) backend to persist its data
 
 The React application has a separate build environment. Find information about the REACT app in the web directory [web/README.md](web/README.md)
 
