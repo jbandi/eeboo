@@ -9,10 +9,10 @@ The React application has a separate build environment. Find information about t
 Below you will find some information on how to install the software and perform common tasks
 
 ## Table of Contents
-- [Requirements](#Requirements)
-- [Installation](#Installation)
-- [Configuration](#Configuration)
-- [Run](#Run)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Run](#run)
 - [Available Scripts](#available-scripts)
   - [yarn start](#yarn-start)
   - [yarn start-dev](#yarn-start-dev)
