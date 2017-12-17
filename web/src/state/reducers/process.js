@@ -7,12 +7,26 @@ import {
   RECEIVE_UPLOAD_CLIENTS,
   DELETE_CLIENT,
   ADD_CLIENT,
+  SET_LANGUAGE,
 } from '../actions/process';
 
 import { removeItem } from '../../utils';
 
 const process = (state = {}, action) => {
   switch (action.type) {
+    case SET_LANGUAGE: {
+      const { procId, language } = action;
+      return Object.assign({}, state, {
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [procId]: {
+            ...state.byHash[procId],
+            language,
+          },
+        },
+      });
+    }
     case ADD_CLIENT: {
       const { procId } = action;
       const clientId = action.client.id;

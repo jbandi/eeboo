@@ -1,5 +1,7 @@
 import idx from 'idx';
 
+import { Language } from '../../utils';
+
 // get a list of processes
 // return array
 export const getProcs = state => (
@@ -37,6 +39,12 @@ export const getQuestionaires = (state, procId) => {
 // return object
 export const getQuestionaire = (state, procId, questionaireId) => (
   idx(state, _ => _.process.byHash[procId].questionaires[questionaireId]) || {}
+);
+
+// get the process language. return 'de if no language is set'
+// return string
+export const getLanguage = (state, procId) => (
+  idx(state, _ => _.process.byHash[procId].language) || Language.DE
 );
 
 // check if a client exist. The test will be made by Mail address

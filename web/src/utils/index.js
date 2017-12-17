@@ -1,5 +1,12 @@
 import uuidv4 from 'uuid/v4';
 
+// Language constants
+export const Language = {
+  DE: 'de',
+  EN: 'en',
+  FR: 'fr',
+};
+
 // remove an item from an object list
 // removal is implemented as immutable update
 // return a new list of objects

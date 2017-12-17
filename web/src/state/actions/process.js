@@ -2,6 +2,7 @@ import uuidv4 from 'uuid/v4';
 import history from '../../services/history';
 
 import Parser from '../../utils/parser';
+import { Language } from '../../utils';
 
 import { getProcess, clientExists } from '../selectors/process';
 import {
@@ -23,6 +24,16 @@ export const RECEIVE_UPLOAD_CLIENTS = 'process/RECEIVE_UPLOAD_CLIENTS';
 
 export const DELETE_CLIENT = 'process/DELETE_CLIENT';
 export const ADD_CLIENT = 'process/ADD_CLIENT';
+
+export const SET_LANGUAGE = 'process/SET_LANGUAGE';
+
+export function setLanguage(procId, language) {
+  return {
+    type: SET_LANGUAGE,
+    procId,
+    language,
+  };
+}
 
 export function requestUploadClients() {
   return {
@@ -193,6 +204,7 @@ export function addProc(process) {
         questionaires: {
           1234: {
             id: 1234,
+            language: Language.DE,
             questions: {},
             contexts: {
               A: {

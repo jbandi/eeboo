@@ -5,10 +5,31 @@ import {
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
+  SET_LANGUAGE,
 } from '../actions/process';
 
+import { Language } from '../../utils';
+
 describe('feedbacker reducer', () => {
-  const state = {};
+  const state = {
+    byHash: {
+      1: {
+        language: 'de',
+        clients: {},
+        questionaires: {
+          1234: {
+            contexts: {},
+            roles: {},
+            questions: {
+              q0: { contents: ['1'] },
+              q1: { contents: [] },
+              q3: { contents: [] },
+            },
+          },
+        },
+      },
+    },
+  };
 
   deepFreeze(state);
 
@@ -31,27 +52,17 @@ describe('feedbacker reducer', () => {
     expect(changedState.byId[0]).toBe('1');
   });
 
+  it('should set a specific Language', () => {
+    const changedState = process(state, {
+      type: SET_LANGUAGE,
+      procId: '1',
+      language: Language.EN,
+    });
+    expect(changedState.byHash['1'].language).toEqual(Language.EN);
+  });
+
   it('should delete a apecific question', () => {
-    const state2 = {
-      byHash: {
-        1: {
-          clients: {},
-          questionaires: {
-            1234: {
-              contexts: {},
-              roles: {},
-              questions: {
-                q0: { contents: ['1'] },
-                q1: { contents: [] },
-                q3: { contents: [] },
-              },
-            },
-          },
-        },
-      },
-    };
-    deepFreeze(state2);
-    const changedState = process(state2, {
+    const changedState = process(state, {
       type: DELETE_QUESTION,
       procId: '1',
       questionaireId: 1234,

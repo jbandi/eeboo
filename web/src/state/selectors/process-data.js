@@ -77,6 +77,7 @@ export const process = {
       company: 'c1',
       end: '1511730071318',
       id: '1',
+      language: 'de',
       questionaires: {
         1234: {
           id: '1234',

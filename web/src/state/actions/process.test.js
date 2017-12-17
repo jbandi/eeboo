@@ -3,17 +3,21 @@ import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 import expect from 'expect';
 
+import { Language } from '../../utils';
+
 import {
   fetchProcs,
   addProc,
   deleteQuestion,
   deleteClient,
   addClient,
+  setLanguage,
   REQUEST_PROCS,
   RECEIVE_PROCS,
   DELETE_QUESTION,
   DELETE_CLIENT,
   ADD_CLIENT,
+  SET_LANGUAGE,
 } from './process';
 
 const middlewares = [thunk];
@@ -41,6 +45,15 @@ describe('test process actions', () => {
       procId: '1',
     };
     expect(addClient('1', { id: '1' })).toEqual(expectedActions);
+  });
+
+  it('should set a Language', () => {
+    const expectedActions = {
+      type: SET_LANGUAGE,
+      procId: '1',
+      language: Language.EN,
+    };
+    expect(setLanguage('1', Language.EN)).toEqual(expectedActions);
   });
 
   it('should receive list of process Ids', () => {

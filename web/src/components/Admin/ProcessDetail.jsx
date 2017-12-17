@@ -64,7 +64,7 @@ class ProcessDetail extends Component {
               <Col>
                 <ListGroup>
                   <LinkContainer to={`/admin/proc/${id}/clients`}>
-                    <ListGroupItem eventkey={1}>Feedbacknehmer</ListGroupItem>
+                    <ListGroupItem eventkey={0}>Feedbacknehmer</ListGroupItem>
                   </LinkContainer>
                   <LinkContainer to={`/admin/proc/${id}/questionaires`}>
                     <ListGroupItem eventkey={2}>Fragebogen</ListGroupItem>
