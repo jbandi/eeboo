@@ -48,27 +48,18 @@ function questionCSV2json(questionArray) {
         id: `id-${index}`,
         scores: 5,
         context: line[2],
-        contents: [{
-          content: line[5],
-          female: line[7],
-          lan: 'de',
-          role: 'foreign',
-        }, {
-          content: line[9],
-          female: line[9],
-          lan: 'de',
-          role: 'self',
-        }, {
-          content: line[16],
-          female: line[18],
-          lan: 'en',
-          role: 'foreign',
-        }, {
-          content: line[20],
-          female: line[20],
-          lan: 'de',
-          role: 'self',
-        }],
+        contents: {
+          de: {
+            he: (line[5] === '') ? line[7] : line[5],
+            she: (line[7] === '') ? line[5] : line[7],
+            me: line[9],
+          },
+          en: {
+            he: (line[16] === '') ? line[18] : line[16],
+            she: (line[18] === '') ? line[16] : line[18],
+            me: line[20],
+          },
+        },
       };
       questions.push(question);
     }

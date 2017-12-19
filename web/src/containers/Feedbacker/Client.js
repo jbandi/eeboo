@@ -4,8 +4,8 @@ import {
   getFirstFeedbackerId,
   getRoleIdByClientId,
 } from '../../state/selectors/feedbacker';
-import { getQuestionaire, getContextsArray, getClient } from '../../state/selectors/process';
-import { getRolesByLanguage, getRoleById } from '../../state/selectors/questionaire';
+import { getQuestionaire, getContextsArray, getClient, getLanguage } from '../../state/selectors/process';
+import { getRoleById } from '../../state/selectors/questionaire';
 import { Client } from '../../components/Feedbacker/Client';
 import { postFeedbacker, clearAnswers } from '../../state/actions/feedbacker';
 
@@ -13,15 +13,12 @@ const mapStateToProps = (state, ownProps) => ({
   contextList: getContextsArray(state, getFirstFeedbackerProc(state), 1234),
   feedbackerId: getFirstFeedbackerId(state),
   client: getClient(state, getFirstFeedbackerProc(state), ownProps.clientId),
-  roles: getRolesByLanguage(
-    getQuestionaire(state, getFirstFeedbackerProc(state), 1234),
-    state.feedbacker.language,
-  ),
   role: getRoleById(
     getQuestionaire(state, getFirstFeedbackerProc(state), 1234),
     getRoleIdByClientId(state, getFirstFeedbackerId(state), ownProps.clientId),
-    'de',
+    getLanguage(getFirstFeedbackerProc(state)),
   ),
+  language: getLanguage(getFirstFeedbackerProc(state)),
 });
 
 const mapDispatchToProps = dispatch => ({

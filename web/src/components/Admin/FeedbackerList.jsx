@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+const createLink = id => (
+  `/feedbacker/${id}`
+);
+
 const FeedbackerList = props => (
   <div>
     <Table striped bordered hover responsive>
@@ -16,7 +20,9 @@ const FeedbackerList = props => (
       <tbody>
         {props.feedbackers.map(f => (
           <tr key={f.id}>
-            <td>{f.id}</td>
+            <td>
+              <Link target="_blank" to={createLink(f.id)}>{f.id}</Link>
+            </td>
             <td>{f.mail}</td>
             <td className="detail-link">
               <Link to="#" onClick={() => props.deleteFeedbacker(f.id)}>Delete</Link>

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import idx from 'idx';
-import FeedbackerAnswer from './../../containers/Feedbacker/FeedbackerAnswer';
+import FeedbackerQuestionsRow from '../../containers/Feedbacker/FeedbackerQuestionsRow';
 
 const FeedbackerQuestions = props => (
   <div>
@@ -16,16 +15,12 @@ const FeedbackerQuestions = props => (
       <tbody>
         {props.questions.map(question =>
           (
-            <tr key={question.id}>
-              <td align="center">{idx(question, _ => _.contents[0].content) || question.id}</td>
-              <td align="align-right">
-                <FeedbackerAnswer
-                  questionId={question.id}
-                  maxScore={question.scores}
-                  clientId={props.clientId}
-                />
-              </td>
-            </tr>
+            <FeedbackerQuestionsRow
+              key={question.id}
+              question={question}
+              client={props.client}
+              role={props.role}
+            />
           ))
         }
       </tbody>
@@ -35,7 +30,8 @@ const FeedbackerQuestions = props => (
 
 FeedbackerQuestions.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  clientId: PropTypes.string.isRequired,
+  client: PropTypes.shape({}).isRequired,
+  role: PropTypes.shape({}).isRequired,
 };
 
 export default FeedbackerQuestions;

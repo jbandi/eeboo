@@ -1,11 +1,27 @@
 export const roles = {
+  role0: {
+    id: 'role0',
+    context: 'self',
+    contents: {
+      de: 'Ich',
+      en: 'self',
+    },
+  },
   role1: {
     id: 'role1',
-    contents: [{ content: 'Kollege', lan: 'de' }, { content: 'friend', lan: 'en' }],
+    context: 'foreign',
+    contents: {
+      de: 'Kollege',
+      en: 'friend',
+    },
   },
   role2: {
     id: 'role2',
-    contents: [{ content: 'Chef', lan: 'de' }, { content: 'chief', lan: 'en' }],
+    context: 'foreign',
+    contents: {
+      de: 'Vorgesetzter',
+      en: 'boss',
+    },
   },
 };
 export const contexts = {
@@ -27,18 +43,18 @@ export const questions = {
     id: 'question1',
     scores: 5,
     context: 1,
-    contents: [
-      {
-        lan: 'de',
-        role: 1,
-        content: 'Frage 1 für Teamleiter zu Konfliktmanagement',
+    contents: {
+      de: {
+        he: 'greift Gesprächsbeiträge anderer auf',
+        she: 'greift Gesprächsbeiträge anderer auf',
+        me: 'greife Gesprächsbeiträge anderer auf',
       },
-      {
-        lan: 'en',
-        role: 1,
-        content: 'question 1 for teamleader, conflict management',
+      en: {
+        he: 'is open to inputs and ideas of others',
+        she: 'is open to inputs and ideas of others',
+        me: 'I am open to inputs and ideas of others',
       },
-    ],
+    },
   },
   question2: {
     id: 'question2',

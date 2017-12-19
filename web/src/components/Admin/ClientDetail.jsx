@@ -68,6 +68,7 @@ class ClientDetail extends React.Component {
               <th>Mail</th>
               <th>Geschlecht</th>
               <th>Rolle</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>

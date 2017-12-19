@@ -8,14 +8,11 @@ const mapStateToProps = (state, ownProps) => ({
   total: getQuestionsByContextId(
     getQuestionaire(state, getFirstFeedbackerProc(state), 1234).questions,
     ownProps.contextId,
-    ownProps.roleId,
-    'de',
   ).length,
   done: countAnswersByContextId(
     getQuestionaire(state, getFirstFeedbackerProc(state), 1234).questions,
     getFeedbackerAnswers(state, getFirstFeedbackerId(state), ownProps.clientId),
-    ownProps.contextId, ownProps.roleId,
-    'de',
+    ownProps.contextId,
   ),
 });
 

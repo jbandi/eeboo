@@ -15,7 +15,6 @@ const QuestionaireDetail = props => (
           <QuestionTab
             questionaire={props.questionaire}
             procId={props.procId}
-            deleteQuestion={props.deleteQuestion}
           />
         </Tab>
         <Tab eventKey={2} title="Themen"><ContextTab questionaire={props.questionaire} /></Tab>
@@ -34,7 +33,6 @@ QuestionaireDetail.propTypes = {
     questions: PropTypes.shape({}),
   }).isRequired,
   procId: PropTypes.string.isRequired,
-  deleteQuestion: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired,
 };
 

@@ -5,8 +5,8 @@ import FeedbackerQuestions from '../../containers/Feedbacker/FeedbackerQuestions
 const Context = props => (
   <FeedbackerQuestions
     contextId={props.context.id}
-    clientId={props.clientId}
-    roleId={props.roleId}
+    client={props.client}
+    role={props.role}
     language={props.language}
   />
 );
@@ -15,8 +15,8 @@ Context.propTypes = {
   context: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }).isRequired,
-  clientId: PropTypes.string.isRequired,
-  roleId: PropTypes.string.isRequired,
+  client: PropTypes.shape({}).isRequired,
+  role: PropTypes.shape({}).isRequired,
   language: PropTypes.string.isRequired,
 };
 

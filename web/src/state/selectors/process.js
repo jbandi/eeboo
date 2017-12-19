@@ -1,5 +1,7 @@
 import idx from 'idx';
 
+import { getFeedbackerClientIds } from './feedbacker';
+
 import { Language } from '../../utils';
 
 // get a list of processes
@@ -25,6 +27,14 @@ export const getClient = (state, procId, clientId) => (
 export const getClients = (state, procId) => {
   const clients = idx(state, _ => _.process.byHash[procId].clients) || [];
   return Object.keys(clients).map(k => clients[k]);
+};
+
+// get a list of clients for a specific Feedbacker
+// return array
+export const getClientsByFeedbackerId = (state, feedbacker) => {
+  const clientIds = getFeedbackerClientIds(state, feedbacker.id);
+  const clients = getClients(state, feedbacker.proc);
+  return clientIds.map(id => clients[id]);
 };
 
 

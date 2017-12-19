@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
-import idx from 'idx';
 
-import { getContentByLanguage } from '../../state/selectors/context';
+import QuestionRow from '../../containers/Admin/QuestionRow';
 
 const toArray = list => (
   (list) ? Object.keys(list).map(q => list[q]) : []
@@ -22,23 +20,12 @@ export const QuestionTab = props => (
     </thead>
     <tbody>
       {toArray(props.questionaire.questions).map(q => (
-        <tr key={q.id}>
-          <td>{idx(q, _ => _.contents[0].content) || 'no content'}</td>
-          <td>{getContentByLanguage(props.questionaire.contexts, q.context, 'de').content}</td>
-          <td className="td-center">{q.scores}</td>
-          <td className="detail-link">
-            <Link to="#">Edit</Link> |&nbsp;
-            <Link
-              to="#"
-              onClick={() => props.deleteQuestion({
-                procId: props.procId,
-                questionaireId: props.questionaire.id,
-                questionId: q.id,
-              })}
-            >Delete
-            </Link>
-          </td>
-        </tr>
+        <QuestionRow
+          question={q}
+          procId={props.procId}
+          key={q.id}
+          questionaire={props.questionaire}
+        />
       ))}
     </tbody>
   </Table>
@@ -50,6 +37,7 @@ QuestionTab.propTypes = {
     questions: PropTypes.shape({}),
     contexts: PropTypes.shape({}),
   }).isRequired,
+  procId: PropTypes.string.isRequired,
 };
 
 export default QuestionTab;

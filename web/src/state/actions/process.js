@@ -235,27 +235,32 @@ export function addProc(process) {
             roles: {
               self: {
                 id: 'self',
-                contents: [
-                  { content: 'Ich', lan: 'de' },
-                ],
+                context: 'self',
+                contents: {
+                  de: 'ich',
+                  en: 'self',
+                },
               },
               vorgesetzter: {
                 id: 'vorgesetzter',
-                contents: [
-                  { content: 'Vorgesetzter', lan: 'de' },
-                ],
+                contents: {
+                  de: 'Vorgesetzter',
+                  en: 'boss',
+                },
               },
               kollege: {
                 id: 'kollege',
-                contents: [
-                  { content: 'Kollege', lan: 'de' },
-                ],
+                contents: {
+                  de: 'Kollege',
+                  en: 'collegue',
+                },
               },
               kunde: {
                 id: 'kunde',
-                contents: [
-                  { content: 'Kunde', lan: 'de' },
-                ],
+                contents: {
+                  de: 'Kunde',
+                  en: 'customer',
+                },
               },
             },
           },

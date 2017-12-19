@@ -8,8 +8,6 @@ const mapStateToProps = (state, ownProps) => ({
   questions: getQuestionsByContextId(
     getQuestionaire(state, getFirstFeedbacker(state).proc, 1234).questions,
     ownProps.contextId,
-    ownProps.roleId,
-    'de',
   ),
 });
 

@@ -2,7 +2,6 @@ import {
   getQuestionById,
   getQuestionsByContextId,
   countAnswersByContextId,
-  getRolesByLanguage,
   getRoleById,
 } from './questionaire';
 
@@ -21,16 +20,6 @@ describe('test selectors for questionairies', () => {
     expect(countAnswersByContextId(questions, {
       question1: 1,
     }, 1)).toEqual(1);
-  });
-
-  it('should return a list of all roles for a given questionaire', () => {
-    const questionaire = process.byHash[1].questionaires;
-    expect(getRolesByLanguage(questionaire[1234], 'de')[0].contents.content).toEqual('Kollege');
-  });
-
-  it('should return "not found" as content if langauge not found', () => {
-    const questionaire = process.byHash[1].questionaires;
-    expect(getRolesByLanguage(questionaire[1234], 'undef')[0].contents.content).toEqual('not found');
   });
 
   it('should return a role for a given id', () => {
