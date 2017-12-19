@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
   contextContent: getContentByLanguage(
     getContexts(state, getFirstFeedbackerProc(state), 1234),
     ownProps.contextId,
-    getLanguage(getFirstFeedbackerProc(state)),
+    getLanguage(state, getFirstFeedbackerProc(state)),
   ),
 });
 

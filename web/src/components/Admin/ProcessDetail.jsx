@@ -82,7 +82,7 @@ class ProcessDetail extends Component {
               </Col>
             </Row>
           </Col>
-          <Col md={8}>
+          <Col md={10}>
             <div style={{ flex: 1, padding: '10px' }}>
               {routes.map(route => (
                 <Route
@@ -99,7 +99,6 @@ class ProcessDetail extends Component {
               />
             </div>
           </Col>
-          <Col md={2} />
         </Row>
       </Grid>
     );

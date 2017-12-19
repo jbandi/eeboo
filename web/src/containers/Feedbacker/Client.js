@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => ({
   role: getRoleById(
     getQuestionaire(state, getFirstFeedbackerProc(state), 1234),
     getRoleIdByClientId(state, getFirstFeedbackerId(state), ownProps.clientId),
-    getLanguage(getFirstFeedbackerProc(state)),
+    getLanguage(state, getFirstFeedbackerProc(state)),
   ),
   language: getLanguage(getFirstFeedbackerProc(state)),
 });

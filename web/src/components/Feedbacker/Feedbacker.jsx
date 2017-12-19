@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Grid, Panel } from 'react-bootstrap';
+import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
 import Client from '../../containers/Feedbacker/Client';
 import PanelHeader from '../../containers/Feedbacker/PanelHeader';
-import { fetchFeedbacker } from '../../state/actions/feedbacker';
+
+import { Language } from '../../utils';
 
 class Feedbacker extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     feedbacker: PropTypes.shape({
       id: PropTypes.string,
       mail: PropTypes.string,
@@ -16,10 +16,16 @@ class Feedbacker extends Component {
     }).isRequired,
     clientIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     feedbackerId: PropTypes.string.isRequired,
+    setLanguage: PropTypes.func.isRequired,
+    fetchFeedbacker: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
-    this.props.dispatch(fetchFeedbacker(this.props.feedbackerId));
+    this.props.fetchFeedbacker(this.props.feedbackerId);
+  }
+
+  setLanguage = (lan) => {
+    this.props.setLanguage(this.props.feedbacker.proc, lan);
   }
 
   header = contextId => (
@@ -34,6 +40,14 @@ class Feedbacker extends Component {
             <Row>
               <Col md={2} />
               <Col md={8}>
+                <div align="right">
+                  <Button bsStyle="link" onClick={() => this.setLanguage(Language.DE)}>
+                    Deutsch
+                  </Button>|
+                  <Button bsStyle="link" onClick={() => this.setLanguage(Language.EN)}>
+                    English
+                  </Button>
+                </div>
                 <Panel collapsible expanded>
                   <table>
                     <tbody>

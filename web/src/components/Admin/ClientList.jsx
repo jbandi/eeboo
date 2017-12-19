@@ -34,7 +34,6 @@ class ClientList extends React.Component {
         <Table responsive striped hover bordered>
           <thead>
             <tr>
-              <th>Id</th>
               <th>Name</th>
               <th>Firstname</th>
               <th>Mail</th>
@@ -44,7 +43,6 @@ class ClientList extends React.Component {
           <tbody>
             {this.props.clients.map(client => (
               <tr key={client.id}>
-                <td>{client.id}</td>
                 <td>{client.name}</td>
                 <td>{client.firstname}</td>
                 <td>{client.mail}</td>
