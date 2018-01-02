@@ -11,12 +11,14 @@ export const ContextTab = props => (
   <Table responsive striped hover bordered>
     <thead>
       <tr>
+        <th>Id</th>
         <th>Thema</th>
       </tr>
     </thead>
     <tbody>
       {toArray(props.questionaire.contexts).map(c => (
         <tr key={c.id}>
+          <td>{c.id}</td>
           <td>{idx(c, _ => _.contents[0].content) || 'no content'}</td>
         </tr>
       ))}
