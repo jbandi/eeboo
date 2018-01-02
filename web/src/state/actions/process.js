@@ -110,7 +110,7 @@ export function importClients(data, procId) {
     const reader = new FileReader();
     reader.onload = (() => (
       (e) => {
-        Parser.parseAll(e.target.result, procId).then((res) => {
+        Parser.parseClients(e.target.result, procId).then((res) => {
           res.clients.forEach(client => dispatch(addClient(procId, client)));
           res.feedbackers.forEach(feedbacker => dispatch(addFeedbacker(feedbacker)));
         });

@@ -65,9 +65,9 @@ const addFeedbacker = (feedbackerArray, feedbacker, procId, clientId) => {
   return feedbackers;
 };
 
-// parse the total list of feedbackers to JSON
+// parse the list of clients and feedbackers to JSON
 // return an object containing an array of clients and an array of feedbackers
-function feedbackerTotalCSV2JJSON(feedbackerArray, procId) {
+function feedbackerCSV2JJSON(feedbackerArray, procId) {
   const clients = [];
   let clientId = -1;
   let feedbackers = [];
@@ -86,43 +86,6 @@ function feedbackerTotalCSV2JJSON(feedbackerArray, procId) {
     }
   });
   return { clients, feedbackers };
-}
-
-// parse a CSV string of clients to JSON
-// return an array
-function clientCSV2json(clientArray) {
-  const clients = [];
-  clientArray.forEach((line) => {
-    const id = uuidv4();
-    const client = {
-      id,
-      mail: line[3],
-      name: line[0],
-      firstname: line[1],
-      gender: line[2],
-      feedbackers: [],
-      role: line[4],
-    };
-    clients.push(client);
-  });
-  return clients;
-}
-
-// parse a CSV string of feedbackers to JSON
-// return an array
-function feedbackerCSV2json(feedbackerArray) {
-  const feedbackers = [];
-  feedbackerArray.forEach((line) => {
-    const feedbacker = {
-      name: line[0],
-      firstname: line[1],
-      gender: line[2],
-      mail: line[3],
-      role: line[4],
-    };
-    feedbackers.push(feedbacker);
-  });
-  return feedbackers;
 }
 
 // parse a CSV string of questionaires to json
@@ -155,25 +118,8 @@ function questionCSV2json(questionArray) {
 }
 
 class Parser {
-  // return an array of client objects
-  static parseClients(input) {
-    return new Promise(((resolve, reject) => {
-      const clients = [];
-      csv({ noheader: false })
-        .fromString(input)
-        .on('csv', (csvRow) => {
-          clients.push(csvRow);
-        })
-        .on('done', (error) => {
-          if (error) {
-            return reject(new Error('CSV File invalid'));
-          }
-          return resolve(clientCSV2json(clients));
-        });
-    }));
-  }
-
-  static parseAll(input, procId) {
+  // return an object with a client array and a feedbacker array
+  static parseClients(input, procId) {
     return new Promise(((resolve, reject) => {
       const feedbackers = [];
       csv({ noheader: false })
@@ -185,25 +131,7 @@ class Parser {
           if (error) {
             return reject(new Error('CSV File invalid'));
           }
-          return resolve(feedbackerTotalCSV2JJSON(feedbackers, procId));
-        });
-    }));
-  }
-
-  // return an array of feedbacker objects
-  static parseFeedbackers(input) {
-    return new Promise(((resolve, reject) => {
-      const feedbackers = [];
-      csv({ noheader: false })
-        .fromString(input)
-        .on('csv', (csvRow) => {
-          feedbackers.push(csvRow);
-        })
-        .on('done', (error) => {
-          if (error) {
-            return reject(new Error('CSV File invalid'));
-          }
-          return resolve(feedbackerCSV2json(feedbackers));
+          return resolve(feedbackerCSV2JJSON(feedbackers, procId));
         });
     }));
   }
