@@ -9,6 +9,7 @@ import {
   addFeedbacker,
   removeClientId,
   removeFeedbackersWithoutClient,
+  deleteFeedbackerFromBackend,
   postFeedbacker,
 } from './feedbacker';
 
@@ -338,14 +339,29 @@ export function updateProc(procId) {
   };
 }
 
+// async helper function
+// deletes all feedbackers asynchronously using Promise.all
+async function delFeedbackers(dispatch, feedbackers) {
+  const results = [];
+  feedbackers.forEach(feedbacker =>
+    results.push(dispatch(deleteFeedbackerFromBackend(feedbacker.id))));
+  await Promise.all(results);
+}
+
+// delete a process, including all related feedbackers
 export function deleteProc(id) {
-  return () => (
-    fetch(`/api/v1/procs/${id}`, {
-      method: 'DELETE',
-    })
-      .then(
-        response => response.json(),
-        error => console.log(`An error occured while deleting process with id ${id}`, error),
-      ).then(history.replace('/admin'))
-  );
+  return (dispatch, getState) => {
+    const feedbackers = getFeedbackerArray(getState());
+    // delete all feedbackers (async/await) then delete the process
+    delFeedbackers(dispatch, feedbackers).then(() => (
+      (fetch(`/api/v1/procs/${id}`, {
+        method: 'DELETE',
+      })
+        .then(
+          response => response.json(),
+          error => console.log(`An error occured while deleting process with id ${id}`, error),
+        ).then(history.replace('/admin'))
+      )
+    ));
+  };
 }
