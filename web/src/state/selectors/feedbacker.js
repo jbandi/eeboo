@@ -95,24 +95,35 @@ export const getFeedbackerAnswers = (state, feedbackerId, clientId) => (
   (idx(state, _ => _.feedbacker.byHash[feedbackerId].clients[clientId].answers) || {})
 );
 
+// number of total answers over all clients
+// return number
+export const getNumAnswers = (state, feedbackerId) => {
+  const clients = idx(state, _ => _.feedbacker.byHash[feedbackerId].clients) || {};
+  let count = 0;
+  Object.keys(clients).forEach((clientId) => {
+    const { answers } = clients[clientId];
+    if (answers) {
+      count += Object.keys(answers).length;
+    }
+  });
+  return count;
+};
+
 // get a specific client by Id
 // return object
 export const getClientById = (state, feedbackerId, clientId) => (
   idx(state, _ => _.feedbacker.byHash[feedbackerId].clients[clientId]) || {}
 );
 
-export const getQuestionaireByClientId = (state, clientId) => {
-  const questionaireId = idx(getClientById(clientId), _ => _.questionaire) || -1;
-  return idx(state, _ => _.feedbacker.proc[questionaireId]) || {};
-};
-
 // check if a feedbacker exists. Test will be done by Mail address
+// return boolean
 export const feedbackerExists = (state, feedbacker) => {
   const feedbackers = getFeedbackerArray(state);
   return feedbackers.find(f => f.mail === feedbacker.mail) !== undefined;
 };
 
-// check if a feedbacker exists. Test will be done by Mail address
+// get a feedbacker by its mail
+// return object
 export const getFeedbackerByMail = (state, mail) => {
   const feedbackers = idx(state, _ => _.feedbacker.feedbackers) || [];
   return feedbackers.find(f => f.mail === mail);

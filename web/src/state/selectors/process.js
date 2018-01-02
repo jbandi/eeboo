@@ -51,6 +51,13 @@ export const getQuestionaire = (state, procId, questionaireId) => (
   idx(state, _ => _.process.byHash[procId].questionaires[questionaireId]) || {}
 );
 
+// get total number of questions
+// return number
+export const getNumQuestions = (state, procId, questionaireId) => {
+  const q = idx(state, _ => _.process.byHash[procId].questionaires[questionaireId].questions) || {};
+  return Object.keys(q).length;
+};
+
 // get the process language. return 'de if no language is set'
 // return string
 export const getLanguage = (state, procId) => (

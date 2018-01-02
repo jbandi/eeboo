@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 
-import QuestionRow from '../../containers/Admin/QuestionRow';
+import QuestionRow from '../../../containers/Admin/Questionaire/QuestionRow';
 
 const toArray = list => (
   (list) ? Object.keys(list).map(q => list[q]) : []

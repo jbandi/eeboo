@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-const createLink = id => (
-  `/feedbacker/${id}`
-);
+import FeedbackerRow from './../../../containers/Admin/Feedbacker/FeedbackerRow';
 
 const FeedbackerList = props => (
   <div>
@@ -14,20 +11,14 @@ const FeedbackerList = props => (
         <tr>
           <th>Id</th>
           <th>Mail</th>
+          <th>Feedback-<br />nehmer</th>
+          <th>Antworten</th>
           <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
         {props.feedbackers.map(f => (
-          <tr key={f.id}>
-            <td>
-              <Link target="_blank" to={createLink(f.id)}>{f.id}</Link>
-            </td>
-            <td>{f.mail}</td>
-            <td className="detail-link">
-              <Link to="#" onClick={() => props.deleteFeedbacker(f.id)}>Delete</Link>
-            </td>
-          </tr>
+          <FeedbackerRow key={f.id} feedbacker={f} numQuestions={props.numQuestions} />
         ))}
       </tbody>
     </Table>
@@ -36,6 +27,7 @@ const FeedbackerList = props => (
 
 FeedbackerList.propTypes = {
   feedbackers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  numQuestions: PropTypes.number.isRequired,
 };
 
 export default FeedbackerList;

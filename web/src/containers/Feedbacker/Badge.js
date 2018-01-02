@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Badge from '../../components/Feedbacker/Badge';
+import Badge from '../../components/Badge';
 import { getQuestionsByContextId, countAnswersByContextId } from '../../state/selectors/questionaire';
 import { getFeedbackerAnswers, getFirstFeedbackerProc, getFirstFeedbackerId } from '../../state/selectors/feedbacker';
 import { getQuestionaire } from '../../state/selectors/process';

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import QuestionRow from '../../components/Admin/QuestionRow';
-import { getContentByLanguage } from '../../state/selectors/context';
-import { getQuestionContentByLanguage } from '../../state/selectors/questionaire';
-import { getLanguage } from '../../state/selectors/process';
-import { deleteQuestion } from '../../state/actions/process';
+import QuestionRow from '../../../components/Admin/Questionaire/QuestionRow';
+import { getContentByLanguage } from '../../../state/selectors/context';
+import { getQuestionContentByLanguage } from '../../../state/selectors/questionaire';
+import { getLanguage } from '../../../state/selectors/process';
+import { deleteQuestion } from '../../../state/actions/process';
 
 const mapStateToProps = (state, ownProps) => ({
   context: getContentByLanguage(

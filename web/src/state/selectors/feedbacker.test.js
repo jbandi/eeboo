@@ -10,6 +10,7 @@ import {
   clientsContainId,
   getFeedbackerIdsByClientId,
   getFeedbackerWithoutClients,
+  getNumAnswers,
 } from './feedbacker';
 
 describe('test selectors for feedbacker', () => {
@@ -88,5 +89,9 @@ describe('test selectors for feedbacker', () => {
         ],
       },
     })).toEqual(['f2']);
+  });
+
+  it('should get the total count of answers', () => {
+    expect(getNumAnswers({ feedbacker }, 'feedbacker2')).toEqual(5);
   });
 });

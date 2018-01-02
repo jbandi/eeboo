@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import RoleRow from '../../containers/Admin/RoleRow';
+import RoleRow from '../../../containers/Admin/Questionaire/RoleRow';
 
 const toArray = list => (
   Object.keys(list).map(q => list[q])

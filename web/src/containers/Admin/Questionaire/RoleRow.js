@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { RoleRow } from '../../components/Admin/RoleRow';
-import { getRoleById } from '../../state/selectors/questionaire';
-import { getLanguage } from '../../state/selectors/process';
+import { RoleRow } from '../../../components/Admin/Questionaire/RoleRow';
+import { getRoleById } from '../../../state/selectors/questionaire';
+import { getLanguage } from '../../../state/selectors/process';
 
 const mapStateToProps = (state, ownProps) => ({
   role: getRoleById(

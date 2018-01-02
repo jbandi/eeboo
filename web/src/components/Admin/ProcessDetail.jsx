@@ -5,10 +5,10 @@ import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { fetchProcs } from './../../state/actions/process';
 import { fetchFeedbackersByProcId } from './../../state/actions/feedbacker';
-import QuestionaireList from './../../containers/Admin/QuestionaireList';
-import ClientList from './../../containers/Admin/ClientList';
-import ClientDetail from './../../containers/Admin/ClientDetail';
-import FeedbackerList from './../../containers/Admin/FeedbackerList';
+import QuestionaireList from './../../containers/Admin/Questionaire/QuestionaireList';
+import ClientList from './../../containers/Admin/Client/ClientList';
+import ClientDetail from './../../containers/Admin/Client/ClientDetail';
+import FeedbackerList from './../../containers/Admin/Feedbacker/FeedbackerList';
 import ProcessData from './../../containers/Admin/ProcessData';
 
 const routes = [

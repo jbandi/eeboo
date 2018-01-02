@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import FeedbackerRow from '../../containers/Admin/FeedbackerRow';
+import FeedbackerRow from '../../../containers/Admin/Client/FeedbackerRow';
 
 class ClientDetail extends React.Component {
   static propTypes = {

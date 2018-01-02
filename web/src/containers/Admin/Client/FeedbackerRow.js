@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { FeedbackerRow } from '../../components/Admin/FeedbackerRow';
-import { getRoleIdByClientId } from '../../state/selectors/feedbacker';
-import { getRoleById } from '../../state/selectors/questionaire';
-import { getQuestionaire } from '../../state/selectors/process';
-import { deleteFeedbackerFromBackend } from '../../state/actions/feedbacker';
+import { FeedbackerRow } from '../../../components/Admin/Client/FeedbackerRow';
+import { getRoleIdByClientId } from '../../../state/selectors/feedbacker';
+import { getRoleById } from '../../../state/selectors/questionaire';
+import { getQuestionaire } from '../../../state/selectors/process';
+import { deleteFeedbackerFromBackend } from '../../../state/actions/feedbacker';
 
 const mapStateToProps = (state, ownProps) => ({
   feedbacker: ownProps.feedbacker,

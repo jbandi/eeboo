@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import ClientDetail from '../../components/Admin/ClientDetail';
-import { importFeedbackers, postFeedbacker } from '../../state/actions/feedbacker';
-import { getClient } from '../../state/selectors/process';
-import { getFeedbackersByClientId } from '../../state/selectors/feedbacker';
+import ClientDetail from '../../../components/Admin/Client/ClientDetail';
+import { importFeedbackers, postFeedbacker } from '../../../state/actions/feedbacker';
+import { getClient } from '../../../state/selectors/process';
+import { getFeedbackersByClientId } from '../../../state/selectors/feedbacker';
 
 function saveFeedbackers(dispatch, feedbackers) {
   feedbackers.forEach(f => dispatch(postFeedbacker(f)));

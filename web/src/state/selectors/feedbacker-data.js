@@ -35,6 +35,9 @@ export const feedbacker = {
           role: 'role2',
         },
         client2: {
+          answers: {
+            question4: 3,
+          },
           id: 'client2',
           role: 'role1',
         },

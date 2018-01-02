@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import QuestionaireDetail from './../../containers/Admin/QuestionaireDetail';
+import QuestionaireDetail from './../../../containers/Admin/Questionaire/QuestionaireDetail';
 
 export class QuestionaireList extends React.Component {
   static propTypes = {
