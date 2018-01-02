@@ -9,6 +9,7 @@ import QuestionaireList from './../../containers/Admin/QuestionaireList';
 import ClientList from './../../containers/Admin/ClientList';
 import ClientDetail from './../../containers/Admin/ClientDetail';
 import FeedbackerList from './../../containers/Admin/FeedbackerList';
+import ProcessData from './../../containers/Admin/ProcessData';
 
 const routes = [
   {
@@ -29,7 +30,7 @@ const routes = [
   },
   {
     path: '/admin/proc/:id/data',
-    main: () => <h2>Data</h2>,
+    main: id => <ProcessData procId={id} />,
   },
 ];
 
