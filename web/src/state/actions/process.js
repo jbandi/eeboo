@@ -224,8 +224,50 @@ export function addProc(process) {
               D: {
                 id: 'D',
                 contents: [
-                  { content: 'Motivation von Mitarbeitern', lan: 'de' },
-                  { content: 'motivation', lan: 'en' }],
+                  { content: 'Coaching/Motivation von Mitarbeitern', lan: 'de' },
+                  { content: 'Employee coaching and motivation', lan: 'en' }],
+              },
+              E: {
+                id: 'E',
+                contents: [
+                  { content: 'Konflikmanagement', lan: 'de' },
+                  { content: 'Conflict management', lan: 'en' }],
+              },
+              F: {
+                id: 'F',
+                contents: [
+                  { content: 'Change Management', lan: 'de' },
+                  { content: 'Conflict management', lan: 'en' }],
+              },
+              G: {
+                id: 'G',
+                contents: [
+                  { content: 'Selbstführung', lan: 'de' },
+                  { content: 'Self Management', lan: 'en' }],
+              },
+              H: {
+                id: 'H',
+                contents: [
+                  { content: 'Interkulturelles Management', lan: 'de' },
+                  { content: 'Intercultural management', lan: 'en' }],
+              },
+              I: {
+                id: 'I',
+                contents: [
+                  { content: 'Diversity Management', lan: 'de' },
+                  { content: 'Diversity management', lan: 'en' }],
+              },
+              J: {
+                id: 'J',
+                contents: [
+                  { content: 'Grundlagen der Führung', lan: 'de' },
+                  { content: 'Fundamentals of leadership', lan: 'en' }],
+              },
+              K: {
+                id: 'K',
+                contents: [
+                  { content: 'Strategie', lan: 'de' },
+                  { content: 'Strategy', lan: 'en' }],
               },
             },
             roles: {
