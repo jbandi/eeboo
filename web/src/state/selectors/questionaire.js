@@ -15,10 +15,11 @@ export const getQuestionContentByLanguage = (question, context, language) => (
 // get a role by Id and language
 // return object
 export const getRoleById = (questionaire, roleId, language) => {
-  const role = idx(questionaire, _ => _.roles[roleId]) || [];
+  const roleIdeLower = roleId.toLowerCase();
+  const role = idx(questionaire, _ => _.roles[roleIdeLower]) || [];
   return (role)
     ? ({
-      content: role.contents[language],
+      content: idx(role, _ => _.contents[language]) || 'no content',
       context: role.context,
       lan: language,
       id: roleId,

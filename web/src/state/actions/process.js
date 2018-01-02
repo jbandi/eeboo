@@ -4,9 +4,9 @@ import history from '../../services/history';
 import Parser from '../../utils/parser';
 import { Language } from '../../utils';
 
-import { getProcess, clientExists } from '../selectors/process';
+import { getProcess } from '../selectors/process';
 import {
-  createFeedbackerIfNotExists,
+  addFeedbacker,
   removeClientId,
   removeFeedbackersWithoutClient,
   postFeedbacker,
@@ -105,18 +105,14 @@ export function addQuestions(procId, questionaireId, questions) {
 
 // add a Client if it does not already exist
 export function importClients(data, procId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const file = data.target.files[0];
     const reader = new FileReader();
     reader.onload = (() => (
       (e) => {
-        Parser.parseClients(e.target.result).then((clients) => {
-          clients.forEach((client) => {
-            if (!clientExists(getState(), procId, client)) {
-              dispatch(addClient(procId, client));
-              dispatch(createFeedbackerIfNotExists(client, procId));
-            }
-          });
+        Parser.parseAll(e.target.result, procId).then((res) => {
+          res.clients.forEach(client => dispatch(addClient(procId, client)));
+          res.feedbackers.forEach(feedbacker => dispatch(addFeedbacker(feedbacker)));
         });
       }
     ))(file);
@@ -255,11 +251,18 @@ export function addProc(process) {
                   en: 'collegue',
                 },
               },
-              kunde: {
-                id: 'kunde',
+              kunden: {
+                id: 'kunden',
                 contents: {
-                  de: 'Kunde',
+                  de: 'Kunden',
                   en: 'customer',
+                },
+              },
+              mitarbeiter: {
+                id: 'mitarbeiter',
+                contents: {
+                  de: 'Mitarbeiter',
+                  en: 'Staff',
                 },
               },
             },
