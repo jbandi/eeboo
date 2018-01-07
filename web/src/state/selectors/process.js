@@ -7,6 +7,7 @@ import {
 } from './feedbacker';
 
 import { getQuestionsByContextId } from './questionaire';
+import { getContentByLanguage } from './context';
 
 import { Language } from '../../utils';
 
@@ -96,13 +97,61 @@ export const getContextIds = (state, procId, questionaireId) => (
   Object.keys(getContexts(state, procId, questionaireId))
 );
 
-// get DataBy context
-// return chart.js data object
-export const getDataByContext = (state, procId, clientId, context, questionaireId) => {
+const createGraphData = (labels, data) => ({
+  labels,
+  datasets: [{
+    label: '# of Votes',
+    data,
+    borderWidth: 1,
+    backgroundColor: [
+      'rgb(8,48,107)',
+      'rgb(8,81,156)',
+      'rgb(33,113,181)',
+      'rgb(66,146,198)',
+      'rgb(107,174,214)',
+      'rgb(158,202,225)',
+      'rgb(198,219,239)',
+      'rgb(222,235,247)',
+      'rgb(247,251,255)',
+    ],
+  }],
+});
+
+// create Data by context
+// return object
+export const createDataByContext = (state, procId, clientId, questionaireId) => {
+  const res = {};
+  const { questions } = getQuestionaire(state, procId, questionaireId);
+  const contextsObj = getContexts(state, procId, questionaireId);
+  const contextsArr = Object.keys(contextsObj).map(key => (contextsObj[key]));
+  const feedbackers = getFeedbackersByClientId(state, clientId);
+  contextsArr.forEach((context) => {
+    const questionsByContext = getQuestionsByContextId(questions, context.id);
+    questionsByContext.forEach((question) => {
+      feedbackers.forEach((feedbacker) => {
+        const count = getFeedbackerAnswer(state, feedbacker.id, clientId, question.id);
+        if (!res[context.id]) {
+          res[context.id] = {
+            total: 0,
+            count: 0,
+          };
+        }
+        if (count > 0) {
+          res[context.id].total += count;
+          res[context.id].count += 1;
+        }
+      });
+    });
+  });
+  return res;
+};
+
+// create Data by role and context
+// return object
+export const createDataByRoleAndContext = (state, procId, clientId, context, questionaireId) => {
   const res = {};
   const { questions } = getQuestionaire(state, procId, questionaireId);
   const questionsByContext = getQuestionsByContextId(questions, context.id);
-
   const feedbackers = getFeedbackersByClientId(state, clientId);
   questionsByContext.forEach((question) => {
     feedbackers.forEach((feedbacker) => {
@@ -120,23 +169,32 @@ export const getDataByContext = (state, procId, clientId, context, questionaireI
       }
     });
   });
-  return {
-    labels: Object.keys(res),
-    datasets: [{
-      label: '# of Votes',
-      data: Object.keys(res).map(key => (res[key].total / res[key].count)),
-      borderWidth: 1,
-      backgroundColor: [
-        'rgb(8,48,107)',
-        'rgb(8,81,156)',
-        'rgb(33,113,181)',
-        'rgb(66,146,198)',
-        'rgb(107,174,214)',
-        'rgb(158,202,225)',
-        'rgb(198,219,239)',
-        'rgb(222,235,247)',
-        'rgb(247,251,255)',
-      ],
-    }],
-  };
+  return res;
+};
+
+// get Data by context
+// return chart.js data object
+export const getDataByContext = (state, procId, clientId, questionaireId) => {
+  const data = createDataByContext(state, procId, clientId, questionaireId);
+  const contexts = getContexts(state, procId, questionaireId);
+  return (
+    createGraphData(
+      Object.keys(data).map(contextId => (
+        getContentByLanguage(contexts, contextId, 'de').content
+      )),
+      Object.keys(data).map(key => (data[key].total / data[key].count)),
+    )
+  );
+};
+
+// get Data by role and context
+// return chart.js data object
+export const getDataByRoleAndContext = (state, procId, clientId, context, questionaireId) => {
+  const data = createDataByRoleAndContext(state, procId, clientId, context, questionaireId);
+  return (
+    createGraphData(
+      Object.keys(data),
+      Object.keys(data).map(key => (data[key].total / data[key].count)),
+    )
+  );
 };

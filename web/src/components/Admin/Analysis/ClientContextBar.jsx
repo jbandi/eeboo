@@ -20,7 +20,7 @@ const options = {
   },
 };
 
-class Context extends React.Component {
+class ClientContextBar extends React.Component {
   generatePDF = () => {
     console.log('exporting pdf');
     this.myChart = this.bar.getChart();
@@ -48,7 +48,7 @@ class Context extends React.Component {
   }
 }
 
-Context.propTypes = {
+ClientContextBar.propTypes = {
   context: PropTypes.shape({
     contents: PropTypes.arrayOf(PropTypes.shape({
       content: PropTypes.string.isRequired,
@@ -57,4 +57,4 @@ Context.propTypes = {
   barData: PropTypes.shape({}).isRequired,
 };
 
-export default Context;
+export default ClientContextBar;
