@@ -10,6 +10,7 @@ import ClientList from './../../containers/Admin/Client/ClientList';
 import ClientDetail from './../../containers/Admin/Client/ClientDetail';
 import FeedbackerList from './../../containers/Admin/Feedbacker/FeedbackerList';
 import ProcessData from './../../containers/Admin/ProcessData';
+import Analysis from './../../containers/Admin/Analysis/Analysis';
 
 const routes = [
   {
@@ -26,7 +27,7 @@ const routes = [
   },
   {
     path: '/admin/proc/:id/analysis',
-    main: () => <h2>Analyis</h2>,
+    main: id => <Analysis procId={id} />,
   },
   {
     path: '/admin/proc/:id/data',

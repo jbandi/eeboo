@@ -6,6 +6,9 @@ const Badge = (props) => {
     return <div style={{ color: '#5cb85c' }} className="glyphicon glyphicon-ok" />;
   }
   if (props.done > props.total / 2) {
+    return <div style={{ background: '#5bc0de' }} className="badge">{props.done}/{props.total} </div>;
+  }
+  if (props.done > 0) {
     return <div style={{ background: '#f0ad4e' }} className="badge">{props.done}/{props.total} </div>;
   }
   return <div style={{ background: '#d9534f' }} className="badge">{props.done}/{props.total} </div>;

@@ -1,6 +1,12 @@
 import idx from 'idx';
 
-import { getFeedbackerClientIds } from './feedbacker';
+import {
+  getFeedbackerClientIds,
+  getFeedbackersByClientId,
+  getFeedbackerAnswer,
+} from './feedbacker';
+
+import { getQuestionsByContextId } from './questionaire';
 
 import { Language } from '../../utils';
 
@@ -89,3 +95,48 @@ export const getContextsArray = (state, procId, questionaireId) => {
 export const getContextIds = (state, procId, questionaireId) => (
   Object.keys(getContexts(state, procId, questionaireId))
 );
+
+// get DataBy context
+// return chart.js data object
+export const getDataByContext = (state, procId, clientId, context, questionaireId) => {
+  const res = {};
+  const { questions } = getQuestionaire(state, procId, questionaireId);
+  const questionsByContext = getQuestionsByContextId(questions, context.id);
+
+  const feedbackers = getFeedbackersByClientId(state, clientId);
+  questionsByContext.forEach((question) => {
+    feedbackers.forEach((feedbacker) => {
+      const count = getFeedbackerAnswer(state, feedbacker.id, clientId, question.id);
+      const { role } = feedbacker.clients[clientId];
+      if (!res[role]) {
+        res[role] = {
+          total: 0,
+          count: 0,
+        };
+      }
+      if (count > 0) {
+        res[role].total += count;
+        res[role].count += 1;
+      }
+    });
+  });
+  return {
+    labels: Object.keys(res),
+    datasets: [{
+      label: '# of Votes',
+      data: Object.keys(res).map(key => (res[key].total / res[key].count)),
+      borderWidth: 1,
+      backgroundColor: [
+        'rgb(8,48,107)',
+        'rgb(8,81,156)',
+        'rgb(33,113,181)',
+        'rgb(66,146,198)',
+        'rgb(107,174,214)',
+        'rgb(158,202,225)',
+        'rgb(198,219,239)',
+        'rgb(222,235,247)',
+        'rgb(247,251,255)',
+      ],
+    }],
+  };
+};

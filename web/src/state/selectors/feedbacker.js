@@ -86,7 +86,7 @@ export const getFeedbackerWithoutClients = (state) => {
 // get a specific answer by client id and question Id
 // return number
 export const getFeedbackerAnswer = (state, feedbackerId, clientId, questionId) => (
-  idx(state, _ => _.feedbacker.byHash[feedbackerId].clients[clientId].answers[questionId]) || -1
+  idx(state, _ => _.feedbacker.byHash[feedbackerId].clients[clientId].answers[questionId]) || 0
 );
 
 // get all answers by client id

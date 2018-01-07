@@ -39,11 +39,11 @@ describe('test selectors for feedbacker', () => {
   });
 
   it('should return -1 if question not found', () => {
-    expect(getFeedbackerAnswer(state, 'client1', 'undef')).toEqual(-1);
+    expect(getFeedbackerAnswer(state, 'client1', 'undef')).toEqual(0);
   });
 
   it('should return -1 if client not found', () => {
-    expect(getFeedbackerAnswer(state, 'undef', 'question1')).toEqual(-1);
+    expect(getFeedbackerAnswer(state, 'undef', 'question1')).toEqual(0);
   });
 
   it('should return an array of answers for a client', () => {
