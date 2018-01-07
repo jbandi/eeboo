@@ -5,6 +5,12 @@ import RC2 from 'react-chartjs2';
 const options = {
   responsive: true,
   maintainAspectRatio: true,
+  scale: {
+    ticks: {
+      beginAtZero: true,
+      max: 5,
+    },
+  },
 };
 
 class ClientContextRadar extends React.Component {

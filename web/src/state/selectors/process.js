@@ -97,30 +97,50 @@ export const getContextIds = (state, procId, questionaireId) => (
   Object.keys(getContexts(state, procId, questionaireId))
 );
 
-const createGraphData = (labels, data) => ({
+const chartColor = [
+  'rgba(8,48,107,0.7)',
+  'rgba(8,81,156,0.7)',
+  'rgba(33,113,181,0.7)',
+  'rgba(66,146,198,0.7)',
+  'rgba(107,174,214,0.7)',
+  'rgba(158,202,225,0.7)',
+  'rgba(198,219,239,0.7)',
+  'rgba(222,235,247,0.7)',
+  'rgba(247,251,255,0.7)',
+];
+
+const createBarData = (labels, data) => ({
   labels,
   datasets: [{
     label: '# of Votes',
     data,
     borderWidth: 1,
-    backgroundColor: [
-      'rgb(8,48,107)',
-      'rgb(8,81,156)',
-      'rgb(33,113,181)',
-      'rgb(66,146,198)',
-      'rgb(107,174,214)',
-      'rgb(158,202,225)',
-      'rgb(198,219,239)',
-      'rgb(222,235,247)',
-      'rgb(247,251,255)',
-    ],
+    backgroundColor: chartColor,
+  }],
+});
+
+const createRadarData = (labels, foreign, self) => ({
+  labels,
+  datasets: [{
+    label: 'Fremdeinschätzung',
+    data: foreign,
+    borderWidth: 3,
+    borderColor: chartColor[1],
+    backgroundColor: chartColor[2],
+  }, {
+    label: 'Selbsteinschätzung',
+    data: self,
+    borderWidth: 3,
+    borderColor: chartColor[4],
+    backgroundColor: chartColor[6],
   }],
 });
 
 // create Data by context
-// return object
+// return an array of objects
 export const createDataByContext = (state, procId, clientId, questionaireId) => {
-  const res = {};
+  const foreign = {};
+  const self = {};
   const { questions } = getQuestionaire(state, procId, questionaireId);
   const contextsObj = getContexts(state, procId, questionaireId);
   const contextsArr = Object.keys(contextsObj).map(key => (contextsObj[key]));
@@ -130,20 +150,28 @@ export const createDataByContext = (state, procId, clientId, questionaireId) => 
     questionsByContext.forEach((question) => {
       feedbackers.forEach((feedbacker) => {
         const count = getFeedbackerAnswer(state, feedbacker.id, clientId, question.id);
-        if (!res[context.id]) {
-          res[context.id] = {
-            total: 0,
-            count: 0,
-          };
-        }
-        if (count > 0) {
-          res[context.id].total += count;
-          res[context.id].count += 1;
+        const { role } = feedbacker.clients[clientId];
+        if (role !== 'self') {
+          if (!foreign[context.id]) {
+            foreign[context.id] = { total: 0, count: 0 };
+          }
+          if (count > 0) {
+            foreign[context.id].total += count;
+            foreign[context.id].count += 1;
+          }
+        } else {
+          if (!self[context.id]) {
+            self[context.id] = { total: 0, count: 0 };
+          }
+          if (count > 0) {
+            self[context.id].total += count;
+            self[context.id].count += 1;
+          }
         }
       });
     });
   });
-  return res;
+  return { foreign, self };
 };
 
 // create Data by role and context
@@ -175,14 +203,15 @@ export const createDataByRoleAndContext = (state, procId, clientId, context, que
 // get Data by context
 // return chart.js data object
 export const getDataByContext = (state, procId, clientId, questionaireId) => {
-  const data = createDataByContext(state, procId, clientId, questionaireId);
+  const { foreign, self } = createDataByContext(state, procId, clientId, questionaireId);
   const contexts = getContexts(state, procId, questionaireId);
   return (
-    createGraphData(
-      Object.keys(data).map(contextId => (
+    createRadarData(
+      Object.keys(foreign).map(contextId => (
         getContentByLanguage(contexts, contextId, 'de').content
       )),
-      Object.keys(data).map(key => (data[key].total / data[key].count)),
+      Object.keys(foreign).map(key => (foreign[key].total / foreign[key].count)),
+      Object.keys(self).map(key => (self[key].total / self[key].count)),
     )
   );
 };
@@ -192,7 +221,7 @@ export const getDataByContext = (state, procId, clientId, questionaireId) => {
 export const getDataByRoleAndContext = (state, procId, clientId, context, questionaireId) => {
   const data = createDataByRoleAndContext(state, procId, clientId, context, questionaireId);
   return (
-    createGraphData(
+    createBarData(
       Object.keys(data),
       Object.keys(data).map(key => (data[key].total / data[key].count)),
     )
