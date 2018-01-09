@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Panel, Tabs, Tab } from 'react-bootstrap';
 
+import { PDF } from '../../../utils/pdf';
 import ClientContextBar from '../../../containers/Admin/Analysis/ClientContextBar';
 import ClientContextRadar from '../../../containers/Admin/Analysis/ClientContextRadar';
 
@@ -11,10 +12,22 @@ class Client extends React.Component {
     this.state = {
       key: 1,
     };
+    this.bars = {};
   }
 
   handleSelect = (key) => {
     this.setState({ key });
+  }
+
+  generatePDF = () => {
+    const { bars } = this;
+    const { client } = this.props;
+    const pdf = new PDF(`${client.firstname} ${client.name}`, true, '', true);
+    // TODO: respect language
+    const barsArray = Object.keys(this.bars).map(key => (bars[key]));
+    barsArray.forEach(chart =>
+      pdf.addBarChart(chart.bar.getChart(), chart.props.context.contents[0].content));
+    pdf.save(`${client.firstname}-${client.name}.pdf`);
   }
 
   header = client => (
@@ -44,6 +57,7 @@ class Client extends React.Component {
                     context={context}
                     client={this.props.client}
                     procId={this.props.procId}
+                    onRef={(ref) => { this.bars[context.id] = ref; }}
                   />
                 ))}
               </tbody>

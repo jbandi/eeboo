@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RC2 from 'react-chartjs2';
 
-import jsPDF from 'jspdf';
-
 const options = {
   responsive: true,
   maintainAspectRatio: false,
+  legend: {
+    display: false,
+  },
   scales: {
     xAxes: [{
       ticks: {
@@ -21,19 +22,21 @@ const options = {
 };
 
 class ClientContextBar extends React.Component {
-  generatePDF = () => {
-    console.log('exporting pdf');
-    this.myChart = this.bar.getChart();
-    const doc = new jsPDF(); // eslint-disable-line
-    doc.text('Bar chart example', 10, 10);
-    doc.addImage(this.myChart.toBase64Image(), 'JPEG', 15, 40, 130, 100);
-    doc.save('chart.pdf');
+  // pass this as reference to the parent
+  // so that the parent gets a reference to the chart ref for this component
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+  componentWillUnmount() {
+    this.props.onRef(undefined);
   }
 
   render() {
     return (
       <tr>
-        <td>{this.props.context.contents[0].content}</td>
+        <td>
+          {this.props.context.contents[0].content}
+        </td>
         <td>
           <RC2
             id="rc2"
@@ -55,6 +58,7 @@ ClientContextBar.propTypes = {
     })),
   }).isRequired,
   barData: PropTypes.shape({}).isRequired,
+  onRef: PropTypes.func.isRequired,
 };
 
 export default ClientContextBar;
