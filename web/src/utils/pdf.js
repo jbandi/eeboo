@@ -54,15 +54,46 @@ export class PDF {
     this.doc.line(x, y - 4, this.width - x, y - 4);
   }
 
+  // check if we have to do a page break
+  checkPageBreak = (barHeight) => {
+    // check if we have to paint the new chart on a new page
+    if (this.yBarOffset + barHeight > (this.height - this.border)) {
+      this.addPage();
+    }
+  }
+
+  // add a new Radar chart
+  addRadarChart = (chart) => {
+    const ratio = (chart.height / chart.width);
+    const barHeight = ratio * this.width;
+
+    this.checkPageBreak(barHeight);
+
+    // draw the new chart
+    this.doc.setFontSize(10);
+    this.doc.addImage(
+      chart.toBase64Image(),
+      'JPEG',
+      this.border,
+      this.yBarOffset,
+      this.width - (2 * this.border),
+      barHeight - this.border,
+    );
+    this.yBarOffset = this.yBarOffset + (barHeight - (this.border / 2));
+    this.doc.line(
+      this.border,
+      this.yBarOffset - (this.border / 4),
+      this.width - this.border,
+      this.yBarOffset - (this.border / 4),
+    );
+  }
+
   // add a new Bar chart
   addBarChart = (chart, label = '') => {
     const ratio = (chart.height / chart.width);
     const barHeight = ratio * this.width;
 
-    // check if we have to paint the new chart on a new page
-    if (this.yBarOffset + barHeight > (this.height - this.border)) {
-      this.addPage();
-    }
+    this.checkPageBreak(barHeight);
 
     // draw the new chart
     this.doc.setFontSize(10);

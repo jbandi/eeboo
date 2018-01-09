@@ -3,7 +3,7 @@ import ClientContextRadar from '../../../components/Admin/Analysis/ClientContext
 import { getDataByContext } from '../../../state/selectors/process';
 
 const mapStateToProps = (state, ownProps) => ({
-  barData: getDataByContext(
+  radarData: getDataByContext(
     state,
     ownProps.procId,
     ownProps.client.id,

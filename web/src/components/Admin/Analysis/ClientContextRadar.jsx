@@ -14,14 +14,21 @@ const options = {
 };
 
 class ClientContextRadar extends React.Component {
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
   render() {
     return (
       <tr>
         <td>
           <RC2
             id="rc2"
-            ref={(ref) => { this.bar = ref; }}
-            data={this.props.barData}
+            ref={(ref) => { this.radar = ref; }}
+            data={this.props.radarData}
             type="radar"
             options={options}
           />
@@ -32,7 +39,8 @@ class ClientContextRadar extends React.Component {
 }
 
 ClientContextRadar.propTypes = {
-  barData: PropTypes.shape({}).isRequired,
+  radarData: PropTypes.shape({}).isRequired,
+  onRef: PropTypes.func.isRequired,
 };
 
 export default ClientContextRadar;

@@ -22,15 +22,9 @@ const options = {
 };
 
 class ClientContextBar extends React.Component {
-  // pass this as reference to the parent
-  // so that the parent gets a reference to the chart ref for this component
   componentDidMount() {
     this.props.onRef(this);
   }
-
-  shouldComponentUpdate = nextProps => (
-    (this.props.tab === 1 && this.props.tab !== nextProps.tab)
-  )
 
   componentWillUnmount() {
     this.props.onRef(undefined);
@@ -64,7 +58,6 @@ ClientContextBar.propTypes = {
   }).isRequired,
   barData: PropTypes.shape({}).isRequired,
   onRef: PropTypes.func.isRequired,
-  tab: PropTypes.number.isRequired,
 };
 
 export default ClientContextBar;
