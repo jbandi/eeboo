@@ -7,7 +7,7 @@ const PanelHeader = props => (
     {props.contextContent.content} .. &nbsp;
     <Badge
       clientId={props.clientId}
-      contextId={props.contextId}
+      contextId={props.context.id}
       language={props.language}
       roleId={props.roleId}
     />
@@ -19,7 +19,9 @@ PanelHeader.propTypes = {
     lan: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  contextId: PropTypes.string.isRequired,
+  context: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
   clientId: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   roleId: PropTypes.string.isRequired,

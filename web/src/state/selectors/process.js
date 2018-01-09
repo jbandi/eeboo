@@ -6,7 +6,7 @@ import {
   getFeedbackerAnswer,
 } from './feedbacker';
 
-import { getQuestionsByContextId } from './questionaire';
+import { getQuestionsByContextId, getRoleById } from './questionaire';
 import { getContentByLanguage } from './context';
 
 import { Language } from '../../utils';
@@ -97,6 +97,13 @@ export const getContextIds = (state, procId, questionaireId) => (
   Object.keys(getContexts(state, procId, questionaireId))
 );
 
+// get a specific context by its id
+// return object
+export const getContextById = (state, procId, questionaireId, contextId) => {
+  const contexts = getContexts(state, procId, questionaireId);
+  return (contexts[contextId]) ? contexts[contextId] : {};
+};
+
 const chartColor = [
   'rgba(8,48,107,0.7)',
   'rgba(8,81,156,0.7)',
@@ -119,16 +126,38 @@ const createBarData = (labels, data) => ({
   }],
 });
 
-const createRadarData = (labels, foreign, self) => ({
+const getLabel = (lang, rating) => {
+  if (rating === 'self') {
+    switch (lang) {
+      case 'de':
+        return 'Selbsteinschätzung';
+      case 'en':
+        return 'self rating';
+      default:
+        return 'Selbsteinschätzung';
+    }
+  } else {
+    switch (lang) {
+      case 'de':
+        return 'Fremdeinschätzung';
+      case 'en':
+        return 'foreign rating';
+      default:
+        return 'Fremdeinschätzung';
+    }
+  }
+};
+
+const createRadarData = (labels, foreign, self, lang) => ({
   labels,
   datasets: [{
-    label: 'Fremdeinschätzung',
+    label: getLabel(lang, 'foreign'),
     data: foreign,
     borderWidth: 3,
     borderColor: chartColor[1],
     backgroundColor: chartColor[2],
   }, {
-    label: 'Selbsteinschätzung',
+    label: getLabel(lang, 'self'),
     data: self,
     borderWidth: 3,
     borderColor: chartColor[4],
@@ -202,27 +231,31 @@ export const createDataByRoleAndContext = (state, procId, clientId, context, que
 
 // get Data by context
 // return chart.js data object
-export const getDataByContext = (state, procId, clientId, questionaireId) => {
+export const getDataByContext = (state, procId, clientId, questionaireId, lang = 'de') => {
   const { foreign, self } = createDataByContext(state, procId, clientId, questionaireId);
-  const contexts = getContexts(state, procId, questionaireId);
   return (
     createRadarData(
       Object.keys(foreign).map(contextId => (
-        getContentByLanguage(contexts, contextId, 'de').content
+        getContentByLanguage(
+          getContextById(state, procId, questionaireId, contextId),
+          lang,
+        ).content
       )),
       Object.keys(foreign).map(key => (foreign[key].total / foreign[key].count)),
       Object.keys(self).map(key => (self[key].total / self[key].count)),
+      lang,
     )
   );
 };
 
 // get Data by role and context
 // return chart.js data object
-export const getDataByRoleAndContext = (state, procId, clientId, context, questionaireId) => {
+export const getDataByRoleAndContext = (state, procId, clientId, context, questionaireId, lang = 'de') => {
   const data = createDataByRoleAndContext(state, procId, clientId, context, questionaireId);
+  const questionaire = getQuestionaire(state, procId, questionaireId);
   return (
     createBarData(
-      Object.keys(data),
+      Object.keys(data).map(key => getRoleById(questionaire, key, lang).content),
       Object.keys(data).map(key => (data[key].total / data[key].count)),
     )
   );

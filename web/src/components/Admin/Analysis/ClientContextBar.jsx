@@ -22,6 +22,12 @@ const options = {
 };
 
 class ClientContextBar extends React.Component {
+  static propTypes = {
+    barData: PropTypes.shape({}).isRequired,
+    onRef: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+  }
+
   componentDidMount() {
     this.props.onRef(this);
   }
@@ -34,7 +40,7 @@ class ClientContextBar extends React.Component {
     return (
       <tr>
         <td>
-          {this.props.context.contents[0].content}
+          {this.props.label}
         </td>
         <td>
           <RC2
@@ -49,15 +55,5 @@ class ClientContextBar extends React.Component {
     );
   }
 }
-
-ClientContextBar.propTypes = {
-  context: PropTypes.shape({
-    contents: PropTypes.arrayOf(PropTypes.shape({
-      content: PropTypes.string.isRequired,
-    })),
-  }).isRequired,
-  barData: PropTypes.shape({}).isRequired,
-  onRef: PropTypes.func.isRequired,
-};
 
 export default ClientContextBar;

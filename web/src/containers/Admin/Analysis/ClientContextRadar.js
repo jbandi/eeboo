@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
     ownProps.procId,
     ownProps.client.id,
     1234,
+    ownProps.lang,
   ),
 });
 

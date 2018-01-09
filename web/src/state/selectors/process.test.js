@@ -6,6 +6,7 @@ import {
   getQuestionaires,
   getQuestionaire,
   getLanguage,
+  getContextById,
 } from './process';
 
 import { Language } from '../../utils';
@@ -35,12 +36,24 @@ describe('test selectors for processes', () => {
           questionaires: {
             1: {
               id: 1,
+              contexts: {
+                A: { id: 'A' },
+                B: { id: 'B' },
+              },
             },
           },
         },
       },
     },
   };
+
+  it('it should return specific context by its id', () => {
+    expect(getContextById(state, 2, 1, 'A').id).toEqual('A');
+  });
+
+  it('it should return an empty Object if context does not exist', () => {
+    expect(getContextById(state, 3, 1, 'A')).toEqual({});
+  });
 
   it('should return a list of process Ids', () => {
     expect(getProcs(state)[1]).toEqual('2');

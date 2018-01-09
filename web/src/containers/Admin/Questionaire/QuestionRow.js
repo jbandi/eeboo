@@ -2,13 +2,12 @@ import { connect } from 'react-redux';
 import QuestionRow from '../../../components/Admin/Questionaire/QuestionRow';
 import { getContentByLanguage } from '../../../state/selectors/context';
 import { getQuestionContentByLanguage } from '../../../state/selectors/questionaire';
-import { getLanguage } from '../../../state/selectors/process';
+import { getLanguage, getContextById } from '../../../state/selectors/process';
 import { deleteQuestion } from '../../../state/actions/process';
 
 const mapStateToProps = (state, ownProps) => ({
   context: getContentByLanguage(
-    ownProps.questionaire.contexts,
-    ownProps.question.context,
+    getContextById(ownProps.question.context),
     getLanguage(ownProps.procId),
   ).content,
   questionContent: getQuestionContentByLanguage(

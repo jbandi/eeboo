@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { Grid, Row, Col, ListGroupItem, ListGroup } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { fetchProcs } from './../../state/actions/process';
-import { fetchFeedbackersByProcId } from './../../state/actions/feedbacker';
+
 import QuestionaireList from './../../containers/Admin/Questionaire/QuestionaireList';
 import ClientList from './../../containers/Admin/Client/ClientList';
 import ClientDetail from './../../containers/Admin/Client/ClientDetail';
@@ -42,12 +41,17 @@ class ProcessDetail extends Component {
         id: PropTypes.string.isRequired,
       }),
     }).isRequired,
-    dispatch: PropTypes.func.isRequired,
+    process: PropTypes.shape({
+      company: PropTypes.string,
+      id: PropTypes.string,
+    }).isRequired,
+    fetchProcs: PropTypes.func.isRequired,
+    fetchFeedbackersByProcId: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchProcs());
-    this.props.dispatch(fetchFeedbackersByProcId(this.props.match.params.id));
+    this.props.fetchProcs();
+    this.props.fetchFeedbackersByProcId(this.props.match.params.id);
   }
 
   render() {
@@ -56,7 +60,9 @@ class ProcessDetail extends Component {
       <Grid className="process-detail">
         <Row>
           <Col>
-            Feedbackprozess: {id}
+            <div align="left">
+              Feedbackprozess: {this.props.process.company}
+            </div>
           </Col>
         </Row>
         <hr />
@@ -85,7 +91,7 @@ class ProcessDetail extends Component {
             </Row>
           </Col>
           <Col md={10}>
-            <div style={{ flex: 1, padding: '10px' }}>
+            <div style={{ padding: '10px' }}>
               {routes.map(route => (
                 <Route
                   key={route.path}

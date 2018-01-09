@@ -57,9 +57,9 @@ export class Client extends React.Component {
     </div>
   );
 
-  contextHeader = contextId => (
+  contextHeader = context => (
     <div><PanelHeader
-      contextId={contextId}
+      context={context}
       clientId={this.props.clientId}
       roleId={this.props.role.id}
       language={this.props.language}
@@ -76,7 +76,7 @@ export class Client extends React.Component {
               <Panel
                 key={context.id}
                 collapsible
-                header={this.contextHeader(context.id)}
+                header={this.contextHeader(context)}
                 eventKey={context.id}
                 bsStyle="warning"
               >
