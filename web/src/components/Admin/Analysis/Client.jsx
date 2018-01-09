@@ -33,27 +33,30 @@ class Client extends React.Component {
   header = client => (
     <div align="left">
       <div style={{ display: 'inline-block' }}>{client.firstname} {client.name}</div>
-      <div style={{ float: 'right' }}>
-        <Button
-          onClick={() => this.generatePDF()}
-          bsSize="small"
-        >
-          Save as PDF
-        </Button>
-      </div>
+      {(this.state.key === 1) && (
+        <div style={{ float: 'right' }}>
+          <Button
+            onClick={() => this.generatePDF()}
+            bsSize="small"
+          >
+            Save as PDF
+          </Button>
+        </div>
+      )}
     </div>
   )
 
   render() {
     return (
       <Panel header={this.header(this.props.client)}>
-        <Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="questionaire-tabs">
+        <Tabs animation={false} defaultActiveKey={1} onSelect={this.handleSelect} id="questionaire-tabs">
           <Tab eventKey={1} title="Balkendiagramm">
             <Table>
               <tbody>
                 {this.props.contexts.map(context => (
                   <ClientContextBar
                     key={context.id}
+                    tab={this.state.key}
                     context={context}
                     client={this.props.client}
                     procId={this.props.procId}
