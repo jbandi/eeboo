@@ -34,14 +34,6 @@ class Header extends Component {
                 <NavItem eventKey={1}>Home</NavItem>
               </LinkContainer>
               {
-                !isAuthenticated() && (
-                  <LinkContainer to="/about">
-                    <NavItem eventKey={2}>About</NavItem>
-                  </LinkContainer>
-                )
-              }
-
-              {
                 isAuthenticated() && userHasRoles(['admin']) && (
                   <LinkContainer to="/admin">
                     <NavItem eventKey={3}>Prozesse</NavItem>
@@ -58,7 +50,7 @@ class Header extends Component {
               {
                 isAuthenticated() && (
                   <LinkContainer to="#">
-                    <NavItem onClick={this.logout} eventKey={3}>Logout</NavItem>
+                    <NavItem onClick={this.logout} eventKey={3}><div className="glyphicon glyphicon-log-out" /></NavItem>
                   </LinkContainer>
                 )
               }

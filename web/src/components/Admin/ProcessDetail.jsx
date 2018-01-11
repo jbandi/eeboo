@@ -30,7 +30,7 @@ const routes = [
   },
   {
     path: '/admin/proc/:id/data',
-    main: id => <ProcessData procId={id} />,
+    main: (id, location) => <ProcessData procId={id} location={location} />,
   },
 ];
 
@@ -41,6 +41,7 @@ class ProcessDetail extends Component {
         id: PropTypes.string.isRequired,
       }),
     }).isRequired,
+    location: PropTypes.shape({}).isRequired,
     process: PropTypes.shape({
       company: PropTypes.string,
       id: PropTypes.string,
@@ -97,7 +98,7 @@ class ProcessDetail extends Component {
                   key={route.path}
                   path={route.path}
                   exact={route.exact}
-                  component={() => route.main(id)}
+                  component={() => route.main(id, this.props.location)}
                 />
               ))}
               <Route

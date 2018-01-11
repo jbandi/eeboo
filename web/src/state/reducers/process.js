@@ -8,12 +8,27 @@ import {
   DELETE_CLIENT,
   ADD_CLIENT,
   SET_LANGUAGE,
+  UPDATE_PROCESS,
 } from '../actions/process';
 
 import { removeItem } from '../../utils';
 
 const process = (state = {}, action) => {
   switch (action.type) {
+    case UPDATE_PROCESS: {
+      return Object.assign({}, state, {
+        ...state,
+        byHash: {
+          ...state.byHash,
+          [action.process.id]: {
+            ...state.byHash[action.process.id],
+            company: action.process.company,
+            start: action.process.start,
+            end: action.process.end,
+          },
+        },
+      });
+    }
     case SET_LANGUAGE: {
       const { procId, language } = action;
       return Object.assign({}, state, {

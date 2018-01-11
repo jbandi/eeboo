@@ -28,6 +28,8 @@ export const ADD_CLIENT = 'process/ADD_CLIENT';
 
 export const SET_LANGUAGE = 'process/SET_LANGUAGE';
 
+export const UPDATE_PROCESS = 'process/UPATE_PROCESS';
+
 export function setLanguage(procId, language) {
   return {
     type: SET_LANGUAGE,
@@ -60,6 +62,13 @@ export function receiveProc(proc) {
   return {
     type: RECEIVE_PROCS,
     procs: [proc],
+  };
+}
+
+export function updateProcess(process) {
+  return {
+    type: UPDATE_PROCESS,
+    process,
   };
 }
 
