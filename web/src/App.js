@@ -3,6 +3,7 @@ import React from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Main from './components/Main';
+import Footer from './components/Footer';
 import './App.css';
 
 // Needed for onTouchTap
@@ -12,6 +13,7 @@ injectTapEventPlugin();
 const App = () => (
   <div className="App">
     <Main />
+    <Footer />
   </div>
 );
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Grid, Panel, Button } from 'react-bootstrap';
-import SplunkLogger from 'splunk-logging';
 import Client from '../../containers/Feedbacker/Client';
 import PanelHeader from '../../containers/Feedbacker/PanelHeader';
 
@@ -26,26 +25,6 @@ class Feedbacker extends Component {
   }
 
   setLanguage = (lan) => {
-    const config = {
-      token: '34D03EB4-84F7-47AA-A344-91772B56A7F9',
-      url: 'http://prd-p-3h8s3rq26xf5.cloud.splunk.com',
-    };
-
-    const Logger = new SplunkLogger.Logger(config);
-
-    // Enable SSL certificate validation
-    // Logger.requestOptions.strictSSL = true;
-    const payload = {
-    // Message can be anything; doesn't have to be an object
-      message: {
-        language: lan,
-        procId: this.props.feedbacker.proc,
-      },
-    };
-    Logger.send(payload, (err, resp, body) => {
-      // If successful, body will be { text: 'Success', code: 0 }
-      console.log('Response from Splunk', body);
-    });
     this.props.setLanguage(this.props.feedbacker.proc, lan);
   }
 

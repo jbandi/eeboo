@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -19,11 +20,13 @@ const store = createStore(
 
 ReactDOM.render(
   (
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ErrorBoundary>
   ), document.getElementById('root'),
 );
 
