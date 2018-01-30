@@ -12,7 +12,6 @@ const proc = require('./controllers/routes/process');
 const feedbacker = require('./controllers/routes/feedbacker');
 const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
-const company = require('./controllers/routes/company');
 
 // authentication middleware
 const checkJwt = jwt({
@@ -92,18 +91,11 @@ app.route('/api/v1/procs/:procid/clients/:clientid')
   .get(client.getClient)
   .delete(client.deleteClient);
 
-// const checkScopes = jwtAuthz([ 'read:messages' ]);
-app.get('/api/private', checkJwt, (req, res) => {
-  res.json({
-    message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.',
-  });
-});
-
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/web/build/index.html`));
-  console.log('sending: ', path.join(`${__dirname}/web/build/index.html`));
+  console.log('sending: ', path.join(`${__dirname}/web/build/index.html`)); // eslint-disable-line no-console
 });
 
 app.use('/test-coverage', express.static('coverage'));
@@ -113,4 +105,4 @@ const server = app.listen(port);
 
 module.exports = server;
 
-console.log(`eeboo server listening on ${port}`);
+console.log(`eeboo server listening on ${port}`); // eslint-disable-line no-console
