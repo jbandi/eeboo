@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+const bodyParser = require('body-parser');
 
 const dateFormat = require('dateformat');
 
@@ -13,23 +14,31 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 
 // authentication middleware
-const checkJwt = (process.env.NODE_ENV !== 'production') ? (req, res, next) => { next(); } : jwt({
-  // Dynamically provide a signing key
-  // based on the kid in the header and
-  // the singing keys provided by the JWKS endpoint.
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: 'https://eeboo.eu.auth0.com/.well-known/jwks.json',
-  }),
+const checkJwt = (process.env.NODE_ENV !== 'production')
+  ? (req, res, next) => {
+    console.log('not in production environment, skip JWT'); // eslint-disable-line no-console
+    next();
+  }
+  : jwt({
+    secret: jwksRsa.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: 'https://eeboo.eu.auth0.com/.well-known/jwks.json',
+    }),
 
-  // Validate the audience and the issuer.
-  // audience: 'https://eboo.herokuapp.com',
-  audience: 'https://eboo.herokuapp.com',
-  issuer: 'https://eeboo.eu.auth0.com/',
-  algorithms: ['RS256'],
-});
+    // Validate the audience and the issuer.
+    // audience: 'https://eboo.herokuapp.com',
+    audience: 'https://eboo.herokuapp.com',
+    issuer: 'https://eeboo.eu.auth0.com/',
+    algorithms: ['RS256'],
+  });
+
+// parse application/json and look for raw text
+app.use('/api', bodyParser.json());
+app.use('/api/', bodyParser.urlencoded({ extended: true }));
+app.use('/api', bodyParser.text());
+app.use('/api', bodyParser.json({ type: 'application/json' }));
 
 const logger = (req, res, next) => {
   const { method, url } = req;
