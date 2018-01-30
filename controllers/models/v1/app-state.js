@@ -16,13 +16,13 @@ const getFBAccount = () => {
   try {
     fbToken = require(`./${config.firebaseToken}`); // eslint-disable-line
   } catch (e) {
-    console.info('firebase token not found in config dir');
+    console.info('firebase token not found in config dir'); // eslint-disable-line no-console
   }
   if (fbToken && fbToken !== '') {
     // if a firbase token can be found in a config file, use it
     return fbToken;
   }
-  console.error('firebase token not found, check your environment variables');
+  console.error('firebase token not found, check your environment variables'); // eslint-disable-line no-console
   process.exit(1);
 };
 
@@ -47,7 +47,7 @@ class AppState {
     });
 
     db = admin.database();
-    console.log('Connected to database. Now reading data');
+    console.log('Connected to database. Now reading data'); // eslint-disable-line no-console
 
     // const encoded = Buffer.from(JSON.stringify(getFBAccount())).toString('base64');
   }
@@ -183,7 +183,7 @@ class AppState {
   // delete a list of feedbackers belonging to a Process
   async deleteFeedbackerfromList(list) {
     for (let client of list) { // eslint-disable-line
-      console.log('deleteing', client.id);
+      console.log('deleteing', client.id); // eslint-disable-line no-console
       await this.deleteFeedbacker(client.id); // eslint-disable-line no-await-in-loop
     }
   }

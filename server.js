@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
-const bodyParser = require('body-parser');
 
 const dateFormat = require('dateformat');
 
@@ -14,7 +13,7 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 
 // authentication middleware
-const checkJwt = jwt({
+const checkJwt = (process.env.NODE_ENV !== 'production') ? (req, res, next) => { next(); } : jwt({
   // Dynamically provide a signing key
   // based on the kid in the header and
   // the singing keys provided by the JWKS endpoint.
@@ -32,16 +31,9 @@ const checkJwt = jwt({
   algorithms: ['RS256'],
 });
 
-// parse application/json and look for raw text
-app.use('/api/v1/procs/:procid/csvclients', bodyParser.text({ type: 'text/csv' }));
-app.use('/api', bodyParser.json());
-app.use('/api/', bodyParser.urlencoded({ extended: true }));
-app.use('/api', bodyParser.text());
-app.use('/api', bodyParser.json({ type: 'application/json' }));
-
 const logger = (req, res, next) => {
   const { method, url } = req;
-  console.log(dateFormat(new Date(), 'isoDateTime'), method, url);
+  console.log(dateFormat(new Date(), 'isoDateTime'), method, url); // eslint-disable-line no-console
   next(); // Passing the request to the next handler in the stack.
 };
 app.use(logger);
