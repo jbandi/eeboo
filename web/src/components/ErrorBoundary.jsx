@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component {
         component: this.props.component,
       },
     });
-    console.log('error in component:', this.props.component);
+    console.log('error in component:', this.props.component); // eslint-disable-line no-console
     rollbar.log(error);
   }
 

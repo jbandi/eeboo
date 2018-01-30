@@ -9,8 +9,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchProcs: () => { dispatch(fetchProcs()); },
-  fetchFeedbackersByProcId: (id) => { dispatch(fetchFeedbackersByProcId(id)); },
+  fetchProcs: (auth) => { dispatch(fetchProcs(auth)); },
+  fetchFeedbackersByProcId: (auth, id) => { dispatch(fetchFeedbackersByProcId(auth, id)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProcessDetail);

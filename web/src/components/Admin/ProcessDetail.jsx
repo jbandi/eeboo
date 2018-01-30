@@ -14,7 +14,7 @@ import Analysis from './../../containers/Admin/Analysis/Analysis';
 const routes = [
   {
     path: '/admin/proc/:id/clients',
-    main: id => <ClientList procId={id} />,
+    main: (id, props) => <ClientList procId={id} {...props} />,
   },
   {
     path: '/admin/proc/:id/questionaires',
@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/admin/proc/:id/feedbackers',
-    main: id => <FeedbackerList procId={id} />,
+    main: (id, props) => <FeedbackerList procId={id} {...props} />,
   },
   {
     path: '/admin/proc/:id/analysis',
@@ -30,18 +30,18 @@ const routes = [
   },
   {
     path: '/admin/proc/:id/data',
-    main: (id, location) => <ProcessData procId={id} location={location} />,
+    main: (id, props) => <ProcessData procId={id} {...props} />,
   },
 ];
 
 class ProcessDetail extends Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
       }),
     }).isRequired,
-    location: PropTypes.shape({}).isRequired,
     process: PropTypes.shape({
       company: PropTypes.string,
       id: PropTypes.string,
@@ -51,8 +51,8 @@ class ProcessDetail extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchProcs();
-    this.props.fetchFeedbackersByProcId(this.props.match.params.id);
+    this.props.fetchProcs(this.props.auth);
+    this.props.fetchFeedbackersByProcId(this.props.auth, this.props.match.params.id);
   }
 
   render() {
@@ -98,13 +98,13 @@ class ProcessDetail extends Component {
                   key={route.path}
                   path={route.path}
                   exact={route.exact}
-                  component={() => route.main(id, this.props.location)}
+                  component={() => route.main(id, this.props)}
                 />
               ))}
               <Route
                 key="/admin/proc/gaga/:id/gaga/:clientId"
                 path="/admin/proc/:id/gaga/:clientId"
-                component={params => <ClientDetail params={params} />}
+                component={params => <ClientDetail params={params} auth={this.props.auth} />}
               />
             </div>
           </Col>

@@ -153,7 +153,7 @@ export function fetchFeedbacker(id) {
     return fetch(`/api/v1/singlefeedbacker/${id}`)
       .then(
         response => response.json(),
-        error => console.log('An error occured.', error),
+        error => console.log('An error occured.', error), // eslint-disable-line no-console
       )
       .then((json) => {
         dispatch(receiveProc(json.proc));
@@ -162,38 +162,27 @@ export function fetchFeedbacker(id) {
   };
 }
 
-export function fetchFeedbackersByProcId(procId) {
+export function fetchFeedbackersByProcId(auth, procId) {
   return (dispatch) => {
     dispatch(requestFeedbacker());
-    return fetch(`/api/v1/procs/${procId}/feedbackers`)
-      .then(
-        response => response.json(),
-        error => console.log('An error occured.', error),
-      )
+    return auth.authFetch(`/api/v1/procs/${procId}/feedbackers`)
       .then(json =>
         dispatch(receiveFeedbackers(json)));
   };
 }
 
-export function deleteFeedbackerFromBackend(feedbackerId) {
+export function deleteFeedbackerFromBackend(auth, feedbackerId) {
   return dispatch => (
-    fetch(`/api/v1/feedbackers/${feedbackerId}`, {
+    auth.authFetch(`/api/v1/feedbackers/${feedbackerId}`, {
       method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
     })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured while deleting feedbacker', error),
-      ).then(() => {
+      .then(() => {
         dispatch(deleteFeedbacker(feedbackerId));
       })
   );
 }
 
-export function postFeedbacker(data) {
+export function postFeedbacker(auth, data) {
   return (dispatch, getState) => {
     const feedbacker = !(data) ? getFirstFeedbacker(getState()) : data;
     const body = {
@@ -203,18 +192,9 @@ export function postFeedbacker(data) {
       gender: feedbacker.gender,
       proc: feedbacker.proc,
     };
-    dispatch(requestFeedbacker());
-    return fetch('/api/v1/feedbackers', {
+    return auth.authFetch('/api/v1/feedbackers', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(body),
-    })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured while posting feedbacker', error),
-      );
+    });
   };
 }

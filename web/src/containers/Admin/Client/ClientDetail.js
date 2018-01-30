@@ -4,8 +4,8 @@ import { importFeedbackers, postFeedbacker } from '../../../state/actions/feedba
 import { getClient } from '../../../state/selectors/process';
 import { getFeedbackersByClientId } from '../../../state/selectors/feedbacker';
 
-function saveFeedbackers(dispatch, feedbackers) {
-  feedbackers.forEach(f => dispatch(postFeedbacker(f)));
+function saveFeedbackers(dispatch, auth, feedbackers) {
+  feedbackers.forEach(f => dispatch(postFeedbacker(auth, f)));
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   handleFileUpload: (data, procId, clientId) => {
     dispatch(importFeedbackers(data, procId, clientId));
   },
-  saveFeedbackers: (feedbackers) => { saveFeedbackers(dispatch, feedbackers); },
+  saveFeedbackers: (auth, feedbackers) => { saveFeedbackers(dispatch, auth, feedbackers); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientDetail);

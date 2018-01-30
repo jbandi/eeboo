@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import FeedbackerList from '../../../components/Admin/Feedbacker/FeedbackerList';
 import { getFeedbackerArray } from '../../../state/selectors/feedbacker';
-import { deleteFeedbackerFromBackend } from '../../../state/actions/feedbacker';
 import { getNumQuestions } from '../../../state/selectors/process';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -9,10 +8,4 @@ const mapStateToProps = (state, ownProps) => ({
   numQuestions: getNumQuestions(state, ownProps.procId, 1234),
 });
 
-const mapDispatchToProps = dispatch => ({
-  deleteFeedbacker: (id) => {
-    dispatch(deleteFeedbackerFromBackend(id));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackerList);
+export default connect(mapStateToProps)(FeedbackerList);

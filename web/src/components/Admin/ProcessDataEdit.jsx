@@ -8,6 +8,7 @@ import './Admin.css';
 
 class ProcessDataEdit extends React.Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     process: PropTypes.shape({
       id: PropTypes.string,
       company: PropTypes.string,
@@ -68,7 +69,7 @@ class ProcessDataEdit extends React.Component {
   }
 
   handleSubmit = (event) => {
-    this.props.saveProcessData({
+    this.props.saveProcessData(this.props.auth, {
       id: this.state.id,
       company: this.state.company,
       start: this.state.start,

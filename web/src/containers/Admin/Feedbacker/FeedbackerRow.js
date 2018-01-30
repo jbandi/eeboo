@@ -9,8 +9,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  deleteFeedbacker: (id) => {
-    dispatch(deleteFeedbackerFromBackend(id));
+  deleteFeedbacker: (auth, id) => {
+    dispatch(deleteFeedbackerFromBackend(auth, id));
   },
 });
 

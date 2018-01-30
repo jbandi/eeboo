@@ -23,6 +23,17 @@ import {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+const auth = {
+  authFetch: (url, options) => {
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    return fetch(url, { headers, ...options })
+      .then(response => response.json());
+  },
+};
+
 describe('test process actions', () => {
   afterEach(() => {
     fetchMock.reset();
@@ -73,7 +84,7 @@ describe('test process actions', () => {
     ];
     const store = mockStore({});
 
-    return store.dispatch(fetchProcs()).then(() => {
+    return store.dispatch(fetchProcs(auth)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
@@ -97,7 +108,7 @@ describe('test process actions', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(addProc({
+    return store.dispatch(addProc(auth, {
       company: 'pf',
       start: '4',
       end: '5',

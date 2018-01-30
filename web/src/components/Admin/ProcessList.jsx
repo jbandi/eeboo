@@ -7,13 +7,14 @@ import ProcessListRow from './../../containers/Admin/ProcessListRow';
 
 class ProcessList extends Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     dispatch: PropTypes.func.isRequired,
     procs: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
 
   componentWillMount() {
     if (this.props.procs.length <= 0) {
-      this.props.dispatch(fetchProcs());
+      this.props.dispatch(fetchProcs(this.props.auth));
     }
   }
 
@@ -40,7 +41,7 @@ class ProcessList extends Component {
                 </thead>
                 <tbody>
                   {this.props.procs.map(p => (
-                    <ProcessListRow key={p} id={p} />
+                    <ProcessListRow key={p} id={p} auth={this.props.auth} />
                     ))}
                 </tbody>
                 </Table> // eslint-disable-line

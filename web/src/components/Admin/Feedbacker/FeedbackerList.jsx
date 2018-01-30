@@ -18,7 +18,7 @@ const FeedbackerList = props => (
       </thead>
       <tbody>
         {props.feedbackers.map(f => (
-          <FeedbackerRow key={f.id} feedbacker={f} numQuestions={props.numQuestions} />
+          <FeedbackerRow key={f.id} feedbacker={f} {...props} />
         ))}
       </tbody>
     </Table>
@@ -27,7 +27,6 @@ const FeedbackerList = props => (
 
 FeedbackerList.propTypes = {
   feedbackers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  numQuestions: PropTypes.number.isRequired,
 };
 
 export default FeedbackerList;

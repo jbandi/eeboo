@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import ErrorBoundary from './components/ErrorBoundary';
 
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 import eeboo from './state/reducers';
@@ -30,4 +30,4 @@ ReactDOM.render(
   ), document.getElementById('root'),
 );
 
-registerServiceWorker();
+// registerServiceWorker();

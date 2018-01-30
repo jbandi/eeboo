@@ -21,13 +21,14 @@ export const FeedbackerRow = (props) => {
       <td className="td-center">{numClients}</td>
       <td className="td-center"><Badge total={numQuestions * numClients} done={numAnswers} /></td>
       <td className="detail-link">
-        <Link to="#" onClick={() => props.deleteFeedbacker(feedbacker.id)}>Delete</Link>
+        <Link to="#" onClick={() => props.deleteFeedbacker(props.auth, feedbacker.id)}>Delete</Link>
       </td>
     </tr>
   );
 };
 
 FeedbackerRow.propTypes = {
+  auth: PropTypes.shape({}).isRequired,
   feedbacker: PropTypes.shape({
     id: PropTypes.string,
     mail: PropTypes.string,

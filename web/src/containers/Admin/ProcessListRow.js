@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => (
-  { deleteProc: (id) => { dispatch(deleteProc(id)); } }
+  { deleteProc: (auth, id) => { dispatch(deleteProc(auth, id)); } }
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProcessListRow);

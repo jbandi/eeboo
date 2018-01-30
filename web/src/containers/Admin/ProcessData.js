@@ -8,9 +8,9 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveProcessData: (p) => {
+  saveProcessData: (auth, p) => {
     dispatch(updateProcess(p));
-    dispatch(putProc(p.id));
+    dispatch(putProc(auth, p.id));
   },
 });
 

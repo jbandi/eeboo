@@ -6,6 +6,7 @@ import FeedbackerRow from '../../../containers/Admin/Client/FeedbackerRow';
 
 class ClientDetail extends React.Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     client: PropTypes.shape({
       id: PropTypes.string,
       firstname: PropTypes.string,
@@ -73,12 +74,17 @@ class ClientDetail extends React.Component {
           </thead>
           <tbody>
             {this.props.feedbackerList.map(f => (
-              <FeedbackerRow key={f.id} feedbacker={f} clientId={this.props.client.id} />
+              <FeedbackerRow
+                key={f.id}
+                feedbacker={f}
+                clientId={this.props.client.id}
+                auth={this.props.auth}
+              />
             ))}
           </tbody>
         </Table>
         <div style={{ textAlign: 'right' }}>
-          <Button bsStyle="default" onClick={() => this.props.saveFeedbackers(this.props.feedbackerList)}>Save</Button>
+          <Button bsStyle="default" onClick={() => this.props.saveFeedbackers(this.props.auth, this.props.feedbackerList)}>Save</Button>
         </div>
       </div>
     );

@@ -159,41 +159,30 @@ export function deleteClientAndFeedbackers(procId, clientId) {
   };
 }
 
-export function putProc(procId) {
+export function putProc(auth, procId) {
   return (dispatch, getState) => {
     const body = getProcess(getState(), procId);
-    return fetch('/api/v1/procs/', {
+    return auth.authFetch('/api/v1/procs/', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(body),
     })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured while updating process', error),
-      ).then(() => {
+      .then(() => {
         const feedbackers = getFeedbackerArray(getState());
         feedbackers.forEach(f => dispatch(postFeedbacker(f)));
       });
   };
 }
 
-export function fetchProcs() {
+export function fetchProcs(auth) {
   return (dispatch) => {
     dispatch(requestProcs());
-    return fetch('/api/v1/procs')
-      .then(
-        response => response.json(),
-        error => console.log('An error occured while receiving process list', error),
-      )
+    return auth.authFetch('/api/v1/procs')
       .then(json =>
         dispatch(receiveProcs(json)));
   };
 }
 
-export function addProc(process) {
+export function addProc(auth, process) {
   return () => {
     let body = {};
     if (process.id) {
@@ -323,18 +312,11 @@ export function addProc(process) {
         state: 'configure',
       };
     }
-    return fetch('/api/v1/procs', {
+    return auth.authFetch('/api/v1/procs', {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(body),
     })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured while posting process', error),
-      ).then(() => {
+      .then(() => {
         if (!process.id) {
           history.replace('/admin');
         }
@@ -358,18 +340,15 @@ async function delFeedbackers(dispatch, feedbackers) {
 }
 
 // delete a process, including all related feedbackers
-export function deleteProc(id) {
+export function deleteProc(auth, id) {
   return (dispatch, getState) => {
     const feedbackers = getFeedbackerArray(getState());
     // delete all feedbackers (async/await) then delete the process
     delFeedbackers(dispatch, feedbackers).then(() => (
-      (fetch(`/api/v1/procs/${id}`, {
+      (auth.authFetch(`/api/v1/procs/${id}`, {
         method: 'DELETE',
       })
-        .then(
-          response => response.json(),
-          error => console.log(`An error occured while deleting process with id ${id}`, error),
-        ).then(history.replace('/admin'))
+        .then(history.replace('/admin'))
       )
     ));
   };

@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   handleFileUpload: (data, procId) => { dispatch(importClients(data, procId)); },
   deleteClient: (procId, clientId) => { dispatch(deleteClientAndFeedbackers(procId, clientId)); },
-  saveProcess: (procId) => { dispatch(putProc(procId)); },
+  saveProcess: (auth, procId) => { dispatch(putProc(auth, procId)); },
 });
 
 

@@ -24,12 +24,13 @@ const ProcessListRow = props => (
     </td>
     <td className="detail-link">
       <Link to={`admin/proc/${props.process.id}/questionaires`}>Details</Link> |&nbsp;
-      <Link to="/admin" onClick={() => props.deleteProc(props.process.id)}>Löschen</Link>
+      <Link to="/admin" onClick={() => props.deleteProc(props.auth, props.process.id)}>Löschen</Link>
     </td>
   </tr>
 );
 
 ProcessListRow.propTypes = {
+  auth: PropTypes.shape({}).isRequired,
   process: PropTypes.shape({
     id: PropTypes.string,
     company: PropTypes.string,

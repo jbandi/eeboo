@@ -50,22 +50,19 @@ app.use(logger);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'web/build')));
 
-app.route('/api/v1/company')
-  .get(company.getCompany);
-
 app.route('/api/v1/procs')
-  .get(proc.getProcs)
-  .delete(proc.deleteProc)
-  .post(proc.addProc);
+  .get(checkJwt, proc.getProcs)
+  .delete(checkJwt, proc.deleteProc)
+  .post(checkJwt, proc.addProc);
 
 app.route('/api/v1/procs/:procid')
-  .get(proc.getProc)
-  .delete(proc.deleteProc);
+  .get(checkJwt, proc.getProc)
+  .delete(checkJwt, proc.deleteProc);
 
 app.route('/api/v1/feedbackers')
-  .get(feedbacker.getFeedbackers)
-  .delete(feedbacker.deleteFeedbackers)
-  .post(feedbacker.addFeedbacker);
+  .get(checkJwt, feedbacker.getFeedbackers)
+  .delete(checkJwt, feedbacker.deleteFeedbackers)
+  .post(checkJwt, feedbacker.addFeedbacker);
 
 app.route('/api/v1/feedbackers/:feedbackerid')
   .get(feedbacker.getFeedbacker)
@@ -75,7 +72,7 @@ app.route('/api/v1/singlefeedbacker/:feedbackerid')
   .get(feedbacker.getSingleFeedbacker);
 
 app.route('/api/v1/procs/:procid/feedbackers')
-  .get(feedbacker.getFeedbackerByProcId);
+  .get(checkJwt, feedbacker.getFeedbackerByProcId);
 
 app.route('/api/v1/procs/:procid/questionaires')
   .get(questionaire.getQuestionaires)

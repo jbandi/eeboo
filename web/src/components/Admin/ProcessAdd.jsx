@@ -8,6 +8,7 @@ import './datepicker.css';
 
 class ProcessAdd extends Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     addProc: PropTypes.func.isRequired,
   }
 
@@ -30,7 +31,7 @@ class ProcessAdd extends Component {
   };
 
   handleSubmit = (event) => {
-    this.props.addProc({
+    this.props.addProc(this.props.auth, {
       company: this.state.company,
       start: this.state.start,
       end: this.state.end,

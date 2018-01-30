@@ -24,6 +24,17 @@ import {
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+const auth = {
+  authFetch: (url, options) => {
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    return fetch(url, { headers, ...options })
+      .then(response => response.json());
+  },
+};
+
 describe('test feedbacker actions', () => {
   afterEach(() => {
     fetchMock.reset();
@@ -171,7 +182,7 @@ describe('test feedbacker actions', () => {
     ];
     const store = mockStore({ id: 1 });
 
-    return store.dispatch(fetchFeedbackersByProcId('1')).then(() => {
+    return store.dispatch(fetchFeedbackersByProcId(auth, '1')).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });

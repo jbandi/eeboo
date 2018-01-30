@@ -5,6 +5,7 @@ import { Table, Button } from 'react-bootstrap';
 
 class ClientList extends React.Component {
   static propTypes = {
+    auth: PropTypes.shape({}).isRequired,
     clients: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     handleFileUpload: PropTypes.func.isRequired,
     procId: PropTypes.string.isRequired,
@@ -55,7 +56,7 @@ class ClientList extends React.Component {
           </tbody>
         </Table>
         <div style={{ textAlign: 'right' }}>
-          <Button bsStyle="default" onClick={() => this.props.saveProcess(this.props.procId)}>Save</Button>
+          <Button bsStyle="default" onClick={() => this.props.saveProcess(this.props.auth, this.props.procId)}>Save</Button>
         </div>
       </div>
     );

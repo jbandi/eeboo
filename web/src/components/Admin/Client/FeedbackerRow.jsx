@@ -13,12 +13,13 @@ export const FeedbackerRow = props => (
     <td>{props.feedbacker.gender}</td>
     <td>{props.role.content}</td>
     <td className="detail-link">
-      <Link to="#" onClick={() => props.deleteFeedbacker(props.feedbacker.id)}>Delete</Link>
+      <Link to="#" onClick={() => props.deleteFeedbacker(props.auth, props.feedbacker.id)}>Delete</Link>
     </td>
   </tr>
 );
 
 FeedbackerRow.propTypes = {
+  auth: PropTypes.shape({}).isRequired,
   deleteFeedbacker: PropTypes.func.isRequired,
   feedbacker: PropTypes.shape({
     id: PropTypes.string,
