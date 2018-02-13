@@ -105,15 +105,16 @@ export const getContextById = (state, procId, questionaireId, contextId) => {
 };
 
 const chartColor = [
-  'rgba(8,48,107,0.7)',
-  'rgba(8,81,156,0.7)',
-  'rgba(33,113,181,0.7)',
-  'rgba(66,146,198,0.7)',
-  'rgba(107,174,214,0.7)',
-  'rgba(158,202,225,0.7)',
-  'rgba(198,219,239,0.7)',
-  'rgba(222,235,247,0.7)',
-  'rgba(247,251,255,0.7)',
+  'rgba(27,133,184,0.9)',
+  'rgba(90,82,85,0.9)',
+  'rgba(85,158,131,0.9)',
+  'rgba(174,90,65,0.9)',
+  'rgba(195,203,113,0.9)',
+  'rgba(27,133,184,0.7)',
+  'rgba(90,82,85,0.7)',
+  'rgba(85,158,131,0.7)',
+  'rgba(174,90,65,0.7)',
+  'rgba(195,203,113,0.7)',
 ];
 
 const createBarData = (labels, data) => ({
@@ -155,13 +156,11 @@ const createRadarData = (labels, foreign, self, lang) => ({
     data: foreign,
     borderWidth: 3,
     borderColor: chartColor[1],
-    backgroundColor: chartColor[2],
   }, {
     label: getLabel(lang, 'self'),
     data: self,
     borderWidth: 3,
     borderColor: chartColor[4],
-    backgroundColor: chartColor[6],
   }],
 });
 

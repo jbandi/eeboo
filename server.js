@@ -14,11 +14,10 @@ const questionaire = require('./controllers/routes/questionaire');
 const client = require('./controllers/routes/client');
 
 // authentication middleware
-console.log(process.env);
-const checkJwt = (process.env.NODE_ENV !== 'prod')
+const checkJwt = (process.env.NODE_ENV !== 'production')
   ? (req, res, next) => {
     console.log('not in production environment, skip JWT'); // eslint-disable-line no-console
-    next();
+    return next();
   }
   : jwt({
     secret: jwksRsa.expressJwtSecret({
