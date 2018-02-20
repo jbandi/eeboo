@@ -40,9 +40,6 @@ class AppState {
     this.fbQuestionaireRef = 'questionaires/';
     this.fbClientRef = 'clients/';
 
-    console.log(fbToken);
-    console.log(getFBUrl(fbToken));
-
     // Setup firebase for persistent storage
     admin.initializeApp({
       credential: admin.credential.cert(fbToken),
