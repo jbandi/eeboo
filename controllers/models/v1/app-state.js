@@ -26,8 +26,8 @@ const getFBAccount = () => {
   process.exit(1);
 };
 
-const getFBUrl = () => (
-  (!process.env.FB_URL) ? config.firebaseUrl : process.env.FB_URL
+const getFBUrl = token => (
+  `https://${token.project_id}.firebaseio.com`
 );
 
 class AppState {
