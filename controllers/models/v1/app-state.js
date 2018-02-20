@@ -43,7 +43,7 @@ class AppState {
     // Setup firebase for persistent storage
     admin.initializeApp({
       credential: admin.credential.cert(fbToken),
-      databaseURL: getFBUrl(),
+      databaseURL: getFBUrl(fbToken),
     });
 
     db = admin.database();
