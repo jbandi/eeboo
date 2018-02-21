@@ -168,7 +168,7 @@ export function putProc(auth, procId) {
     })
       .then(() => {
         const feedbackers = getFeedbackerArray(getState());
-        feedbackers.forEach(f => dispatch(postFeedbacker(f)));
+        feedbackers.forEach(f => dispatch(postFeedbacker(auth, f)));
       });
   };
 }
