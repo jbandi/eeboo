@@ -15,7 +15,7 @@ jobs:
     script: yarn test
   - script: cd web && yarn install && yarn test
   - stage: deploy
-    script: skip
+    script: cd web && yarn install && yarn build
     deploy: &heroku
       - provider: heroku
         script: echo "deploying dev"
