@@ -4,6 +4,7 @@ cache: yarn
 stages:
   - lint
   - test
+  - build
   - deploy
 jobs:
   include:
@@ -14,9 +15,10 @@ jobs:
   - stage: test
     script: yarn test
   - script: cd web && yarn install && yarn test
-  - stage: deploy
-    script: cd web && yarn install && yarn build
+  - stage: build
+    script: script: cd web && yarn install && yarn build
     skip_cleanup: true
+  - stage: deploy
     deploy: &heroku
       - provider: heroku
         script: echo "deploying dev"
