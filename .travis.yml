@@ -11,17 +11,17 @@ stages:
 jobs:
   include:
   - stage: lint
-    script: yarn lint
+    script: yarn install && yarn lint
   - stage: lint
     script: cd web && yarn install && yarn lint
   - stage: test
-    script: yarn test
-  - script: cd web && yarn install && yarn test
+    script: yarn install && test
+  - stage: test
+    script: cd web && yarn install && yarn test
   - stage: build
-    script: script: cd web && yarn install && yarn build
+    script: cd web && yarn install && yarn build
   - stage: deploy
     script: skip
-    skip_cleanup: true
     deploy: &heroku
       - provider: heroku
         app: eeboo-dev
