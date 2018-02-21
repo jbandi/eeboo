@@ -15,7 +15,7 @@ jobs:
   - stage: lint
     script: cd web && yarn install && yarn lint
   - stage: test
-    script: yarn install && test
+    script: yarn install && yarn test
   - stage: test
     script: cd web && yarn install && yarn test
   - stage: build
