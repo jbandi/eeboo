@@ -16,6 +16,7 @@ jobs:
   - script: cd web && yarn install && yarn test
   - stage: deploy
     script: cd web && yarn install && yarn build
+    skip_cleanup: true
     deploy: &heroku
       - provider: heroku
         script: echo "deploying dev"
