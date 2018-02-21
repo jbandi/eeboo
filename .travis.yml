@@ -21,7 +21,7 @@ jobs:
   - stage: build
     script: cd web && yarn install && yarn build
   - stage: deploy
-    script: cd web && rm package.json
+    script: skip
     deploy: &heroku
       - provider: heroku
         app: eeboo-dev
