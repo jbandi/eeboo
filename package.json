@@ -16,7 +16,7 @@
     "start-test": "NODE_ENV=test node server.js",
     "test": "mocha --timeout 10000 --exit",
     "test-coverage": "nyc --reporter=html mocha --timeout 10000",
-    "heroku-postbuild": "cd web && yarn --production=false && yarn run build",
+    "heroku-postbuild": "cd web && yarn --production=true && yarn run build",
     "lint": "eslint --ext .js *.js controllers/ test/",
     "lint-fix": "eslint --ext .js --fix *.js controllers/ test/"
   },
